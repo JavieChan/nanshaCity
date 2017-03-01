@@ -1,0 +1,34 @@
+## apgroups.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="location" value="${location}" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'apgroups': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='AP组管理'"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="apgroups">
+            <div class="toolnav">
+                <h4>AP组列表</h4>
+                <div class="toolbox">
+                    <button type="button" class="btnGraySmall delbtn">删除AP组</button>
+                    <a href="/apgroupsadd.html" class="btnGraySmall addbtn">新增AP组</a>
+                    <a href="/apgroupsedit.html" class="btnGraySmall editbtn">编辑AP组</a>
+                </div>
+            </div>
+            <ul class="mw880 navlink" id="apgroupChange"></ul>
+            <div class="toolnav">
+                <div class="toolbox">
+                    <div class="search" id="search"><input type="text" placeholder="搜索" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                </div>
+            </div>
+            <div id="apgroupsMemTable"></div>
+            <script src="/static/js/component/apgroups.js"></script>
+        </div>
+    </div>
+</div>

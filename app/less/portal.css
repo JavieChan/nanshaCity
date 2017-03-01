@@ -1,0 +1,51 @@
+.logo{
+    background: url('../img/portal/logo.png');
+    width: 22px;
+    height: 22px;
+}
+.aDwn{
+    background: url("../img/portal/a_dwn_normal.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.aUp{
+    background: url("../img/portal/a_up_normal.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.aDwn:hover{
+    background: url("../img/portal/a_dwn_click.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.aUp:hover{
+    background: url("../img/portal/a_up_click.png") no-repeat;
+    width: 20px;
+    height: 20px;
+}
+.autoAuthor{
+    background: url("../img/portal/yjsw_normal.png");
+    width: 132px;
+    height: 40px;
+}
+.autoAuthor:hover{
+    background: url("../img/portal/yjsw_click.png");
+    width: 132px;
+    height: 40px;
+}
+.appDL{
+    background: url("../img/portal/app_normal.png");
+    width: 132px;
+    height: 40px;
+}
+.appDL:hover{
+    background: url("../img/portal/app_click.png");
+    width: 132px;
+    height: 40px;
+}
+
+.logo, .aDwn, .aUp{
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+}

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>增加时间</title>
+    <link rel="stylesheet" href="http://mp.bidongwifi.com/static/css/weixin.css" />
+    <script src="http://mp.bidongwifi.com/static/js/lib/jquery.min.js"></script>
+</head>
+
+<body style="background:#fff">
+    <div class="chargeWrapper">
+        <p class="exchange">您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换<button type="button" id="exHours" class="btn green">兑换</button></p>
+        <div class="exchangeChoice">
+            <h3>选择上网套餐</h3>
+            <ul>
+                <li class="orderlist">
+                    <a href="javascript:;" data-price="1" data-time="1" data-id="202" data-label="1元=1小时"><i class="tic chk"></i>1元=1小时<em>（小时淘活动专属）</em></a>
+                    <div class="amount xst"><button type="button" class="reduce">-</button><input type="text" class="number" value="1" /><button type="button" class="add">+</button></div>
+                </li>
+            </ul>
+        </div>
+        <p class="help"><a href="http://mp.bidongwifi.com/hourpayquestion.html">常见问题</a></p>
+    </div>
+    <div class="paynow">
+        <p>合计：<span class="yuan">￥<em>1</em>元</span><span class="timelong">购买时长：<em>1</em>小时</span></p>
+        <a href="javascript:;" id="checkOrder">确认订单</a>
+    </div>
+    <div class="modalCharge exTime">
+        <div class="modalBox">
+            <h3>兑换时间</h3>
+            <a href="javascript:;" class="closed"></a>
+            <div class="modalContent">
+                <div class="subtxt">
+                    <p>您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换</p>
+                    <div><input type="text" placeholder="请输入兑换时间" name="hours" /><button type="button" class="btn green" id="excharge">兑换</button></div>
+                    <div class="errmsg"></div>
+                </div>
+                <div class="succtxt">
+                    <p>兑换成功！</p>
+                    <p style="font-size:14px" class="expired">当前上网时间<em></em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="http://mp.bidongwifi.com/static/js/amount.js"></script>
+<script>document.body.addEventListener('touchstart', function(){});</script>
+<script>
+    function getParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURIComponent(r[2].replace(/\+/g, "+"));return null;
+    }
+    ;$(function(){
+        $('#checkOrder').click(function(){
+            alert($(this).attr('href'));
+        });
+        function LocationOrder(id, count, price, time, label){
+            var param = $.param({
+                openid: '${openid}',
+                user: getParam("user"),
+                token: getParam("token"),
+                policy_id: id,
+                count: count,
+                price: price,
+                time: time,
+                label: label
+            });
+            $('#checkOrder').attr('href', 'http://mp.bidongwifi.com/wxpay/hourpayorder/?'+param);
+        }
+        LocationOrder(202, 1, 1, 1, '1元=1小时');
+
+        function Pay(){}
+        Pay.prototype.selectPay = function(tis){
+            $('i').removeClass('chk');
+            $(tis).parents('.orderlist').find('i').addClass('chk');
+
+            var $chk = $('.exchangeChoice i.chk');
+            var price = $chk.parent().data('price');
+            var time = $chk.parent().data('time');
+            var count = $chk.parent().next('.amount').find('input').val();
+            var type = $chk.parent().data('type');
+            var labeltxt = $chk.parent().data('label');
+            var id = $chk.parent().data('id');
+
+            var totalPrice = price*count;
+            var totalTime = time*count;
+
+            $('.paynow .yuan em').text(totalPrice);
+            $('.paynow .timelong em').text(totalTime);
+
+            LocationOrder(id, count, totalPrice, totalTime, labeltxt);
+        };
+        var pay = new Pay();
+        $('.xst').Amount({}, pay.selectPay);
+        $(document).on('click', '.exchangeChoice a', function(){
+            pay.selectPay(this);
+        });
+
+        var payURL = 'http://mp.bidongwifi.com';
+        // 套餐
+        function renderPolicy(){
+            $.ajax({
+                method: "get",
+                url: payURL + "/app/v1.0/paypolicy/",
+                data: {
+                    mobile: '${mobile}',
+                    user: '${user}',
+                    package: 'com.niot.fst'
+                },
+                dataType: "json",
+                success: function (data) {
+                    if( (data.code==200) && (data.policys.length>0)){
+                        for(var i=0, h=''; i<data.policys.length; i++){
+                            var policy=data.policys[i];
+                            h += '<li class="orderlist">'+
+                                '<a href="javascript:;" data-price="'+policy.price+'" data-time="'+policy.time+'" data-id="'+policy.id+'" data-label="'+policy.label+'"><i class="tic"></i>'+policy.label+'</a>'+
+                                '<div class="amount nor"><button type="button" class="reduce">-</button><input type="text" class="number" value="1" /><button type="button" class="add">+</button></div>'+
+                            '</li>';
+                        }
+                        $('.exchangeChoice ul').append(h);
+                        $('.nor').Amount({}, pay.selectPay);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        }
+        //renderPolicy();
+        // 兑换时间
+        $(document).on('click', '#exHours', function(){$('.succtxt').hide().siblings('.subtxt').show();$('.exTime').fadeIn();});
+        $(document).on('click', '.exTime .closed', function(){
+            $('.exTime').fadeOut('normal', function(){
+                $(this).find('input').val('');
+                $(this).find('.errmsg').text('');
+            });
+        });
+        $(document).on('click', '#excharge', function(){
+            var $modal = $('.exTime');
+            var hours = parseInt($modal.find('input[name=hours]').val()),
+                exhours = parseInt($('.exchange .exhours').text());
+
+            if(hours=='' || (!(/^[\d]+$/.test(hours)))){
+                $modal.find('.errmsg').text('需填写兑换小时数');
+                $modal.find('input[name=hours]').focus();
+                return false;
+            }
+//            if(hours > exhours){
+//                $modal.find('.errmsg').text('超出可兑换小时数');
+//                return false;
+//            }
+            $modal.find('.errmsg').text('');
+            var param = {
+                user: '${user}',
+                minutes: hours * 60
+            };
+            console.log(param);
+            $.ajax({
+                method: "post",
+                url: payURL + "/app/v1.0/exchange/",
+                data: param,
+                dataType: "json",
+                success: function (data) {
+                    if(data.code==200){
+                        $('.succtxt .expired em').text(data.expired);
+                        $('.subtxt').hide().siblings('.succtxt').show();
+                        $('.exhours').text(exhours-hours);
+                    }else{
+                        $modal.find('.errmsg').text(data.reason);
+                    }
+                },
+                error: function (error) {
+                    console.log(error);
+                    $modal.find('.errmsg').text('兑换失败，请重新兑换！');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

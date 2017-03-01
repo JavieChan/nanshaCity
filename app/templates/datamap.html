@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>南沙无线城市运行监控平台</title>
+    <link rel="stylesheet" href="/static/css/datamap.css" />
+    <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.slimscroll.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="/static/js/lib/highcharts/highcharts-3d.js"></script>
+    <script type="text/javascript" src="/static/js/lib/highcharts/themes/dark-unica.js"></script>
+    <script type="text/javascript" src="/static/js/lib/taffy.js"></script>
+    <script type="text/javascript" src="/static/js/datamap.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>南沙无线城市运行监控平台</h1>
+        <span>
+            <a href="/">南沙无线城市后台</a>
+            <button type="button" class="mapbtn on"><i class="dataIco"></i>数据统计</button>
+        </span>
+    </header>
+    <section class="block">
+        <div class="blockTab">
+            <h2><i class="wifiIco"></i>综合统计</h2>
+            <div class="blockNavBtns">
+                <button type="button" class="on"><i class="wifiIco"></i>综合统计</button>
+            </div>
+            <div class="blockCtx online" style="display: block;">
+                <div class="blockNav">
+                    <div></div>
+                    <ul class="blockInfo">
+                        <li><span><em>0</em> 个</span><span>热点总数</span></li>
+                        <li><span><em>0</em> 个</span><span>热点故障数</span></li>
+                        <li><span><em>0</em> 人</span><span>总用户数</span></li>
+                        <li><span><em>0</em> 人</span><span>在线人数</span></li>
+                        <li><span><em>0</em> M</span><span>流量</span></li>
+                    </ul>
+                </div>
+                <div class="blockChart">
+                    <div class="blockChartTop">
+                        <div class="asidebtns">
+                            <button type="button" class="changeChart btn">切换坐标</button>
+                        </div>
+                        <ul class="chartBar">
+                            <li id="onlinePieA"></li>
+                            <li id="onlinePieB"></li>
+                            <li id="onlinePieC"></li>
+                        </ul>
+                    </div>
+                    <div class="blockChartBottom">
+                        <div class="asidebtns">
+                            <button type="button" class="btn">流量统计</button>
+                            <button type="button" class="btn on">人数统计</button>
+                        </div>
+                        <div class="htq" id="Xline"></div>
+                    </div>
+                </div>
+                <div class="blockRank">
+                    <h3>上网人数排行榜</h3>
+                    <!--<div class="btngroups townVillage"><button type="button" class="btn">镇街</button><button type="button" class="btn on">村</button></div>-->
+                    <div class="ranklist">
+                        <ul class="rankTitle"><li>地点</li><li>人数</li></ul>
+                        <div class="slimScroll" id="onlineSlimScroll">
+                            <div class="scrollbar">
+                                <!--<div class="fst"><span>南沙街南沙街南沙街南沙街南沙街</span><em>155</em></div>-->
+                                <!--<div class="sec">-->
+                                    <!--<div><span>一街</span><em>155</em></div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="blockCtx sens">
+                <img src="/static/images/datamap/sens_demo.png" style="width: 100%; height: 100%" />
+            </div>
+            <div class="blockCtx sens">
+                <img src="/static/images/datamap/bigdata_demo.png" style="width: 100%; height: 100%" />
+            </div>
+        </div>
+        <i class="bgLeftTop"></i>
+        <i class="bgRightTop"></i>
+        <i class="bgLeftBottom"></i>
+        <i class="bgRightBottom"></i>
+    </section>
+    <section class="map">
+        <div id="infoWindow"></div>
+        <ul id="mapNav">
+            <li data-lnglat="113.515011,22.821834">黄阁镇</li>
+            <li data-lnglat="113.551862,22.704594">万顷沙镇</li>
+            <li data-lnglat="113.532869,22.726493">珠江街</li>
+            <li data-lnglat="113.673374,22.641442">龙穴街</li>
+            <li data-lnglat="113.333699,22.844638">榄核镇</li>
+            <li data-lnglat="113.49894,22.741872">横沥镇</li>
+            <li data-lnglat="113.440592,22.882995">东涌镇</li>
+            <li data-lnglat="113.566451,22.797626">南沙街</li>
+            <li data-lnglat="113.398784,22.805322">大岗镇</li>
+        </ul>
+        <div class="dataOvi">
+            <h3>-- 数据概览 --</h3>
+            <div>
+                <table>
+                    <tr class="doH"><th width="31%"></th><th width="23%">当前</th><th width="23%">昨天</th><th width="23%">最高</th></tr>
+                    <tr><th>热点:</th><td class="dGreen"></td><td></td><td></td></tr>
+                    <tr onclick="CheckErrOrNorm()" style="cursor:pointer"><th>故障:</th><td class="dRed"></td><td class="dRed"></td><td class="dRed"></td></tr>
+                    <tr><th>人数:</th><td class="dGreen"></td><td></td><td></td></tr>
+                    <tr><th>流量 M/H:</th><td class="dGreen"></td><td></td><td></td></tr>
+                    <tr><th>APP应用:</th><td class="dGreen"></td><td></td><td></td></tr>
+                    <tr><th>信息热度:</th><td class="dGreen"></td><td></td><td></td></tr>
+                </table>
+            </div>
+        </div>
+        <div id="map"></div>
+        <script type="text/javascript" src="/static/js/nsmapajax.js"></script>
+        <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8754f668e26aea7c10f33b220e1713ae&&plugin=AMap.Scale,AMap.ToolBar,AMap.Geocoder"></script>
+        <script type="text/javascript" src="/static/js/nsmap.js"></script>
+        <script type="text/javascript" src="/static/js/nsmaperr.js"></script>
+    </section>
+</body>
+</html>
