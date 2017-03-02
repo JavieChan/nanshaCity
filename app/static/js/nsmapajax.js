@@ -1,7 +1,7 @@
 //ajax
-var urlLocate = "http://nsm.cniotroot.cn/mpoi/";
-var urlmEditLocate ="http://nsm.cniotroot.cn/mpoi/";
-var urllist ="http://nsm.cniotroot.cn/list/";
+var urlLocate = "https://map.cniotroot.cn:21766/mpoi/";
+var urlmEditLocate ="https://map.cniotroot.cn:21766/mpoi/";
+var urllist ="https://map.cniotroot.cn:21766/list/";
 var ajaxQuest = function(url,type,param,callback,errFunc){
 	$.ajax({
 		url:url,
@@ -46,6 +46,7 @@ var markerOrCluster,icon;//记录当前被点击marker or cluster,icon
 var lists=TAFFY();//全局TAFFY数据库变量lists
 var listArr =[],searchResutIndex=false;
 var infoWindow;	//infowindow  cluster onClick 事件打开InfoWindow
+var mpois=TAFFY();
 
 var queryCallback = function(){};
 var addCallback = function(){};
@@ -85,6 +86,7 @@ function updateDB(editData){
 
 function queryDB(){
 	ajaxQuest(urlLocate,"GET",null,function(data){
+		mpois=TAFFY(data.mpoi);
 		queryCallback(data.mpoi);	
 		loadCluster();	
 		refreshIndex=0;
@@ -167,7 +169,7 @@ function OnclickSelectAll(){
 			});
 		queryPeopleOnLine();
          //查询在线人数
-		 queryAPOnLine();
+		 //queryAPOnLine();
 		//查询在线Ap
 
 	}
@@ -250,7 +252,7 @@ function addCluster(Testmarkers) {
 		}];
 		map.plugin(["AMap.MarkerClusterer"], function() {
 			cluster = new AMap.MarkerClusterer(map, Testmarkers,{styles:sts, maxZoom:15, averageCenter:true});
-			console.log(cluster);
+			//console.log(cluster);
 			cluster.setMaxZoom(18);
 			cluster.on("click",clusterClick)
 			});
@@ -259,7 +261,7 @@ function addCluster(Testmarkers) {
 	//return cluster0;
 		
 		//addClusterInner();
-		console.log(cluster);
+		//console.log(cluster);
 }
 
 function ShowSelectedInfo(markersC)
@@ -294,7 +296,7 @@ function ShowSelectedMpoi(){
 	var content=[];
 	AllKindMkrTfy([{title:{like:value}},{address:{like:value}}]).each(function(r){	
 		if (i==0){
-			 map.setZoomAndCenter(16, r.getPosition( ));
+			 map.setZoomAndCenter(16, r.getPosition());
 			i++;
 		}
 		
@@ -386,25 +388,22 @@ function queryPeopleOnLine(){
 		queryPeopleOnLineCallback(data.list);	
 		});
 }
+
 //查找list Mpoi_id非空记录 并运行queryDB()
 function GetListMidNotnull(){
 	ajaxQuest(urllist,"GET",{mpoi_id:{"!is":""}},function(data){
 		//listArr=data.list;
 		lists =TAFFY(data.list);
-		queryDB();	
+		queryDB();
 	});
 }
+
 //返回对应id AP数量 
 function GetApInfo(lists,mpoi_id){
     var count=lists({mpoi_id:mpoi_id}).count();
 	var norNum=0,errNum=0,onliPeopleNum=0;
 	lists({mpoi_id:mpoi_id}).each(function(r){
-		if (r.online=="1"){
-			norNum++;	
-		}
-		else {
-			errNum++;
-		}
+		r.online=="1" ? norNum++ : errNum++;
 		onliPeopleNum+=r.conns;
 	});
 	

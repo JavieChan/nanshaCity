@@ -14,7 +14,7 @@ window.msgBox = function (texts,tos) {
 //全局变量 map
 var	map = new AMap.Map('map', {
 	resizeEnable: true,
-	zoom:11,
+	zoom:12,
 	center: [113.518364,22.712559],//南沙区域正中心点	//[113.53141,22.808029],//南沙区政府点
 	mapStyle:"normal"
 });
@@ -68,12 +68,12 @@ var	map = new AMap.Map('map', {
 		map.setFitView();//地图自适应
 	}
 	CreatUpdateData();
-	
+
 	function getBoundary(){
 	   //注释工具条标尺等
 	   // map.addControl(scale); map.addControl(toolBar);
 	    infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, 0),closeWhenClickMap:false});
-        
+
     	//构建南沙各镇分区经纬度坐标数组
     	/*var nsTsPgs = [];
 	    var nsPolygon=function(arr,fillColor){
@@ -90,7 +90,7 @@ var	map = new AMap.Map('map', {
 	    for(var i=0;i<10;i++){	//9个镇区域色块
 	    	nsPolygon(towns[i],townColor[i]);
 	    }  */
-         
+
 	    queryCallback = function(results){	//获取到热点数据后执行（地图画点、显示数据、事件）
 	    	//先清除地图上已有的数据
 			GonvernMarkers =[];
@@ -107,22 +107,22 @@ var	map = new AMap.Map('map', {
 
 	    	markers=[];
 	    	var lnglats = [];
-		    
+
 		    // 循环处理查询到的数据
 		    for (var i = 0; i < results.length; i++) {
 				var object = results[i];
 				mpoi_id = object.mpoi_id;
-				 
+
 				//AP 数量显示
 				var num = GetApInfo(lists,mpoi_id);
 				var datacount= num[0];
 				var norNum = num[1];
 				var errNum = num[2];
 				var onliPeopleNum= num[3];
-				
-				
+
+
 		        var marker = new AMap.Marker({
-					
+
 				    //icon: (i%2==1)?"images/nsc_images/map/p3.png":"images/nsc_images/map/p2.png",
 					//content: div,
 		            position: [object.lng,object.lat],
@@ -142,48 +142,49 @@ var	map = new AMap.Map('map', {
 					'<p><b>在线人数：</b>'+onliPeopleNum+'</p>' +
 					'<p><b>类型：</b>'+object.type+'</p></div>' +
 					'<img id="close" src="/static/images/nsc_images/close.png" onclick="closeInfoindow()"/>';
-				
+
 				marker.on('click', markerClick);
 		        marker.on('mouseover', function(e){
 		        	e.target.setAnimation("AMAP_ANIMATION_NONE");//AP图标不弹跳
 			    });
-		        
-				
+
+				if(errNum>0){
+					marker.setIcon("/static/images/nsc_images/dot_0.png");
+				}else if(onliPeopleNum<=5){
+					marker.setIcon("/static/images/nsc_images/blue.png");
+				}else{
+					marker.setIcon("/static/images/nsc_images/red.png");
+				}
 				var  type =object.type;
-				
 				switch (type){
-					case "政府":   
+					case "政府":
 					case "医院":
-						marker.setIcon("/static/images/nsc_images/dot_12.png");
 						GonvernMarkers.push(marker);
 						break;
 					case "校区":
-						marker.setIcon("/static/images/nsc_images/dot_12.png");
 						CmpuMarkers.push(marker);
 						break;
 					case "商超":
-					case "餐饮": 
+					case "餐饮":
 					case "宾馆":
-					case "文娱": 
+					case "文娱":
 					case "景区":
 					case "企业":
 					case "公共":
-						marker.setIcon("/static/images/nsc_images/dot_12.png");
 						BusiMarkers.push(marker);
 						break;
 					case "机场":
 					case "车站":
-						marker.setIcon("/static/images/nsc_images/dot_12.png");
 						TraffiMarkers.push(marker);
 						break;
 				}
-				
+
 		    }
 			//四种类型markers 赋值，以作后面筛选查询
 			AllKindMkrTfy=TAFFY(GonvernMarkers.concat(CmpuMarkers).concat(BusiMarkers).concat(TraffiMarkers));
-			
-			
-			
+
+
+
 		    function markerClick(e) {
 			    closeAddPileBox();
 				$("#infoWindow").html(e.target.content).show();
@@ -194,34 +195,34 @@ var	map = new AMap.Map('map', {
 				icon = e.target.getIcon( );
 				//e.target.setIcon("/static/images/nsc_images/故障.png");
 				markerOrCluster=e.target;
-		    }	
-			
+		    }
 
-			
+
+
 	    };
 		//queryDB();
 		GetListMidNotnull();
-		
+
 		//地图缩放时关闭infoWindow
 		map.on('zoomend',function(){
 			if(infoWindow.getIsOpen()){
 				infoWindow.close();
 			}
 		});
-		queryAPOnLine();
+		//queryAPOnLine();
 		//查询在线Ap
-		queryPeopleOnLine();
+		//queryPeopleOnLine();
          //查询在线人数
-		 
+
 		//添加定时触发函数
-		timedMsg=function (){
-		   if(!isErrNum){queryAPOnLine();}
-		   queryPeopleOnLine();
-		   t=setTimeout("timedMsg()",300000);//300秒钟获取一次值(5min)
-		};
+		function timedMsg(){
+		   if(!isErrNum){/*queryAPOnLine();*/}
+		   //queryPeopleOnLine();
+		   t=setTimeout(timedMsg,300000);//300秒钟获取一次值(5min)
+		}
 		timedMsg();
 		//添加地图缩放或平移时infoWIndow关闭
-	    
+
 	   // addNanSha();
 
 	    //查询实时天气信息
@@ -256,7 +257,7 @@ var	map = new AMap.Map('map', {
 			                	default:week="日";break;
 			                }
 			                wStr+=('<p>周'+week+' '+dayWeather.dayWeather+' '+ dayWeather.nightTemp + '~' + dayWeather.dayTemp + '℃</p>');
-			            }			            
+			            }
 			        });
 
 	            	$(".weather").html(minStr).show();
@@ -280,7 +281,7 @@ var	map = new AMap.Map('map', {
 			$(this).addClass("on").siblings().removeClass("on");
 			$(".tbl-wifi").toggle();
 			$(".tbl-pile").toggle();
-		});	
+		});
 	}
 	getBoundary();
    
@@ -331,6 +332,18 @@ var	map = new AMap.Map('map', {
 		editObjId = markerOrCluster.id;
 		console.log(editObjId);
 	});
+
+	// 地图移动镇区域
+    $('#mapNav li').on('click', function(){
+        $(this).addClass('on').siblings().removeClass('on');
+        var ln = $(this).data('lnglat').split(',');
+        if($(this).index()==0){
+            map.setZoomAndCenter(12, ln);
+        }else{
+            map.setZoomAndCenter(13, ln);
+        }
+        closeInfoindow();
+    });
 
 	$(document).on("click",".btn-open-del",function(e){
 		var delObjId = $(this).parent().data("id");
