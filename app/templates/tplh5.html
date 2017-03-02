@@ -77,12 +77,17 @@
 
 <body>
     <div class="wrapper">
-      <img src="/static/images/nsimgs/bg_tpl.jpg" class="bg" />
+      <img src="${config['pic']}" class="bg" />
         <h1>${config['title']}</h1>
         <div class="ns_box">
             <div id="zw">
+                % if 'wechat' in config['way']:
                 <button type="button" class="wx"><i></i>微信上网</button>
-                <!--<a href="javascript:;" class="dld">APP下载</a>-->
+                % endif
+                % if 'app' in config['way']:
+                <a href="javascript:;" class="dld">APP下载</a>
+                % endif
+                % if 'account' in config['way']:
                 <div id="login">
                     <div id="portal_zone">
                         <div>
@@ -94,6 +99,7 @@
                         <button type="button" id="portal_login">登录</button>
                     </div>
                 </div>
+                % endif
             </div>
         </div>
     </div>
@@ -104,53 +110,6 @@
             zw.style.marginTop = -Math.ceil(h/2)+"px";
         }
         resizeZW();
-        // 2016-12-21 新增
-        function NewsHot(){this.data = '';}
-        NewsHot.prototype.getNewsImg = function(){
-            var self = this;
-            $.ajax({
-                method: 'get',
-                url: '${self.attr.cmsUrl}/message?groups=${groups}&ap_groups=${ap_groups}&page=0&per=3',
-                dataType: "json"
-            }).done(function(data){
-                console.log(data);
-                self.data = data;
-                self.renderBanner(data);
-            }).fail(function(error){
-                console.log(error);
-            });
-        };
-        NewsHot.prototype.renderBanner = function(data){
-            if(data.messages.length>0){
-                for(var i= 0, h=''; i<data.messages.length; i++){
-                    var mes=data.messages[i];
-                    var img = (mes.image=='' ? "" : '<img src="${self.attr.cmsImgUrl}'+mes.image+'" />');
-                    h+='<a href="${self.attr.cmsUrl}/message/'+mes.id+'">'+
-                        img+
-                        '<p>'+mes.title+'</p>'+
-                        '<span class="shadow"></span>'+
-                    '</a>';
-                }
-                $('#banner').html(h);
-                if(data.messages.length>1){
-                    $('#banner').owlCarousel({
-                        items: 1,
-                        loop: true,
-                        center: true,
-                        autoplay: true
-                    });
-                }else{
-                    $('#banner').owlCarousel({
-                        items: 1,
-                        loop: false,
-                        center: true,
-                        autoplay: false
-                    });
-                }
-            }
-        };
-        var Getnews = new NewsHot();
-        Getnews.getNewsImg();
     </script>
 </body>
 </html>

@@ -17,11 +17,21 @@
                 <h4>AP组列表</h4>
                 <div class="toolbox">
                     <button type="button" class="btnGraySmall delbtn">删除AP组</button>
-                    <a href="/apgroupsadd.html" class="btnGraySmall addbtn">新增AP组</a>
-                    <a href="/apgroupsedit.html" class="btnGraySmall editbtn">编辑AP组</a>
+                    <a href="/apgroupsadd.html?location=${location}" class="btnGraySmall addbtn">新增AP组</a>
+                    % if apgroups:
+                    <a href="/apgroupsedit.html?location=${location}&ap_group_id=${str(apgroups[0]['_id'])}" class="btnGraySmall editbtn">编辑AP组</a>
+                    % endif
                 </div>
             </div>
-            <ul class="mw880 navlink" id="apgroupChange"></ul>
+            <ul class="mw880 navlink" id="apgroupChange">
+                % for apg in apgroups:
+                  % if loop.index == 0:
+                  <li class="act" data-id="${str(apg['_id'])}"><span class="name">${apg['name']}</span><span class="member">AP数量：${apg['ap_count']}</span></li>
+                  % else:
+                  <li data-id="${str(apg['_id'])}"><span class="name">${apg['name']}</span><span class="member">AP数量：${apg['ap_count']}</span></li>
+                  % endif
+                % endfor
+            </ul>
             <div class="toolnav">
                 <div class="toolbox">
                     <div class="search" id="search"><input type="text" placeholder="搜索" /><button type="button"><i class="searchIcoGray"></i></button></div>

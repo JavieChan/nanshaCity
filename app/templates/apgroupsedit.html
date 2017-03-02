@@ -1,6 +1,15 @@
 ## apgroups.html
 <%inherit file="base.html" />
 
+<%
+import resource
+def get_resource_name(self, _location):
+    r = resource.get(self, _location)
+    if r:
+        return r.name
+    else:
+        return ''
+%>
 <div class="wrapper">
     <input type="hidden" id="location" value="${location}" />
     <input type="hidden" id="apgroupId" value="${ap_group_id}" />
@@ -19,7 +28,7 @@
                     <li>
                         <label>AP组名称：</label>
                         <span class="veright">
-                            <div class="verify"><input type="text" name="name" class="matchVerify shouldVerify" value="" /></div>
+                          <div class="verify"><input type="text" name="name" class="matchVerify shouldVerify" value="${apgroup['name']}" /></div>
                         </span>
                     </li>
                     <li>
@@ -33,12 +42,22 @@
                                         <th>所属</th>
                                         <th>位置</th>
                                     </tr>
+                                    % for ap in selected_aps:
+                                    <tr>
+                                        <td><i class="unchk_b chk_b"></i></td>
+                                        <td>${ap.get('mac')}</td>
+                                        <td>${get_resource_name(ins, ap.get('_location'))}</td>
+                                        <td>${ap.get('address', '')}</td>
+                                    </tr>
+                                    % endfor
+                                    % for ap in other_aps:
                                     <tr>
                                         <td><i class="unchk_b"></i></td>
-                                        <td>70:F9:6D:30:D6:00</td>
-                                        <td>女校</td>
-                                        <td>女校</td>
+                                        <td>${ap.get('mac')}</td>
+                                        <td>${get_resource_name(ins, ap.get('_location'))}</td>
+                                        <td>${ap.get('address', '')}</td>
                                     </tr>
+                                    % endfor
                                 </table>
                             </div>
                         </span>

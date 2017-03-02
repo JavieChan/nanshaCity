@@ -23,11 +23,11 @@
                 <h3>数据统计</h3>
             </div>
             <div class="areabox">
-                <a href="/user.html" class="ns_onlines">
+                <a href="/user.html?location=" class="ns_onlines">
                     <i class="dataTotalIco"></i>
-                    <span>在线人数：<em>${sum([ap_profile.get('conns', 0) for resource, ap_profile in profiles])}</em></span>
+                    <span>在线人数：<em>${int(sum([ap_profile.get('conns', 0) for resource, ap_profile in profiles]))}</em></span>
                 </a>
-                <a href="/ap.html" class="ns_ap">
+                <a href="/ap.html?location=" class="ns_ap">
                     <i class="dataHotsIco"></i>
                     <span>热点总数：<em>${sum([ap_profile.get('total', 0) for resource, ap_profile in profiles])}</em></span>
                 </a>
@@ -123,7 +123,7 @@
                       <div class="tabinfo">
                           <h6 title="${resource.name}">${resource.name}</h6>
                           <ul>
-                              <li><span><label>运行：</label><em class="green">${ap_profile.get('onlines', 0)}</em></span><span><label>在线：</label><em>${ap_profile.get('conns', 0)}</em></span></li>
+                              <li><span><label>运行：</label><em class="green">${ap_profile.get('onlines', 0)}</em></span><span><label>在线：</label><em>${int(ap_profile.get('conns', 0))}</em></span></li>
                               <li><span><label>故障：</label><em class="red">${ap_profile.get('offlines', 0)}</em></span><span><label>管理员：</label><em title="${resource.owner}">${resource.owner}</em></span></li>
                           </ul>
                           <p>开通日期：${resource.ctime.strftime('%Y-%m-%d')}</p>

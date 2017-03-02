@@ -76,7 +76,7 @@
                         % endif
                     </tr>
                     % for online in onlines:
-                    % if online.get('mask', 0) & (1 << 30) <= 0:
+                    % if online.get('mask') is not None and online.get('mask', 0) & (1 << 30) <= 0:
                     <tr>
                     % else:
                     <tr class="dab">
@@ -88,7 +88,7 @@
                         <td>${process_platform(online.get('platform', ''))}</td>
                         % if is_allowed_update_user:
                         <td>
-                            % if online.get('mask', 0) & (1 << 30) <= 0:
+                            % if online.get('mask') is not None and online.get('mask', 0) & (1 << 30) <= 0:
                             <span class="forbin">停用</span>
                             % else:
                             <span class="unforbin">启用</span>
