@@ -160,7 +160,7 @@
             if(!/^[0-9]+$/.test(m)){
                 inputError("*输入整数", this);
             }else{
-                $(this).val(m.match(/[1-9][0-9]+/)[0]);
+                $(this).val(m.match(/[1-9][0-9]*/)[0]);
             }
         }else if($(this).hasClass('checkEng')){
             if(/^[\u4e00-\u9fa5]*$/.test(m)){
@@ -1484,12 +1484,15 @@
     // 新增pn
     $(document).on('click', '#modalPn .add', function(){
         var pri=$('#pri').val(),
-            policy=$('#policy').val();
+            policy=$('#policy').val(),
+            accountRZ=$('#accountRZ').val(),
+            wechatRZ=$('#wechatRZ').val(),
+            mobileRZ=$('#mobileRZ').val();
 
         if(checkInput($(this).parent().parent())==0){
             var param={
                 location: $('#location').val(),
-                policy: parseInt(pri.toString()+policy.toString(), 2),
+                policy: parseInt(mobileRZ.toString()+wechatRZ.toString()+accountRZ.toString()+'000000'+pri.toString()+policy.toString(), 2),
                 ssid: $('input[name=ssid]').val(),
                 note: $('input[name=note]').val(),
                 portal: $('#portal').val(),
@@ -1498,6 +1501,7 @@
                 secret: $('input[name=secret]').val(),
                 duration: $('input[name=duration]').val()
             };
+
             pnAjax("post", param, function(data){
                 if(data.code==200){
                     window.location.reload();
