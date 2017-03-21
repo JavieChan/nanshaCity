@@ -1,0 +1,91 @@
+## projecth5page.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="location" value="${location}" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'h5': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='H5页面管理'"/>
+            </div>
+        </div>
+        <div class="tabbox">
+            <div class="toolnav">
+                <h3>认证模板</h3>
+            </div>
+            <div class="areabox">
+                <ul class="defaultportal">
+                    <li>
+                        <img src="/static/images/nsimgs/p1.jpg" data-src="/static/images/nsimgs/web.jpg" />
+                        <p>-羊晚PC端认证模板-</p>
+                    </li><li>
+                        <img src="/static/images/nsimgs/p2.jpg" data-src="/static/images/nsimgs/h5.png" />
+                        <p>-羊晚手机端认证模板-</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="portallist">
+            <div class="toolnav">
+                <h3>Portal列表</h3>
+                <div class="toolbox">
+                    <button type="button" class="btnGraySmall addbtn">新增</button>
+                </div>
+            </div>
+            <div class="areabox">
+                <table>
+                    <tr>
+                        <th>名称</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                        <td>默认模板</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        portalAjax("get", '', '', function(data){
+            if(data.Code==200){
+                for(var i=0, h=''; i<data.templates.length; i++){
+                    var tpl = data.templates[i];
+                    h+='<tr><td>'+tpl+'</td><td><a href="/projecth5page.html?name='+tpl+'&location=${location}">编辑模板</a><span class="delete">删除</span><input type="hidden" value="'+tpl+'" /></td></tr>';
+                }
+                $('#portallist table:gt(1)').remove();
+                $('#portallist table').append(h);
+            }else{
+                console.log(data);
+            }
+        });
+    });
+</script>
+
+<%block name="aside">
+    <%include file="imgModal.html" />
+    <div class="modal fade" id="modalPortal">
+        <div class="modal_portal modal_body">
+            <h3>新增Portal</h3>
+            <ul class="vertical">
+                <li><label><i>*</i>名称：</label>
+                    <span class="veright">
+                        <div class="verify">
+                            <input type="text" name="name" class="matchVerify shouldVerify" />
+                        </div>
+                    </span>
+                </li>
+            </ul>
+            <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+            <i class="msg"></i>
+            <span class="closed">X</span>
+            <input type="hidden" name="id" />
+        </div>
+    </div>
+</%block>

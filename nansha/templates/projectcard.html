@@ -1,0 +1,106 @@
+## projectcard.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'ap')}">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'ap')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'ap')}">
+    <input type="hidden" value="${resource._location}" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'project': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,header='无线城市概况',headerurl='/index.html'"/>
+                <div class="widget">
+                    <a href="/projectinfo.html?location=${location}" class="btnBlueSmall simbtn">查看项目信息</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_form">
+            <div class="toolnav">
+                <h3>基本信息</h3>
+            </div>
+            <div class="areabox">
+                <ul class="horizon">
+                    <li>总用户数：<span>${total_user}</span></li>
+                    <li>在线人数：<span>${conns}</span></li>
+                    <li>管理员：<span>${manager_count}</span></li>
+                    <li>AP总数：<span>${ap_count}</span></li>
+                    <li>离线设备：<span>${ap_offline_count}</span></li>
+                    <li>街镇数：<span>${len(profiles)}</span></li>
+                </ul>
+            </div>
+        </div>
+        % if profiles:
+        <div class="tabbox ns_subtab">
+            <div class="toolnav">
+                <h3>街镇列表</h3>
+                <div class="toolbox">
+                    % if ins.is_allowed('create', 'resource'):
+                    <a type="button" class="btnGraySmall" href="/projectresourceedit.html?location=${location}">新增</a>
+                    <button type="button" class="btnGraySmall forbinAC">禁用</button>
+                    % endif
+                    <div class="search"><input type="text" placeholder="输入搜索内容" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                </div>
+            </div>
+              <div class="areabox">
+                  % for r, p in profiles:
+                  % if p.get('offlines', 0) > 0:
+                  <a href="/projectcard.html?location=${r._location}" class="magnet error">
+                  % else:
+                  <a href="/projectcard.html?location=${r._location}" class="magnet">
+                  % endif
+                  <div class="name">
+                    % if len(r.name) > 10:
+                    ${''.join(list(r.name)[:10] + ['...'])}
+                    % else:
+                    ${r.name}
+                    % endif
+                  </div><div class="ap">离线AP：${p.get('offlines', 0)}</div><input type="hidden" value="${r._location}" /></a>
+                  % endfor
+              </div>
+              % if len(profiles) > 4:
+              <div class="mw880" style="overflow: hidden;">
+                  <span class="more">更多<i class="aDwn"></i></span>
+              </div>
+              % endif
+        </div>
+        % endif
+        <div class="tabbox ns_table" id="apslist">
+            <div class="toolnav">
+                <h3>AP列表</h3>
+                <div class="toolbox batch">
+                    <div class="search" id="search"><input type="text" placeholder="输入MAC/位置" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                    <select id="online"><option value="">状态</option><option value="1">在线</option><option value="0">离线</option></select>
+                    <select id="vendor"><option value="">品牌</option>
+                      % for k, v in vendors.iteritems():
+                      <option value="${k}">${v}</option>
+                      % endfor
+                    </select>
+                </div>
+            </div>
+            <div id="apMemTable" data-value="0"></div>
+            <script src="/static/js/component/ap.js"></script>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+<div class="modal fade" id="modalImg">
+    <div class="modal_img modal_ele">
+        <img src="" />
+        <span class="closed">X</span>
+    </div>
+</div>
+</%block>
+
+<%block name="jscode">
+    <script src="/static/js/lib/myselect.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.autoDom').mySelect();
+        });
+    </script>
+</%block>

@@ -1,0 +1,103 @@
+## index.html
+<%inherit file="base.html" />
+
+<%def name="timeNow()">${datetime.now().strftime('%Y-%m-%d')}</%def>
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" args="on={'project': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location='',ins=ins"/>
+                <div class="widget">
+                    <%include file="button.html" />
+                    <a href="javascript:;" class="btnBlueSmall" id="custom">自定义</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_total">s
+            <div class="toolnav">
+                <h3>数据统计</h3>
+            </div>
+            <div class="areabox">
+                <a href="/user.html?location=" class="ns_onlines">
+                    <i class="dataTotalIco"></i>
+                    <span>在线人数：<em>${int(sum([ap_profile.get('conns', 0) for resource, ap_profile in profiles]))}</em></span>
+                </a>
+                <a href="/ap.html?location=" class="ns_ap">
+                    <i class="dataHotsIco"></i>
+                    <span>热点总数：<em>${sum([ap_profile.get('total', 0) for resource, ap_profile in profiles])}</em></span>
+                </a>
+                <a href="javascript:;" class="ns_apps" style="margin-right: 0;">
+                    <i class="dataAppIco"></i>
+                    <span>APP安装总数：<em></em></span>
+                </a>
+            </div>
+        </div>
+        <div class="tabbox ns_prolist">
+            <div class="toolnav">
+                <h3>项目列表</h3>
+            </div>
+            <div class="areabox">
+                % if len(profiles) > 2:
+                  % for resource, ap_profile in profiles:
+                  <a class="protab protabM" href="/projectcard.html?location=${resource._location}">
+                      <div class="tabimg"></div>
+                      <div class="tabinfo">
+                          <h6 title="${resource.name}">${resource.name}</h6>
+                          <ul>
+                              <li><span><label>运行：</label><em class="green">${ap_profile.get('onlines', 0)}</em></span><span><label>在线：</label><em>${int(ap_profile.get('conns', 0))}</em></span></li>
+                              <li><span><label>故障：</label><em class="red">${ap_profile.get('offlines', 0)}</em></span><span><label>管理员：</label><em title="${resource.owner}">${resource.owner}</em></span></li>
+                          </ul>
+                          <p>开通日期：${resource.ctime.strftime('%Y-%m-%d')}</p>
+                      </div>
+                  </a>
+                  % endfor
+                % else:
+                % for resource, ap_profile in profiles:
+                <a class="protab protabL" href="/projectcard.html?location=${resource._location}">
+                    <div class="tabimg"></div>
+                    <div class="proL">
+                        <h6 title="${resource.name}">${resource.name}</h6>
+                        <p><label>管理员：</label><span style="font-size: 16px;">${resource.owner}</span></p>
+                        <p><label>开通日期：</label><span>${resource.ctime.strftime('%Y-%m-%d')}</span></p>
+                    </div>
+                    <div class="proM"></div>
+                    <ul class="proR">
+                        <li><i class="xm_work"></i><div><span class="green">${ap_profile.get('onlines', 0)}</span><span>运行</span></div></li>
+                        <li><i class="xm_online"></i><div><span class="black">${ap_profile.get('conns', 0)}</span><span>在线</span></div></li>
+                        <li><i class="xm_unwork"></i><div><span class="red">${ap_profile.get('offlines', 0)}</span><span>故障</span></div></li>
+                    </ul>
+                </a>
+                % endfor
+                % endif
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/jqueryui.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 日期
+            $("#dateStart").datepicker({
+                dateFormat: 'yy-mm-dd',
+                onClose: function(selectedDate) {
+                    $("#dateEnd").datepicker("option", "minDate", selectedDate);
+                }
+            });
+            $("#dateEnd").datepicker({
+                dateFormat: 'yy-mm-dd',
+                onClose: function(selectedDate) {
+                    $("#dateStart").datepicker("option", "maxDate", selectedDate);
+                }
+            });
+            $("#datepicker").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
+        });
+    </script>
+</%block>

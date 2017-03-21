@@ -1,0 +1,56 @@
+.dataIco{
+    background: url("../img/datamap/ico_data.png") no-repeat;
+    width: 27px;
+    height: 19px;
+}
+.deviceIco{
+    background: url("../img/datamap/ico_device.png") no-repeat;
+    width: 26px;
+    height: 24px;
+}
+.wifiIco{
+    background: url("../img/datamap/ico_wifi.png") no-repeat;
+    width: 26px;
+    height: 24px;
+}
+.sensIco{
+    background: url("../img/datamap/ico_sens.png") no-repeat;
+    width: 26px;
+    height: 24px;
+}
+.dataCenterIco{
+    background: url("../img/datamap/ico_dataCenter.png") no-repeat;
+    width: 26px;
+    height: 24px;
+}
+.deviceIcoBig{
+    background: url("../img/datamap/ico_device_big.png") no-repeat;
+    width: 32px;
+    height: 20px;
+}
+.rankIco{
+    background: url("../img/datamap/ico_rank.png") no-repeat;
+    width: 26px;
+    height: 25px;
+}
+.errIco{
+    background: url("../img/datamap/er.png") no-repeat;
+    width: 30px;
+    height:30px;
+}
+.onlineIco{
+    background: url("../img/datamap/pl.png") no-repeat;
+    width: 40px;
+    height: 29px;
+}
+.clickIco{
+    background: url("../img/datamap/click.png") no-repeat;
+    width: 30px;
+    height: 30px;
+}
+
+.dataIco, .deviceIco, .wifiIco, .sensIco, .dataCenterIco, .deviceIcoBig, .rankIco, .errIco, .onlineIco, .clickIco{
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -2px;
+}

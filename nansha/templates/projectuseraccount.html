@@ -1,0 +1,90 @@
+## projectuser.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'user')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'user')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'user')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'user')}">
+    <input type="hidden" value="${location}" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'user': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='上网账号',header='无线用户列表',headerurl='/projectuseraccount.html?location={}',compress=True"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="userlistAccount">
+            <ul class="adsnav">
+                <li><a href="/projectuseronline.html?location=${location}">在线用户</a></li>
+                <li class="on"><a href="/projectuseraccount.html?location=${location}">上网账号</a></li>
+                <%
+                import resource
+                res = resource.get(ins, location)
+                %>
+                % if res.type_id == 8:
+                <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
+                <li><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
+                % endif
+            </ul>
+            <div class="toolnav">
+                <div class="toolbox">
+                    <div class="search" id="search"><input type="text" placeholder="输入搜索内容" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                    % if ins.is_allowed('create', 'user'):
+                    <button type="button" class="btnGraySmall add">新增</button>
+                    % endif
+                </div>
+            </div>
+            <div id="userAccountMemTable"></div>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+    <%include file="imgModal.html" />
+    <div class="modal fade" id="modalRoomAccount">
+        <div class="modal_room_account modal_body">
+            <h3>新增用户</h3>
+            <ul class="vertical">
+                <li><label>电话号码：</label><span class="veright"><div class="verify"><input type="text" name="mobile" class="matchVerify shouldVerify checkPhone"></div></span></li>
+                <li><label>上网账号：</label>
+                    <span class="veright">
+                        <em style="float:left;line-height:32px">${location.split(',')[-1]}</em>
+                        <div class="verify" style="width:158px;float: left"><input type="text" name="user" class="matchVerify shouldVerify" data-type="string" style="width:158px;margin-right:0" /></div>
+                    </span>
+                </li>
+                <li><label>密码：</label><span class="veright"><div class="verify"><input type="password" name="password" class="matchVerify shouldVerify"></div></span></li>
+                <li><label>到期时间：</label><span class="veright"><div class="verify"><input type="text" name="expired" class="datepicker"></div></span></li>
+                <li><label>终端数：</label><span class="veright">
+                    <div class="amount">
+                      <button type="button" class="btnWhiteSmall reduceOne">-</button>
+                      <input type="text" name="ends" value="2" />
+                      <button type="button" class="btnWhiteSmall addOne">+</button>
+                    </div>
+                </span></li>
+                <li><label>备注：</label><span class="veright"><div class="verify"><input type="text" name="note" class="matchVerify"></div></span></li>
+            </ul>
+            <div class="btngroups"><button type="button" class="btnBlue add" id="add">确定</button></div>
+            <i class="msg"></i>
+            <span class="closed">X</span>
+            <input type="hidden" name="id" />
+        </div>
+    </div>
+    <script src="/static/js/component/useraccount.js"></script>
+</%block>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/jqueryui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            // 日期
+            $(".datepicker").datetimepicker({
+                dateFormat: 'yy-mm-dd',
+                stepMinute: 10
+            });
+        });
+    </script>
+</%block>

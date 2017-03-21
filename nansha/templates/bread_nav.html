@@ -1,0 +1,44 @@
+<%page args="location,ins,suffix=None,remain=None,compress=False,header=None,headerurl=None">
+<h2>
+<%
+import resource
+locs = location.split(',')
+def get_resource_name(locs, title=False):
+    try:
+        _location = ','.join(locs)
+        name = resource.get(ins, _location).name
+        if not title and compress and len(list(name)) > 5:
+            return ''.join(list(name)[:5]) + '...'
+        else:
+            return name
+    except Exception, e:
+        return ''
+%>
+<a href="/index.html">首页</a> >
+% if location:
+  % for i, loc in enumerate(locs):
+    % if i == 0:
+        % if len(location.split(',')) > 1:
+        <a href="${headerurl.format(','.join(location.split(',')[:-1]))}">${header}</a>
+        % else:
+        <a href="${headerurl.format(location)}">${header}</a>
+        % endif
+    % elif i == (len(locs) - 1) and loc and not suffix and not remain:
+    > <span style="color:#0faee5">${get_resource_name(locs[:i + 1])}</span>
+    % else:
+    > <a href="/projectcard.html?location=${','.join(locs[:i + 1])}" title="${get_resource_name(locs[:i + 1], True)}">${get_resource_name(locs[:i + 1])}</a>
+    % endif
+  % endfor
+% endif
+
+% if remain:
+  % for title, url in remain:
+  > <a href="${url}">${title}</a>
+  % endfor
+% endif
+
+% if suffix:
+> <span style="color:#0faee5">${suffix}</span>
+% endif
+</h2>
+</%page>

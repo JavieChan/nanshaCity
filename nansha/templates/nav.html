@@ -1,0 +1,14 @@
+<%page args="ins,location='',on={'project': 'on'}">
+<div class="nav">
+    % if location:
+    <h3 class="${on.pop('project', '')}"><a href="/projectcard.html?location=${location}"><i class="navProjectIco"></i>无线城市概况</a></h3>
+    % else:
+    <h3 class="${on.pop('project', '')}"><a href="/index.html"><i class="navProjectIco"></i>无线城市概况</a></h3>
+    % endif
+    <h3 class="${on.pop('policy', '')}"><a href="/policy.html?location=${location}"><i class="navPolicyIco"></i>无线覆盖空间</a></h3>
+    <h3 class="${on.pop('admin', '')}"><a href="/admin.html?location=${location}"><i class="navManagerIco"></i>管理员账号管理</a></h3>
+    <h3 class="${on.pop('datamap', '')}"><a href="/datamap.html"><i class="navDatamapIco"></i>数据统计</a></h3>
+    <h3 class="${on.pop('user', '')}"><a href="/projectuseronline.html?location=${location}"><i class="navUserIco"></i>无线用户列表</a></h3>
+    <h3 class="${on.pop('message', '')}"><a href="/projectmsg.html?location=${location}"><i class="navNewsIco"></i>新闻通告</a></h3>
+</div>
+</%page>
