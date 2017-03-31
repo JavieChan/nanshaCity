@@ -57,9 +57,6 @@
         if (r != null) return decodeURIComponent(r[2].replace(/\+/g, "+"));return null;
     }
     ;$(function(){
-        $('#checkOrder').click(function(){
-            alert($(this).attr('href'));
-        });
         function LocationOrder(id, count, price, time, label){
             var param = $.param({
                 openid: '${openid}',
