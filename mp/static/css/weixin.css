@@ -633,12 +633,18 @@ input.case{
 	line-height: 45px;
 }
 .quesWrapper li h4{
+	width: 100%;
+	display: table;
 	color: #222;
 	position: relative;
 	height: 54px;
-	line-height: 54px;
 	border-bottom: 1px solid #eee;
-	padding: 0 15px;
+}
+.quesWrapper li h4 span{
+	display: table-cell;
+	vertical-align: middle;
+	padding-left: 15px;
+	padding-right: 30px;
 }
 .quesWrapper li h5{
 	margin-bottom: 5px;
