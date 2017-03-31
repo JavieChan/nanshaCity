@@ -14,7 +14,7 @@
 
 <body style="background:#fff">
     <div class="chargeWrapper">
-        <p class="exchange">您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换<button type="button" id="exHours" class="btn green">兑换</button></p>
+        <!--<p class="exchange">您有<em class="exhours">${ex_hours}</em>小时上网时间可兑换<button type="button" id="exHours" class="btn green">兑换</button></p>-->
         <div class="exchangeChoice">
             <h3>选择上网套餐</h3>
             <ul>
@@ -30,7 +30,7 @@
         <p>合计：<span class="yuan">￥<em>1</em>元</span><span class="timelong">购买时长：<em>1</em>小时</span></p>
         <a href="javascript:;" id="checkOrder">确认订单</a>
     </div>
-    <div class="modalCharge exTime">
+    <!--<div class="modalCharge exTime">
         <div class="modalBox">
             <h3>兑换时间</h3>
             <a href="javascript:;" class="closed"></a>
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
 <script src="http://mp.bidongwifi.com/static/js/amount.js"></script>
 <script>document.body.addEventListener('touchstart', function(){});</script>
@@ -132,7 +132,7 @@
                 }
             });
         }
-        //renderPolicy();
+        renderPolicy();
         // 兑换时间
         $(document).on('click', '#exHours', function(){$('.succtxt').hide().siblings('.subtxt').show();$('.exTime').fadeIn();});
         $(document).on('click', '.exTime .closed', function(){

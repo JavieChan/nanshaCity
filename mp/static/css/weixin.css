@@ -741,7 +741,7 @@ input.case{
 }
 .exchangeChoice li a em{
 	font-size: 14px;
-	color: #f14e4f;
+	color: #2cbcff;
 }
 .exchangeChoice .amount{
 	position: absolute;
@@ -845,14 +845,14 @@ input.case{
 }
 .paynow p span.yuan{
 	font-size: 18px;
-	color: #f14e4f;
+	color: #2cbcff;
 }
 .paynow p span.timelong{
 	color: #999;
 	margin-left: 10px;
 }
 .paynow a, .paynow button{
-	background: #f14e4f;
+	background: #2cbcff;
 	color: #fff;
 	width: 100px;
 	height: 55px;
@@ -863,7 +863,7 @@ input.case{
 	text-align: center;
 }
 .paynow a:active, .paynow button:active{
-	background: #e2444c;
+	background: #2d9eee;
 }
 
 .orderCard{
@@ -873,11 +873,11 @@ input.case{
 	background: #fff;
 }
 .orderCard .orderHead{
-	background: #f96659;
-	background: -webkit-linear-gradient(left, #f14e4f , #ff7660);
-	background: -o-linear-gradient(right, #f14e4f, #ff7660);
-	background: -moz-linear-gradient(right, #f14e4f, #ff7660);
-	background: linear-gradient(to right, #f14e4f , #ff7660);
+	background: #2cbcff;
+	background: -webkit-linear-gradient(left, #2987f1 , #2cbcff);
+      background: -o-linear-gradient(right, #2987f1, #2cbcff);
+      background: -moz-linear-gradient(right, #2987f1, #2cbcff);
+      background: linear-gradient(to right, #2987f1 , #2cbcff);
 	color: #fff;
 }
 .orderCard .orderHead:before{
