@@ -1,0 +1,38 @@
+<%page args="location,ins,suffix=None,remain=None,compress=False">
+<h2>
+<%
+from utils import ServiceFactory
+locs = location.split(',')
+def get_resource_name(locs, title=False):
+    try:
+        _location = ','.join(locs)
+        name = ServiceFactory.create('project.project').get_by_location(_location).name
+        if not title and compress and len(list(name)) > 5:
+            return ''.join(list(name)[:5]) + '...'
+        else:
+            return name
+    except Exception as e:
+        return ''
+%>
+<a href="/index.html">所有项目</a>
+% if location:
+  % for i, loc in enumerate(locs):
+    % if i == (len(locs) - 1) and loc and not suffix and not remain:
+    > <span style="color:#0faee5">${get_resource_name(locs[:i + 1])}</span>
+    % else:
+    > <a href="/projectcard.html?location=${','.join(locs[:i + 1])}" title="${get_resource_name(locs[:i + 1], True)}">${get_resource_name(locs[:i + 1])}</a>
+    % endif
+  % endfor
+% endif
+
+% if remain:
+  % for title, url in remain:
+  > <a href="${url}">${title}</a>
+  % endfor
+% endif
+
+% if suffix:
+> <span style="color:#0faee5">${suffix}</span>
+% endif
+</h2>
+</%page>

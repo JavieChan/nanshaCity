@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>常见问题-壁咚</title>
+    <link rel="stylesheet" href="http://mp.bidongwifi.com/static/css/weixin.css" />
+    <script src="http://mp.bidongwifi.com/static/js/lib/jquery.min.js"></script>
+</head>
+
+<body style="background:#fff">
+    <div class="wbox quesWrapper">
+        <h3>常见问题</h3>
+        <ul>
+            <li>
+                <h4 class="wlinkdm">上网时间是什么意思？</h4>
+                <div class="ctx">
+                    <div>
+                        <h5>上网时间表示形式为“到期时间+可用时间”如上网时间：2017年1月1日15时00分+3小时。</h5>
+                        <p class="dot">表示当前账户截止到2017年1月1日15时00分将不能使用上网服务。</p>
+                    </div>
+                    <div>
+                        <h5>+3小时表示当前账户的可用时间仍有3小时。</h5>
+                        <p class="dot">用户可将该3小时“兑换”到“到期时间”里，延长当前的到期时间。（如上所述兑换后上网时间：2017年1月1日18时00分+0小时）</p>
+                        <p class="dot">用户也可直接利用“可用时间”进行“小时淘”活动</p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <h4 class="wlinkdm">购买套餐中的上网时间，能用于“小时淘”活动中吗？</h4>
+                <div class="ctx">
+                    <p>套餐中的上网时间，不能用于“小时淘”活动投注，只有直接购买1元1小时的上网时间才能用于活动投注。</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+<script>
+    $(function(){
+        $('.quesWrapper li h4').click(function(){
+            $(this).next('.ctx').slideToggle();
+            $(this).toggleClass('on');
+        });
+    });
+</script>
+</body>
+</html>
