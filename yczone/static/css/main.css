@@ -3389,7 +3389,7 @@ select.sel {
 }
 .content .projects .ns_device .areabox .ns_deCtx .ns_deinfo ul.bbody .name p {
   display: inline-block;
-  width: 90px;
+  width: 170px;
   line-height: 1;
   vertical-align: middle;
 }
@@ -3412,7 +3412,7 @@ select.sel {
   display: inline-block;
 }
 .content .projects .ns_device .areabox .ns_deCtx .ns_deinfo ul li span.name {
-  width: 148px;
+  width: 100%;
 }
 .content .projects .ns_device .areabox .ns_deCtx .ns_deinfo .arrow {
   position: absolute;
