@@ -7,6 +7,7 @@
     <!--导航-->
     <%include file="nav.html" args="on={'ap': 'on'}"/>
     <!--右侧功能栏-->
+    % if location.startswith('29946'):
     <%
         import user
         from settings import Base
@@ -22,15 +23,22 @@
         except:
             offline_count = 0
     %>
+    % else:
+    <%
+        online_count = online_count2 = offline_count = 0
+    %>
+    % endif
     <div class="projects">
         <div class="tabbox">
             <div class="bread">
                 <%include file="bread_nav.html" args="location=location,ins=ins,suffix='AP列表'"/>
+                % if location == '29946':
                 <div class="widget">
                     <span class="widinfo bg_green" style="width:145px">在线：${online_count}人</span>
                     <span class="widinfo bg_gray" style="width:145px">不在线：${offline_count}人</span>
                     <span class="widinfo bg_blue" style="width:145px">在线访客：${online_count2}人</span>
                 </div>
+                % endif
             </div>
         </div>
         <div class="tabbox ns_table" id="apslist">

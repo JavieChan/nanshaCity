@@ -1,0 +1,64 @@
+## projectaplist.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'ap')}">
+    <input type="hidden" value="${location}" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'ap': 'on'}"/>
+    <!--右侧功能栏-->
+    <%
+        import user
+        from settings import Base
+        online, _, _, _ = user.online_user_array(ins, location, page=None, page_size=None);
+        # 内部在线人数
+        online_count = len([ol for ol in online if ol['name'] != '' and ol['name'] != u'(访客)'])
+        # 非内部在线人数
+        online_count2 = len([ol for ol in online if ol['name'] == '' or ol['name'] == u'(访客)'])
+        try:
+            TPNUser = Base.classes.__getattr__('pn_{}'.format(location.split(',')[-1]))
+            # 内部不在线人数
+            offline_count = ins.session.query(TPNUser).count() - online_count
+        except:
+            offline_count = 0
+    %>
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='AP列表'"/>
+                <div class="widget">
+                    <span class="widinfo bg_green" style="width:145px">在线：${online_count}人</span>
+                    <span class="widinfo bg_gray" style="width:145px">不在线：${offline_count}人</span>
+                    <span class="widinfo bg_blue" style="width:145px">在线访客：${online_count2}人</span>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="apslist">
+            <div class="toolnav">
+                <h3>AP列表</h3>
+                <div class="toolbox batch">
+                    <div class="search" id="search"><input type="text" placeholder="输入MAC/位置" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                    <div class="autoInput" id="locationSel">所属</div>
+                    <select id="online"><option value="">状态</option><option value="1">在线</option><option value="0">离线</option></select>
+                    <select id="vendor"><option value="">品牌</option>
+                        % for k, v in vendors.iteritems():
+                        <option value="${k}">${v}</option>
+                        % endfor
+                    </select>
+                </div>
+            </div>
+            <div id="aponlineMemTable"></div>
+            <script src="/static/js/component/aponline.js"></script>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+    <script src="/static/js/lib/myselect.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $('.autoDom').mySelect();
+            $('#locationSel').mySelect({autoid: true});
+        });
+    </script>
+</%block>

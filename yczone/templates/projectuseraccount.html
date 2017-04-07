@@ -10,6 +10,7 @@
     <!--导航-->
     <%include file="nav.html" args="on={'user': 'on'}"/>
     <!--右侧功能栏-->
+    % if location.startswith('29946'):
     <%
         import user
         from settings import Base
@@ -25,14 +26,24 @@
         except:
             offline_count = 0
     %>
+    % else:
+    <%
+        online_count = online_count2 = offline_count = 0
+    %>
+    % endif
     <div class="projects">
         <div class="tabbox">
             <div class="bread">
                 <%include file="bread_nav.html" args="location=location,ins=ins,suffix='上网账号',compress=True"/>
                 <div class="widget">
+                    % if location == '29946':
                     <span class="widinfo bg_green" style="width:145px">在线：${online_count}人</span>
                     <span class="widinfo bg_gray" style="width:145px">不在线：${offline_count}人</span>
                     <span class="widinfo bg_blue" style="width:145px">在线访客：${online_count2}人</span>
+                    % endif
+                    % if location.startswith('206386'):
+                    <a href="/projectchart.html?location=${location}" class="btnBlue">认证人数统计</a>
+                    % endif
                 </div>
             </div>
         </div>
@@ -47,7 +58,12 @@
                 %>
                 % if res.type_id == 8:
                 <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
+                % if location.startswith('29946'):
                 <li><a href="/projectuserinner.html?location=${location}">内网用户</a></li>
+                % endif
+                % if not location.startswith('29946'):
+                <li><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
+                % endif
                 % endif
             </ul>
             <div class="toolnav">
@@ -72,6 +88,9 @@
                 <li><label>电话号码：</label><span class="veright"><div class="verify"><input type="text" name="mobile" class="matchVerify shouldVerify checkPhone"></div></span></li>
                 <li><label>上网账号：</label>
                     <span class="veright">
+                        % if not location.startswith('29946'):
+                        <em style="float:left;line-height:32px">${location.split(',')[-1]}</em>
+                        % endif
                         <div class="verify" style="width:158px;float: left"><input type="text" name="user" class="matchVerify shouldVerify" data-type="string" style="width:158px;margin-right:0" /></div>
                     </span>
                 </li>
@@ -84,6 +103,16 @@
                       <button type="button" class="btnWhiteSmall addOne">+</button>
                     </div>
                 </span></li>
+                % if not location.startswith('29946'):
+                <li><label>备注：</label><span class="veright"><div class="verify"><input type="text" name="note" class="matchVerify"></div></span></li>
+                % endif
+                % if location.startswith('206386'):
+                <li><label>绑定MAC：</label>
+                    <span class="veright">
+                        <div class="verify"><input type="text" name="mac" /><span style="font-size:14px;color:#777">*MAC格式 xx:xx:xx:xx:xx:xx，以逗号(","）隔开多个MAC</span></div>
+                    </span>
+                </li>
+                % endif
             </ul>
             <div class="btngroups"><button type="button" class="btnBlue add" id="add">确定</button></div>
             <i class="msg"></i>

@@ -57,6 +57,22 @@
                         <label>密码：</label>
                         <span class="veright sue pwdtip" data-tip="${account.password}" data-value="${account.password}" data-type="password" name="password">***</span>
                     </li>
+                    % if not location.startswith('29946'):
+                    <li>
+                        <label>备注：</label>
+                        <span class="veright sue" data-value="${account.note}" name="note" data-type="string">${account.note}</span>
+                    </li>
+                    % endif
+                    % if location.startswith('206386'):
+                    <li>
+                        <label>绑定MAC：</label>
+                        <span class="veright sue" data-value="${account.mac}" data-type="string" name="mac">
+                            % for m in account.mac.split(','):
+                            <em class="bz">${m}</em>
+                            % endfor
+                        </span>
+                    </li>
+                    % endif
                 </ul>
             </div>
         </div>

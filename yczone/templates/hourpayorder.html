@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>确认订单</title>
+    <link rel="stylesheet" href="http://mp.bidongwifi.com/static/css/weixin.css" />
+    <script src="http://mp.bidongwifi.com/static/js/lib/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="orderWrapper">
+        <div class="orderCard">
+            <div class="orderHead">
+                <div>
+                    <p>上网套餐：</p>
+                    <p style="font-size:19px" class="labeltxt">1元=1小时</p>
+                </div>
+                <span class="times">x<em>2</em></span>
+            </div>
+            <div class="orderCtx">
+                <p class="totalTime">合计所购时间：<em>1</em>小时</p>
+                <p class="xstTip" style="display:none">*该时间不可用于小时淘活动</p>
+            </div>
+        </div>
+        <div class="paynow">
+            <p>需付：<span class="yuan">￥<em>1</em>元</span>
+            <button type="button" onclick="BridgePay()">立即支付</button>
+        </div>
+    </div>
+
+<script>document.body.addEventListener('touchstart', function(){});</script>
+<script>
+    function onBridgeReady(){
+        WeixinJSBridge.invoke(
+            'getBrandWCPayRequest', {
+                "appId": '${appId}',
+                "timeStamp": '${timeStamp}',
+                "nonceStr": '${nonceStr}',
+                "package": '${package}',
+                "signType": "MD5",
+                "paySign": '${paySign}'
+            },
+            function(res){
+                if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                    var user = getParam("user"), token = getParam("token");
+                    var url = "http://mbd.cniotroot.cn/account/"+user+"?token="+token;
+                    alert(url);
+                    window.location.replace(url);
+                }
+            }
+        );
+    }
+
+    function BridgePay() {
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+            }
+        } else {
+            onBridgeReady();
+        }
+    }
+
+    function getParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURIComponent(r[2].replace(/\+/g, "+"));return null;
+    }
+
+    ;$(function(){
+        var price = getParam("price"),
+            time = getParam("time"),
+            count = getParam("count"),
+            id = getParam("id"),
+            label = getParam("label");
+
+        $('.yuan em').text(price);
+        $('.labeltxt').text(label);
+        $('.totalTime em').text(time);
+        $('.times em').text(count);
+        if(id==149){
+            $('.xstTip').show();
+        }
+    });
+</script>
+</body>
+</html>

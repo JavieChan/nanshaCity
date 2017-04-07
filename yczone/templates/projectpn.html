@@ -32,7 +32,13 @@
                         <th>Appid</th>
                         <th>Shopid</th>
                         <th>Secret</th>
-                        <th>免认证(小时)</th>
+                        <th>
+                            % if location=='29946' :
+                            免认证(小时)
+                            % else:
+                            免认证(天)
+                            % endif
+                        </th>
                         % if ins.is_allowed('update', 'policy') and ins.is_allowed('delete', 'policy'):
                         <th>操作</th>
                         % endif
@@ -144,7 +150,11 @@
                 <label><i>*</i>Portal：</label>
                 <span class="veright">
                     <div class="verify">
+                        % if location.startswith('29946') :
                         <select id="portal"></select>
+                        % else:
+                        <input type="text" class="matchVerify" id="portal" />
+                        % endif
                     </div>
                 </span>
             </li>
@@ -161,9 +171,19 @@
                 <span class="veright"><div class="verify"><input type="text" name="secret" /></div></span>
             </li>
             <li>
-                <label><i>*</i>免认证(小时)</label>
+                <label><i>*</i>
+                    % if location=='29946' :
+                    免认证(小时)
+                    % else:
+                    免认证(天)
+                    % endif
+                </label>
                 <span class="veright"><div class="verify">
+                    % if location=='29946' :
                     <input type="text" name="duration" placeholder="输入小时，例如：5" class="matchVerify shouldVerify checkInt" />
+                    % else:
+                    <input type="text" name="duration" placeholder="输入天数，例如：5" class="matchVerify shouldVerify checkInt" />
+                    % endif
                 </div></span>
             </li>
             <li>
@@ -184,6 +204,7 @@
 <script type="text/javascript" src="/static/js/lib/ajaxfileupload.js"></script>
 <script>
     $(function(){
+        % if location=='29946' :
         portalAjax("get", '', '', function(data){
             console.log(data);
             if(data.Code==200){
@@ -197,6 +218,7 @@
                 console.log(data);
             }
         });
+        % endif
     });
 </script>
 </%block>
