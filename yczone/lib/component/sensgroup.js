@@ -12,7 +12,7 @@ class Table extends Component {
                     <tr>
                         <th>头像</th>
                         <th>姓名</th>
-                        <th>手机号</th>
+                        <!--<th>手机号</th>-->
                         <th>MAC</th>
                         <th>客户端</th>
                         <th>停留时长</th>
@@ -23,10 +23,10 @@ class Table extends Component {
                     this.props.datalist.map((list, index) => {
                         return (
                             <tbody key={index}>
-                                <tr className="ouTable" data-group-id={list._id} data-mac={list.sta_mac}>
+                                <tr className="ouTable" data-group-id={list._id} data-mac={list.sta_mac} data-name={list.name}>
                                     <td><i className="st"></i><img src={list.avatar} className="txx" /></td>
                                     <td>{list.name}</td>
-                                    <td>{list.mobile}</td>
+                                    <!--<td>{list.mobile}</td>-->
                                     <td>{list.sta_mac}</td>
                                     <td>{list.platform}</td>
                                     <td>{list.time}h</td>

@@ -213,7 +213,8 @@
             sta_mac:$(this).data('mac'),
             start:$('#dateStart').val(),
             end:$('#dateEnd').val(),
-            group_id:$('#groupId').val()
+            group_id:$('#groupId').val(),
+            name: $(this).data('name')
         };
         window.location.href = '/projectsensmember.html?'+$.param(param);
     });
@@ -347,7 +348,8 @@
             location: $('#location').val(),
             group_id: $('#groupId').val(),
             start: $('#dateStart').val(),
-            end: $('#dateEnd').val()
+            end: $('#dateEnd').val(),
+            keyword: $('#search input').val()
         };
         $(this).attr('href', '/sensmembers.xls?'+$.param(param));
     });

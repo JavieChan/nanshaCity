@@ -103,7 +103,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "用户唯一ID"
+	                                "\u7528\u6237\u552F\u4E00ID"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -113,7 +113,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "姓名"
+	                                "\u59D3\u540D"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -123,7 +123,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "学号"
+	                                "\u5B66\u53F7"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -133,7 +133,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "手机"
+	                                "\u624B\u673A"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -143,7 +143,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "密码"
+	                                "\u5BC6\u7801"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -153,7 +153,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "到期时间"
+	                                "\u5230\u671F\u65F6\u95F4"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -163,14 +163,14 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "终端数"
+	                                "\u7EC8\u7AEF\u6570"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
 	                        _react2.default.createElement(
 	                            "i",
 	                            null,
-	                            "操作"
+	                            "\u64CD\u4F5C"
 	                        )
 	                    )
 	                ),
@@ -223,7 +223,7 @@
 	                                _this2.state.view ? _react2.default.createElement(
 	                                    "a",
 	                                    { href: "/projectuserpayinfo.html?location=" + location + "&user_id=" + list.user + "&pnuser_id=" + list.pnuser_id },
-	                                    "详情"
+	                                    "\u8BE6\u60C5"
 	                                ) : null
 	                            )
 	                        )
@@ -661,8 +661,15 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -683,7 +690,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -712,7 +719,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -732,8 +739,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -1140,12 +1147,18 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 
 	  if (!condition) {
 	    var error;
@@ -21810,9 +21823,9 @@
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "page" },
-	                _react2.default.createElement("input", { type: "button", value: "跳转", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u8DF3\u8F6C", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement("input", { type: "text", className: "pagesize", placeholder: "1", ref: "jumpIpu" }),
-	                _react2.default.createElement("input", { type: "button", value: "下一页", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0B\u4E00\u9875", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement(
 	                    "div",
 	                    null,
@@ -21828,7 +21841,7 @@
 	                        this.props.pagecount
 	                    )
 	                ),
-	                _react2.default.createElement("input", { type: "button", value: "上一页", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0A\u4E00\u9875", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
 	            );
 	        }
 	    }]);

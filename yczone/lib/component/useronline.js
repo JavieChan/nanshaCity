@@ -22,7 +22,7 @@ class Table extends Component {
                         <span name="user"><em>用户唯一ID</em><i></i></span>
                         <span name="address"><em>位置</em><i></i></span>
                         <span name="name"><em>姓名</em><i></i></span>
-                        <span name="mobile"><em>手机号</em><i></i></span>
+                        <!--<span name="mobile"><em>手机号</em><i></i></span>-->
                         <span name="traffic"><em>流量</em><i></i></span>
                         <span name="platform"><em>客户端</em><i></i></span>
                         <span name="auth_type"><em>认证方式</em><i></i></span>
@@ -42,7 +42,7 @@ class Table extends Component {
                                     <td>{list.user}</td>
                                     <td>{list.address}</td>
                                     <td>{list.name}</td>
-                                    <td>{list.mobile}</td>
+                                    <!--<td>{list.mobile}</td>-->
                                     <td>{list.traffic}M</td>
                                     <td>{list.platform}</td>
                                     <td>{list.auth_type}</td>

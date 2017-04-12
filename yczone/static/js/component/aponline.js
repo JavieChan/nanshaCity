@@ -143,37 +143,37 @@
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "MAC地址"
+	                            "MAC\u5730\u5740"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "所属"
+	                            "\u6240\u5C5E"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "状态"
+	                            "\u72B6\u6001"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "品牌"
+	                            "\u54C1\u724C"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "位置"
+	                            "\u4F4D\u7F6E"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "在线人数"
+	                            "\u5728\u7EBF\u4EBA\u6570"
 	                        ),
 	                        this.state.update ? _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "操作"
+	                            "\u64CD\u4F5C"
 	                        ) : null
 	                    )
 	                ),
@@ -201,11 +201,11 @@
 	                                list.online == 1 ? _react2.default.createElement(
 	                                    "span",
 	                                    { style: { color: "#27b600" } },
-	                                    "在线"
+	                                    "\u5728\u7EBF"
 	                                ) : _react2.default.createElement(
 	                                    "span",
 	                                    { style: { color: "#f74646" } },
-	                                    "离线"
+	                                    "\u79BB\u7EBF"
 	                                )
 	                            ),
 	                            _react2.default.createElement(
@@ -229,17 +229,17 @@
 	                                _react2.default.createElement(
 	                                    "span",
 	                                    { className: "edit" },
-	                                    "编辑"
+	                                    "\u7F16\u8F91"
 	                                ),
 	                                _react2.default.createElement(
 	                                    "button",
 	                                    { type: "button", className: "btnGrayAutoMin save" },
-	                                    "保存"
+	                                    "\u4FDD\u5B58"
 	                                ),
 	                                _react2.default.createElement(
 	                                    "button",
 	                                    { type: "button", className: "btnGrayAutoMin cancel" },
-	                                    "取消"
+	                                    "\u53D6\u6D88"
 	                                )
 	                            ) : null
 	                        ),
@@ -290,32 +290,32 @@
 	                                    _react2.default.createElement(
 	                                        "th",
 	                                        { width: "22%" },
-	                                        "用户唯一ID"
+	                                        "\u7528\u6237\u552F\u4E00ID"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
 	                                        { width: "12%" },
-	                                        "姓名"
+	                                        "\u59D3\u540D"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
 	                                        { width: "22%" },
-	                                        "手机号"
+	                                        "\u624B\u673A\u53F7"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
 	                                        { width: "12%" },
-	                                        "流量"
+	                                        "\u6D41\u91CF"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
 	                                        { width: "12%" },
-	                                        "客户端"
+	                                        "\u5BA2\u6237\u7AEF"
 	                                    ),
 	                                    this.props.update ? _react2.default.createElement(
 	                                        "th",
 	                                        { width: "10%" },
-	                                        "操作"
+	                                        "\u64CD\u4F5C"
 	                                    ) : null
 	                                )
 	                            ),
@@ -803,8 +803,15 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -825,7 +832,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -854,7 +861,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -874,8 +881,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -1282,12 +1289,18 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 
 	  if (!condition) {
 	    var error;
@@ -21952,9 +21965,9 @@
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "page" },
-	                _react2.default.createElement("input", { type: "button", value: "跳转", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u8DF3\u8F6C", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement("input", { type: "text", className: "pagesize", placeholder: "1", ref: "jumpIpu" }),
-	                _react2.default.createElement("input", { type: "button", value: "下一页", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0B\u4E00\u9875", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement(
 	                    "div",
 	                    null,
@@ -21970,7 +21983,7 @@
 	                        this.props.pagecount
 	                    )
 	                ),
-	                _react2.default.createElement("input", { type: "button", value: "上一页", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0A\u4E00\u9875", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
 	            );
 	        }
 	    }]);
