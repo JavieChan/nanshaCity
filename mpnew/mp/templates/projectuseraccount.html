@@ -53,9 +53,8 @@
                 <li><a href="/projectuserguest.html?location=${location}">在线访客</a></li>
                 <li class="on"><a href="/projectuseraccount.html?location=${location}">上网账号</a></li>
                 <%
-                import project 
-                papi = project.ProjectService()
-                res = papi.get_by_location(ins.session, location)
+                from utils import ServiceFactory
+                res = ServiceFactory.create('project.project').get_by_location(location)
                 %>
                 % if res.type.id == 8:
                 <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>

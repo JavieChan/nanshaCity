@@ -33,17 +33,14 @@
                 <ul>
                     <li><p>${ins.user}</p><h4>账号</h4></li>
                     <%
-                      import project;
-                      import account;
+                      from utils import ServiceFactory
                       def get_projectname(_location):
                           try:
-                              papi = project.ProjectService()
-                              return papi.get_by_location(ins.session, _location).name;
+                              return ServiceFactory.create('project.project').get_by_location(ins.session, _location).name
                           except:
                               return ''
 
-                      aapi = account.AdminService()
-                      current_user = aapi.get_by_user(ins.session, ins.user);
+                      current_user = ServiceFactory.create('account.admin').get_by_user(ins.user);
                     %>
                     % if ins._location:
                     <li><p>${get_projectname(current_user._location)}</p><h4>所属项目</h4></li>
