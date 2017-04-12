@@ -129,16 +129,6 @@
 	                        ),
 	                        _react2.default.createElement(
 	                            "span",
-	                            { name: "mobile" },
-	                            _react2.default.createElement(
-	                                "em",
-	                                null,
-	                                "\u624B\u673A\u53F7"
-	                            ),
-	                            _react2.default.createElement("i", null)
-	                        ),
-	                        _react2.default.createElement(
-	                            "span",
 	                            { name: "traffic" },
 	                            _react2.default.createElement(
 	                                "em",
@@ -196,11 +186,6 @@
 	                                "td",
 	                                null,
 	                                list.name
-	                            ),
-	                            _react2.default.createElement(
-	                                "td",
-	                                null,
-	                                list.mobile
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",

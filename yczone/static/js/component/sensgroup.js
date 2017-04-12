@@ -101,11 +101,6 @@
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "\u624B\u673A\u53F7"
-	                        ),
-	                        _react2.default.createElement(
-	                            "th",
-	                            null,
 	                            "MAC"
 	                        ),
 	                        _react2.default.createElement(
@@ -117,11 +112,6 @@
 	                            "th",
 	                            null,
 	                            "\u505C\u7559\u65F6\u957F"
-	                        ),
-	                        _react2.default.createElement(
-	                            "th",
-	                            null,
-	                            "\u4FE1\u53F7\u5F3A\u5EA6(dbm)"
 	                        )
 	                    )
 	                ),
@@ -131,7 +121,7 @@
 	                        { key: index },
 	                        _react2.default.createElement(
 	                            "tr",
-	                            { className: "ouTable", "data-group-id": list._id, "data-mac": list.sta_mac },
+	                            { className: "ouTable", "data-group-id": list._id, "data-mac": list.sta_mac, "data-name": list.name },
 	                            _react2.default.createElement(
 	                                "td",
 	                                null,
@@ -142,11 +132,6 @@
 	                                "td",
 	                                null,
 	                                list.name
-	                            ),
-	                            _react2.default.createElement(
-	                                "td",
-	                                null,
-	                                list.mobile
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",
@@ -163,11 +148,6 @@
 	                                null,
 	                                list.time,
 	                                "h"
-	                            ),
-	                            _react2.default.createElement(
-	                                "td",
-	                                null,
-	                                list.rssi
 	                            )
 	                        ),
 	                        _react2.default.createElement(InsideTr, { aps: list.section })
