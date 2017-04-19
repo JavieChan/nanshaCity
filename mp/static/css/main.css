@@ -195,6 +195,11 @@ select.sel {
 .btnBlueAutoMin:hover {
   background: #07afcd;
 }
+.btnBlue.disabled,
+.btnBlueSmall.disabled,
+.btnBlueAutoMin.disabled {
+  background: #d2d2d2;
+}
 .btnGreen,
 .btnGreenAutoMin {
   background: #68d68f;
