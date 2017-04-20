@@ -22,3 +22,12 @@ redeemCode.prototype.generateCodes = function(serial, page, callback){
         callback(data);
     });
 };
+redeemCode.prototype.getCodeList = function(status, page, callback){
+    var params = {
+        status: status,
+        page: page
+    };
+    this._get('/redeemcode/list', params, function(data){
+        callback(data);
+    });
+};

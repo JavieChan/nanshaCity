@@ -40,9 +40,11 @@ var vm = new Vue({
         count: 1,
         expired: GetDateStr(1),
         codeList: [],
+
         currentPage: 0,
         totalPage: 0,
         jumpPage: '',
+
         serial: '',
         onePageCodes: ''
     },

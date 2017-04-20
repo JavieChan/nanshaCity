@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>生成兑换码</title>
+    <title>兑换码列表</title>
     <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/jqueryui.css" />
     <link rel="stylesheet" href="/static/css/main.css" />
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/main.min.js"></script>
 
-    <link rel="stylesheet" href="/static/css/redeemcode.css" />
 </head>
 
 <body>
@@ -53,53 +52,39 @@
                 <div class="tabbox">
                     <div class="bread">
                         <h2>
-                            <a href="/index.html">所有项目</a> > <a href="javascript:;">兑换码管理</a> > <span style="color:#0faee5">生成兑换码</span>
+                            <a href="/index.html">所有项目</a> > <a href="/redeemcode.html">兑换码管理</a> > <span style="color:#0faee5">兑换码列表</span>
                         </h2>
                         <div class="widget">
-                            <a href="javascript:;" class="btnBlue disabled">生成兑换码</a>
-                            <a href="/redeemcodelist.html" class="btnBlue">兑换码列表</a>
+                            <a href="/redeemcode.html" class="btnBlue">生成兑换码</a>
+                            <a href="javascript:;" class="btnBlue disabled">兑换码列表</a>
                             <a href="javascript:;" class="btnBlue">运营统计</a>
                         </div>
                     </div>
                 </div>
-                <div class="tabbox ns_table" id="redeemcode">
+                <div class="tabbox ns_table" id="redeemcodelist">
+                    <div class="toolnav">
+                        <div class="toolbox">
+                            筛选条件：
+                            <select v-model.lazy="codeStatus" @change="selectStatusCodes">
+                                <option value="">状态</option>
+                                <option value="0">待兑换</option>
+                                <option value="1">已兑换</option>
+                                <option value="2">过期未兑换</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="areabox">
-                        <div class="generate-code-panel">
-                            <div>
-                                兑换码时长
-                                <select v-model="hours">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                </select>
-                                小时
-                            </div>
-                            <div>
-                                兑换码数量
-                                <input type="text" v-model.number.trim="count" style="width:50px" />
-                                个<span>(<200个)</span>
-                            </div>
-                            <div>
-                                有效期
-                                <input type="text" v-model.trim="expired" id="expired" />
-                            </div>
-                            <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
-                        </div>
-                        <div class="tool-panel">
-                            <a :href="exportCodes" class="btnBlueSmall">导出Excel</a>
-                            <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar" :disabled="(onePageCodes=='') ? true : false">复制兑换码</button>
-                        </div>
-                        <textarea id="copyBar" v-model="onePageCodes" style="width:100%;height:100px"></textarea>
                         <table>
                             <tr>
-                                <th width="33%">兑换码</th>
-                                <th width="33%">时长</th>
-                                <th width="34%">有效期</th>
+                                <th width="20%">兑换码</th>
+                                <th width="20%">时长</th>
+                                <th width="20%">有效期</th>
+                                <th width="20%">创建时间</th>
+                                <th width="20%">状态</th>
                             </tr>
                             <tr is="render-list" v-for="code in codeList" :code="code" :key="code.id"></tr>
                         </table>
-                        <div class="page-panel">
+                        <div class="page-panel" style="text-align:right;margin-top:16px">
                             <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
                         </div>
                     </div>
@@ -118,8 +103,12 @@
     <div class="uptotop"><i></i>返回顶部</div>
 
     <script src="/static/js/lib/jqueryui.min.js"></script>
-    <script src="/static/js/lib/clipboard.js"></script>
     <script src="/static/js/lib/vue.js"></script>
-    <script src="/static/js/redeemcode.min.js"></script>
+    <script src="/static/js/redeemcodelist.min.js"></script>
+
+    <!--<script src="/lib/request/http.js"></script>
+    <script src="/lib/redeemcode/redeemcode-http.js"></script>
+    <script src="/lib/components/paginator.js"></script>
+    <script src="/lib/redeemcode/redeemcodelist.js"></script>-->
 </body>
 </html>
