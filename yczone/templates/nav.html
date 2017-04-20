@@ -24,7 +24,7 @@
     % if location and ins.is_allowed('view', 'user'):
     <h3 class="${on.pop('user', '')}"><a href="/projectuseronline.html?location=${location}"><i class="navUserIco"></i>用户列表</a></h3>
     % endif
-    % if not location.startswith('29946'):
+    % if location and not location.startswith('29946'):
     <h3 class="${on.pop('pay', '')}"><a href="/projectbill.html?location=${location}"><i class="navBillIco"></i>计费模块</a></h3>
     % endif
     % if location and ins.is_allowed('view', 'message'):
@@ -33,9 +33,7 @@
     % if location and ins.is_allowed('view', 'sens'):
     <h3 class="${on.pop('sens', '')}"><a href="/projectsens.html?location=${location}"><i class="navSensIco"></i>感知分析</a></h3>
     % endif
-    % if location.startswith('29946') and ins.is_allowed('view', 'h5'):
     <h3 class="${on.pop('h5', '')}"><a href="/projecth5list.html?location=${location}"><i class="navH5Ico"></i>H5页面管理</a></h3>
-    % endif
     % if location and ins.is_allowed('view', 'message'):
     <h3 class="${on.pop('apgroups', '')}"><a href="/apgroups.html?location=${location}"><i class="navAPgroupIco"></i>AP组管理</a></h3>
     % endif
