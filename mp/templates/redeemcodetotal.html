@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>兑换码列表</title>
+    <title>运营统计</title>
     <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
     <link rel="stylesheet" href="/static/css/jqueryui.css" />
     <link rel="stylesheet" href="/static/css/main.css" />
     <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/main.min.js"></script>
 
+    <link rel="stylesheet" href="/static/css/redeemcodetotal.css" />
 </head>
 
 <body>
@@ -52,37 +53,53 @@
                 <div class="tabbox">
                     <div class="bread">
                         <h2>
-                            <a href="/index.html">所有项目</a> > <a href="/redeemcode.html">兑换码管理</a> > <span style="color:#0faee5">兑换码列表</span>
+                            <a href="/index.html">所有项目</a> > <a href="/redeemcode.html">兑换码管理</a> > <span style="color:#0faee5">运营统计</span>
                         </h2>
                         <div class="widget">
                             <a href="/redeemcode.html" class="btnBlue">生成兑换码</a>
-                            <a href="javascript:;" class="btnBlue disabled">兑换码列表</a>
-                            <a href="/redeemcodetotal.html" class="btnBlue">运营统计</a>
+                            <a href="/redeemcodelist.html" class="btnBlue">兑换码列表</a>
+                            <a href="javascript:;" class="btnBlue disabled">运营统计</a>
                         </div>
                     </div>
                 </div>
-                <div class="tabbox ns_table" id="redeemcodelist">
+                <div class="tabbox ns_table" id="redeemcodetotal">
+                    <div class="total-panel">
+                        <div class="total">总时长：4000小时</div><div class="used">已兑换：4000小时</div><div class="usable">待兑换：4000小时</div><div class="expired">已过期：4000小时</div>
+                    </div>
                     <div class="toolnav">
                         <div class="toolbox">
-                            筛选条件：
-                            <select v-model.lazy="codeStatus" @change="selectStatusCodes">
-                                <option value="">状态</option>
-                                <option value="0">待兑换</option>
-                                <option value="1">已兑换</option>
-                                <option value="2">过期未兑换</option>
-                            </select>
+                            <div>
+                                运营人员：
+                                <select v-model.lazy="codeStatus" @change="selectStatusCodes">
+                                    <option value="">全部</option>
+                                </select>
+                            </div>
+                            <div>
+                                统计周期：
+                                <input type="text" />
+                                —
+                                <input type="text" />
+                            </div>
+                            <button type="button" class="btnBlueSmall">确定</button>
                         </div>
                     </div>
                     <div class="areabox">
                         <table>
                             <tr>
-                                <th width="20%">兑换码</th>
-                                <th width="20%">时长</th>
-                                <th width="20%">有效期</th>
-                                <th width="20%">创建时间</th>
-                                <th width="20%">状态</th>
+                                <th width="20%">运维人员</th>
+                                <th width="20%">总时长</th>
+                                <th width="20%">已兑换</th>
+                                <th width="20%">待兑换</th>
+                                <th width="20%">已过期</th>
                             </tr>
                             <tr is="render-list" v-for="code in codeList" :code="code" :key="code.id"></tr>
+                            <tr>
+                                <td><b>合计</b></td>
+                                <td>4000</td>
+                                <td>4000</td>
+                                <td>4000</td>
+                                <td>4000</td>
+                            </tr>
                         </table>
                         <div class="page-panel" style="text-align:right;margin-top:16px">
                             <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
@@ -104,6 +121,6 @@
 
     <script src="/static/js/lib/jqueryui.min.js"></script>
     <script src="/static/js/lib/vue.js"></script>
-    <script src="/static/js/redeemcodelist.min.js"></script>
+    <script src="/static/js/redeemcodetotal.min.js"></script>
 </body>
 </html>
