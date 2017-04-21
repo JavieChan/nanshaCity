@@ -30,7 +30,7 @@ Request.prototype._send = function(type, pathname, params, success, fail){
             }
         }
     }).fail(function(err){
-        alert("[请求失败]系统繁忙")
+        alert(err.reason);
     });
 };
 Request.prototype._post = function(pathname, params, success, fail){
