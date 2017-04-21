@@ -30,8 +30,8 @@ var vm = new Vue({
         codeStatus: '',
         codeList: [],
 
-        currentPage: 0,
-        totalPage: 0,
+        currentPage: 1,
+        totalPage: 1,
         jumpPage: ''
     },
     components: {
@@ -45,6 +45,7 @@ var vm = new Vue({
         selectStatusCodes: function(){
             var self = this;
             self.pageChange(1);
+            self.jumpPage = '';
         },
         pageChange: function(page){
             var self = this;

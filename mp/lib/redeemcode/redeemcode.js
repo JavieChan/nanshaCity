@@ -31,8 +31,8 @@ var vm = new Vue({
         expired: GetDateStr(1),
         codeList: [],
 
-        currentPage: 0,
-        totalPage: 0,
+        currentPage: 1,
+        totalPage: 1,
         jumpPage: '',
 
         serial: '',

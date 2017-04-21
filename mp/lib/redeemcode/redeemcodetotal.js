@@ -34,8 +34,8 @@ var vm = new Vue({
         ],
         codeList: [],
 
-        currentPage: 0,
-        totalPage: 0,
+        currentPage: 1,
+        totalPage: 1,
         jumpPage: ''
     },
     components: {
@@ -55,8 +55,6 @@ var vm = new Vue({
                 $.each(self.codeList, function(i, n){
                     sum += n.total;
                 });
-            }else{
-                sum = '';
             }
             return sum;
         },
@@ -67,8 +65,6 @@ var vm = new Vue({
                 $.each(self.codeList, function(i, n){
                     sum += n.used;
                 });
-            }else{
-                sum = '';
             }
             return sum;
         },
@@ -79,8 +75,6 @@ var vm = new Vue({
                 $.each(self.codeList, function(i, n){
                     sum += n.usable;
                 });
-            }else{
-                sum = '';
             }
             return sum;
         },
@@ -91,8 +85,6 @@ var vm = new Vue({
                 $.each(self.codeList, function(i, n){
                     sum += n.expired;
                 });
-            }else{
-                sum = '';
             }
             return sum;
         }
@@ -114,6 +106,7 @@ var vm = new Vue({
         changeFilter: function(){
             var self = this;
             self.pageChange(1);
+            self.jumpPage = '';
         },
         pageChange: function(page){
             var self = this;
