@@ -13,6 +13,7 @@ class Table extends Component {
                         <th>头像</th>
                         <th>姓名</th>
                         <th>MAC</th>
+                        <th>部门</th>
                         <th>客户端</th>
                         <th>停留时长</th>
                     </tr>
@@ -25,6 +26,7 @@ class Table extends Component {
                                     <td><i className="st"></i><img src={list.avatar} className="txx" /></td>
                                     <td>{list.name}</td>
                                     <td>{list.sta_mac}</td>
+                                    <td>{list.department}</td>
                                     <td>{list.platform}</td>
                                     <td>{list.time}h</td>
                                 </tr>
@@ -49,12 +51,11 @@ class InsideTr extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th width="17%">感知设备</th>
-                                    <th width="17%">感知日期</th>
-                                    <th width="16%">出现时间</th>
-                                    <th width="16%">消失时间</th>
-                                    <th width="17%">停留时长</th>
-                                    <th width="17%">信号强度(dbm)</th>
+                                    <th width="20%">感知设备</th>
+                                    <th width="20%">感知日期</th>
+                                    <th width="20%">出现时间</th>
+                                    <th width="20%">消失时间</th>
+                                    <th width="20%">停留时长</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,12 +63,11 @@ class InsideTr extends Component {
                                 this.props.aps.map((ap, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td width="17%">{ap[4]}</td>
-                                            <td width="17%">{ap[0]}</td>
-                                            <td width="16%">{ap[1]}</td>
-                                            <td width="16%">{ap[2]}</td>
-                                            <td width="17%">{ap[3]}h</td>
-                                            <td width="17%">{ap[5]}</td>
+                                            <td width="20%">{ap[4]}</td>
+                                            <td width="20%">{ap[0]}</td>
+                                            <td width="20%">{ap[1]}</td>
+                                            <td width="20%">{ap[2]}</td>
+                                            <td width="20%">{ap[3]}h</td>
                                         </tr>
                                     )
                                 })

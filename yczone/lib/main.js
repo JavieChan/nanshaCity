@@ -351,7 +351,12 @@
             end: $('#dateEnd').val(),
             keyword: $('#search input').val()
         };
-        $(this).attr('href', '/sensmembers.xls?'+$.param(param));
+        if(confirm("是否导出所有mac?")){
+            param.mac = 1;
+        }else{
+            param.mac = 0
+        }
+        $.get("/sensmembers.xls", param);
     });
     // 导出漫游纪录
     $(document).on('click', '#connectRecordExport', function(){
