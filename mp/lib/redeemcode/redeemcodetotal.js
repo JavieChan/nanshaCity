@@ -32,10 +32,6 @@ var vm = new Vue({
         operatorOptions: [
             {text: '全部', value: ''}
         ],
-        total: '',
-        used: '',
-        usable: '',
-        expired: '',
         codeList: [],
 
         currentPage: 0,
@@ -51,25 +47,79 @@ var vm = new Vue({
         },
         totalEnd: function(){
             return this.end+" 23:59:59";
+        },
+        total: function(){
+            var self = this;
+            var sum = 0;
+            if(self.codeList.length>0){
+                $.each(self.codeList, function(i, n){
+                    sum += n.total;
+                });
+            }else{
+                sum = '';
+            }
+            return sum;
+        },
+        used: function(){
+            var self = this;
+            var sum = 0;
+            if(self.codeList.length>0){
+                $.each(self.codeList, function(i, n){
+                    sum += n.used;
+                });
+            }else{
+                sum = '';
+            }
+            return sum;
+        },
+        usable: function(){
+            var self = this;
+            var sum = 0;
+            if(self.codeList.length>0){
+                $.each(self.codeList, function(i, n){
+                    sum += n.usable;
+                });
+            }else{
+                sum = '';
+            }
+            return sum;
+        },
+        expired: function(){
+            var self = this;
+            var sum = 0;
+            if(self.codeList.length>0){
+                $.each(self.codeList, function(i, n){
+                    sum += n.expired;
+                });
+            }else{
+                sum = '';
+            }
+            return sum;
         }
     },
     mounted: function(){
         var self = this;
 
-        var op = ['1', '2'];
-
-        //ree.getOperatorAndList(self.totalStart, self.totalEnd, self.operator, 1, function(data){
-        //    self.currentPage = data.current_page;
-        //    self.totalPage = data.total_pages;
-        //    self.codeList = data.table_payload.datas;
-        //});
+        ree.getOperatorAndList(self.totalStart, self.totalEnd, self.operator, 1, function(data){
+            self.currentPage = data.table_payload.current_page;
+            self.totalPage = data.table_payload.total_pages;
+            self.codeList = data.table_payload.datas;
+            $.each(data.operators, function(i,n){
+                var op = {text: n, value: n};
+                self.operatorOptions.push(op);
+            });
+        });
     },
     methods: {
+        changeFilter: function(){
+            var self = this;
+            self.pageChange(1);
+        },
         pageChange: function(page){
             var self = this;
             ree.getOperatorAndList(self.totalStart, self.totalEnd, self.operator, page, function(data){
-                self.currentPage = data.current_page;
-                self.totalPage = data.total_pages;
+                self.currentPage = data.table_payload.current_page;
+                self.totalPage = data.table_payload.total_pages;
                 self.codeList = data.table_payload.datas;
             });
         }

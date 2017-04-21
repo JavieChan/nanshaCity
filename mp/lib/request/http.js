@@ -1,12 +1,12 @@
 function Request(){
     this.protocol= "http",                // 请求协议
-    this.host= "test.bidongwifi.com:",       // 请求域名或IP
-    this.port= "9902",                      // 请求端口
+    this.host= "test.bidongwifi.com",       // 请求域名或IP
+    this.port= "80",                      // 请求端口
     this.version= "v0"                   // API版本号
 }
 Request.prototype._send = function(type, pathname, params, success, fail){
-    var url = this.protocol+'://'+this.host+':'+this.port+pathname;
-    //var url = pathname;
+    //var url = this.protocol+'://'+this.host+':'+this.port+pathname;
+    var url = pathname;
 
     $.ajax({
         method: type,
@@ -26,7 +26,7 @@ Request.prototype._send = function(type, pathname, params, success, fail){
             if($.isFunction(fail)){
                 fail(res)
             }else{
-                alert(res.message);
+                alert(res.reason);
             }
         }
     }).fail(function(err){
