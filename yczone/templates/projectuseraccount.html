@@ -19,12 +19,7 @@
         online_count = len([ol for ol in online if ol['name'] != '' and ol['name'] != u'(访客)'])
         # 非内部在线人数
         online_count2 = len([ol for ol in online if ol['name'] == '' or ol['name'] == u'(访客)'])
-        try:
-            TPNUser = Base.classes.__getattr__('pn_{}'.format(location.split(',')[-1]))
-            # 内部不在线人数
-            offline_count = ins.session.query(TPNUser).count() - online_count
-        except:
-            offline_count = 0
+	offline_count = ins.mdb.inner_user.count() - online_count
     %>
     % else:
     <%
