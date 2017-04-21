@@ -46,7 +46,7 @@ var vm = new Vue({
             return this.expired+" 23:59:59";
         },
         exportCodes: function(){
-            var url = (this.serial == '') ? 'javascript:;' : 'http://10.20.1.34:8087/redeemcode/codes.xls?serial='+this.serial;
+            var url = (this.serial == '') ? 'javascript:;' : '/redeemcode/codes.xls?serial='+this.serial;
             return url;
         }
     },

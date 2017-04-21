@@ -3,7 +3,7 @@
 
 <div class="wrapper">
     <!--导航-->
-    <%include file="nav.html" args="on={'ac': 'redeem'}"/>
+    <%include file="nav.html" args="on={'redeem': 'on'}"/>
     <!--右侧功能栏-->
     <div class="projects">
         <div class="tabbox">
@@ -13,8 +13,8 @@
                 </h2>
                 <div class="widget">
                     <a href="javascript:;" class="btnBlue disabled">生成兑换码</a>
-                    <a href="javascript:;" class="btnBlue">兑换码列表</a>
-                    <a href="javascript:;" class="btnBlue">运营统计</a>
+                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue">兑换码列表</a>
+                    <a href="/redeemcodetotal.html?location=${location}" class="btnBlue">运营统计</a>
                 </div>
             </div>
         </div>
