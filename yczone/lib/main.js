@@ -356,7 +356,8 @@
         }else{
             param.mac = 0
         }
-        $.get("/sensmembers.xls", param);
+        $('#sensExport').attr('href', '/sensmembers.xls?'+$.param(param));
+        $('#sensExport span').click();
     });
     // 导出漫游纪录
     $(document).on('click', '#connectRecordExport', function(){
