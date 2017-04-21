@@ -31,3 +31,14 @@ redeemCode.prototype.getCodeList = function(status, page, callback){
         callback(data);
     });
 };
+redeemCode.prototype.getOperatorAndList = function(start, end, operator, page, callback){
+    var params = {
+        start: start,
+        end: end,
+        operator: operator,
+        page: page
+    };
+    this._get('/redeemcode/operator', params, function(data){
+        callback(data);
+    });
+};

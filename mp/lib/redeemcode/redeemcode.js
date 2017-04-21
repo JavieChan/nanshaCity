@@ -17,16 +17,6 @@ $(function(){
     });
 });
 
-function GetDateStr(AddDayCount) {
-    var dd = new Date();
-    dd.setDate(dd.getDate()+AddDayCount);   //获取AddDayCount天后的日期
-    var y = dd.getFullYear();
-    var m = dd.getMonth()+1;     //获取当前月份的日期
-    var d = dd.getDate();
-    if(m<9) m="0"+m;
-    return y+"-"+m+"-"+d;
-}
-
 var renderList = {
     template: '<tr><td>{{ code.code }}</td><td>{{ code.hours }}小时</td><td>至{{ code.expired }}</td></tr>',
     props: ['code']

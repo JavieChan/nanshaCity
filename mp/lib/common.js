@@ -136,6 +136,16 @@ function dateFormate(){
     return s;
 }
 
+function GetDateStr(AddDayCount) {
+    var dd = new Date();
+    dd.setDate(dd.getDate()+AddDayCount);   //获取AddDayCount天后的日期
+    var y = dd.getFullYear();
+    var m = dd.getMonth()+1;     //获取当前月份的日期
+    var d = dd.getDate();
+    if(m<9) m="0"+m;
+    return y+"-"+m+"-"+d;
+}
+
 // h5定位
 function resizeZW(){
     var h = $('#zw').height();

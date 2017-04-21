@@ -5,7 +5,8 @@ function Request(){
     this.version= "v0"                   // API版本号
 }
 Request.prototype._send = function(type, pathname, params, success, fail){
-    var url = this.protocol+'://'+this.host+':'+this.port+pathname;
+    //var url = this.protocol+'://'+this.host+':'+this.port+pathname;
+    var url = pathname;
 
     $.ajax({
         method: type,

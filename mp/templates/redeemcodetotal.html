@@ -64,21 +64,21 @@
                 </div>
                 <div class="tabbox ns_table" id="redeemcodetotal">
                     <div class="total-panel">
-                        <div class="total">总时长：4000小时</div><div class="used">已兑换：4000小时</div><div class="usable">待兑换：4000小时</div><div class="expired">已过期：4000小时</div>
+                        <div class="total">总时长：{{ total }}小时</div><div class="used">已兑换：{{ used }}小时</div><div class="usable">待兑换：{{ usable }}小时</div><div class="expired">已过期：{{ expired }}小时</div>
                     </div>
                     <div class="toolnav">
                         <div class="toolbox">
                             <div>
                                 运营人员：
-                                <select v-model.lazy="codeStatus" @change="selectStatusCodes">
+                                <select v-model.lazy="operator">
                                     <option value="">全部</option>
                                 </select>
                             </div>
                             <div>
                                 统计周期：
-                                <input type="text" />
+                                <input type="text" v-model="start" id="start" />
                                 —
-                                <input type="text" />
+                                <input type="text" v-model="end" id="end" />
                             </div>
                             <button type="button" class="btnBlueSmall">确定</button>
                         </div>
@@ -95,10 +95,10 @@
                             <tr is="render-list" v-for="code in codeList" :code="code" :key="code.id"></tr>
                             <tr>
                                 <td><b>合计</b></td>
-                                <td>4000</td>
-                                <td>4000</td>
-                                <td>4000</td>
-                                <td>4000</td>
+                                <td>{{ total }}</td>
+                                <td>{{ used }}</td>
+                                <td>{{ usable }}</td>
+                                <td>{{ expired }}</td>
                             </tr>
                         </table>
                         <div class="page-panel" style="text-align:right;margin-top:16px">
