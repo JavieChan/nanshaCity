@@ -129,6 +129,16 @@
 	                            _react2.default.createElement("i", null)
 	                        ),
 	                        _react2.default.createElement(
+	                            "span",
+	                            { name: "department" },
+	                            _react2.default.createElement(
+	                                "em",
+	                                null,
+	                                "\u90E8\u95E8"
+	                            ),
+	                            _react2.default.createElement("i", null)
+	                        ),
+	                        _react2.default.createElement(
 	                            "i",
 	                            null,
 	                            "\u64CD\u4F5C"
@@ -153,6 +163,11 @@
 	                                "td",
 	                                null,
 	                                list.name
+	                            ),
+	                            _react2.default.createElement(
+	                                "td",
+	                                null,
+	                                list.department
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",
@@ -251,11 +266,13 @@
 	            addBtn.addEventListener('click', function () {
 	                if (checkInput($('#modalRoomInner .veright')) == 0) {
 	                    var account = $('input[name=account]').val(),
-	                        name = $('input[name=name]').val();
+	                        name = $('input[name=name]').val(),
+	                        department = $('input[name=department]').val();
 	                    var param = {
 	                        location: $('#location').val(),
 	                        account: account,
-	                        name: name
+	                        name: name,
+	                        department: department
 	                    };
 	                    userInnerAjax("post", "", param, function (data) {
 	                        if (data.code == 200) {
@@ -263,7 +280,8 @@
 	                            var rows = self.state.list;
 	                            rows.unshift({
 	                                account: account,
-	                                name: name
+	                                name: name,
+	                                department: department
 	                            });
 	                            self.setState({ list: rows });
 	                        } else {

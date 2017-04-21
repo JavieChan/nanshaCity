@@ -29,9 +29,9 @@ var vm = new Vue({
         start: GetDateStr(-1),
         end: GetDateStr(1),
         operator: '',
-        operatorOptions: {
-
-        },
+        operatorOptions: [
+            {text: '全部', value: ''}
+        ],
         total: '',
         used: '',
         usable: '',
@@ -55,11 +55,14 @@ var vm = new Vue({
     },
     mounted: function(){
         var self = this;
-        ree.getOperatorAndList(self.totalStart, self.totalEnd, self.operator, 1, function(data){
-            self.currentPage = data.current_page;
-            self.totalPage = data.total_pages;
-            self.codeList = data.table_payload.datas;
-        });
+
+        var op = ['1', '2'];
+
+        //ree.getOperatorAndList(self.totalStart, self.totalEnd, self.operator, 1, function(data){
+        //    self.currentPage = data.current_page;
+        //    self.totalPage = data.total_pages;
+        //    self.codeList = data.table_payload.datas;
+        //});
     },
     methods: {
         pageChange: function(page){

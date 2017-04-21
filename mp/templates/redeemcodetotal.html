@@ -71,7 +71,7 @@
                             <div>
                                 运营人员：
                                 <select v-model.lazy="operator">
-                                    <option value="">全部</option>
+                                    <option v-for="option in operatorOptions" :value="option.value">{{ option.text }}</option>
                                 </select>
                             </div>
                             <div>

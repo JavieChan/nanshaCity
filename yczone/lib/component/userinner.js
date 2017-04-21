@@ -29,6 +29,7 @@ class Table extends Component {
                     <SortCmp callbackSort={this.props.callbackSort} update={this.state.update} sortIndex={this.props.sortIndex} xbcheck={this.props.xbcheck}>
                         <span name="account"><em>账号</em><i></i></span>
                         <span name="name"><em>姓名</em><i></i></span>
+                        <span name="department"><em>部门</em><i></i></span>
                         <i>操作</i>
                     </SortCmp>
                 }
@@ -43,6 +44,7 @@ class Table extends Component {
                                 <tr>
                                     <td>{list.account}</td>
                                     <td>{list.name}</td>
+                                    <td>{list.department}</td>
                                     <td>
                                         { this.state.view ? <a href={"/projectuserinnerinfo.html?location="+location+"&mask=2&id="+list._id+"&mac="+list.mac+"&ip="+list.ip}>详情</a> : null }
                                         { this.state.delete ? <span className="delete" onClick={this.handleDel.bind(this)} data-key={index}>删除</span> : null }
@@ -119,11 +121,13 @@ class Box extends Component {
         addBtn.addEventListener('click', function(){
             if(checkInput($('#modalRoomInner .veright'))==0){
                 var account = $('input[name=account]').val(),
-                    name = $('input[name=name]').val();
+                    name = $('input[name=name]').val(),
+                    department = $('input[name=department]').val();
                 var param={
                     location: $('#location').val(),
                     account: account,
-                    name: name
+                    name: name,
+                    department: department
                 };
                 userInnerAjax("post", "", param, function(data){
                     if(data.code==200){
@@ -131,7 +135,8 @@ class Box extends Component {
                         var rows = self.state.list;
                         rows.unshift({
                             account: account,
-                            name: name
+                            name: name,
+                            department: department
                         });
                         self.setState({list: rows});
                     }else{
