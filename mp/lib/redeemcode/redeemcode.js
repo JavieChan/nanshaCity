@@ -3,6 +3,7 @@ $(function(){
     // 日期
     $("#expired").datepicker({
         dateFormat: 'yy-mm-dd',
+        minDate: GetDateStr(0),
         onClose: function(selectedDate) {
             vm.expired = selectedDate;
         }
