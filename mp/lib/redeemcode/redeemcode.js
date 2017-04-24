@@ -11,7 +11,12 @@ $(function(){
     // 复制兑换码
     var clipboard = new Clipboard('#clipboard');
     clipboard.on('success', function(){
-        alert("本页兑换码已复制到剪贴板");
+        if(vm.codeList.length>0){
+            alert("本页兑换码已复制到剪贴板");
+        }else{
+            alert("兑换码为空，请生成兑换码");
+            return false;
+        }
     });
     clipboard.on('error', function(){
         alert("[复制失败]");
@@ -54,8 +59,9 @@ var vm = new Vue({
     methods: {
         generateCodes: function(){
             var self = this;
-            if(self.count>200){
-                alert("兑换码数量超出上限(最多200个)");
+            if(!/^[1-9]$|^[1-9]\d$|^1\d{2}$|^200$/.test(self.count)){
+                alert("兑换码数量最多可设置200个");
+                self.count = 1;
                 return false;
             }
             ree.createSerial(self.count, self.hours, self.totalExpired, function(data){
@@ -79,6 +85,13 @@ var vm = new Vue({
                 h+=code.code + '\t' + code.hours + '小时\t有效期至' + code.expired + '\r\n';
             }
             this.onePageCodes = h;
+        },
+        exportEXE: function(){
+            var self = this;
+            if(!(self.codeList.length>0)){
+                alert("兑换码为空，请生成兑换码");
+                return false;
+            }
         }
     }
 });

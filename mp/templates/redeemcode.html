@@ -34,7 +34,7 @@
                     <div>
                         兑换码数量
                         <input type="text" v-model.number.trim="count" style="width:50px" />
-                        个<span>(<200个)</span>
+                        个<span>(1-200个)</span>
                     </div>
                     <div>
                         有效期
@@ -43,8 +43,8 @@
                     <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
                 </div>
                 <div class="tool-panel">
-                    <a :href="exportCodes" class="btnBlueSmall">导出Excel</a>
-                    <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar" :disabled="(onePageCodes=='') ? true : false">复制兑换码</button>
+                    <a :href="exportCodes" class="btnBlueSmall" @click="exportEXE">导出Excel</a>
+                    <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar">复制兑换码</button>
                 </div>
                 <textarea id="copyBar" v-model="onePageCodes" style="width:100%;height:100px"></textarea>
                 <table>
@@ -72,5 +72,4 @@
 <script src="/static/js/lib/clipboard.js"></script>
 <script src="/static/js/lib/vue.js"></script>
 <script src="/static/js/redeemcode.min.js"></script>
-
 </%block>
