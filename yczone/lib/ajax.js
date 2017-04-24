@@ -554,7 +554,7 @@ function apgrouplistAjax(type, param, callback, errFunc){
 function sensAdminAjax(type, param, callback, errFunc){
     $.ajax({
         method: type,
-        url: proUrl+'/sens/admin',
+        url: proUrl+'sens/admin',
         data: param,
         dataType: "json"
     }).done(function(data){
