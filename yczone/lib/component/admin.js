@@ -40,6 +40,7 @@ class Table extends Component {
                                                 { list.mask==0 ? <span className="unforbin">启用</span> : <span className="forbin">停用</span> }
                                                 <span className="edit">编辑</span>
                                                 <input type="hidden" name="name" value={list.name} />
+                                                <input type="hidden" name="sensgoups" value={list.sens_group} />
                                             </td>
                                         ) : (
                                             null

@@ -176,7 +176,8 @@
 	                                    { className: "edit" },
 	                                    "\u7F16\u8F91"
 	                                ),
-	                                _react2.default.createElement("input", { type: "hidden", name: "name", value: list.name })
+	                                _react2.default.createElement("input", { type: "hidden", name: "name", value: list.name }),
+	                                _react2.default.createElement("input", { type: "hidden", name: "sensgoups", value: list.sens_group })
 	                            ) : null
 	                        )
 	                    );
