@@ -2005,6 +2005,7 @@
     });
     $(document).on('click', '#modalAccount, #modalAccount .closed', function(){
         $('#modalAccount').modal('closed');
+        $('.checklist dd i').removeClass('on');
     });
     $(document).on('click', '#modalAccount .add', function(e){
         var name=$('#modalAccount input[name=name]').val(),
@@ -2015,13 +2016,22 @@
             password=$('#modalAccount input[name=password]').val();
 
         if(location==''){$('.msg').text('选择所属项目');return false;}
+
+        var sensgroups=[];
+        $('.checklist dd i').each(function(i, n){
+            if($(n).hasClass('on')){
+                sensgroups.push($(n).next('em').attr("data-id"));
+            }
+        });
+
         $('.msg').text('');
         if(checkInput($('#modalAccount .veright'))==0){
             var param={
                 name: name,
                 location: location,
                 role: role,
-                password: password
+                password: password,
+                sens_group: sensgroups.join(',')
             };
             accountAjax("post", param, function(data){
                 if(data.code==200){
@@ -2034,7 +2044,16 @@
     });
     // 编辑账户
     $(document).on('click', '#accountlist .edit', function(){
-        var idx = $(this).parent().parent().index(), $td=$(this).parent().parent().find('td');
+        var idx = $(this).parent().parent().index(), $td=$(this).parent().parent().find('td'), sensgoups=$(this).siblings('input[name=sensgoups]').val();
+
+        $('.checklist dd').each(function(i, n){
+            $.each(sensgoups.split(','), function(j, k){
+                if($(n).find('em').data('id')==k){
+                    $(n).find('i').addClass('on');
+                }
+            });
+        });
+
         $('#modalAccount input[name=idx]').val(idx);
         $('#modalAccount input[name=id]').val($td.eq(0).data('value'));
         $('#modalAccount li:eq(0) .verify').html($td.eq(0).data('value'));
@@ -2056,12 +2075,21 @@
             roleName = $('#role option:selected').text(),
             idx = $('#modalAccount input[name=idx]').val();
         if(location==''){$('.msg').text('选择所属项目');return false;}
+
+        var sensgroups=[];
+        $('.checklist dd i').each(function(i, n){
+            if($(n).hasClass('on')){
+                sensgroups.push($(n).next('em').attr("data-id"));
+            }
+        });
+
         $('.msg').text('');
         if(checkInput($('#modalAccount .veright'))==0) {
             var param = {
                 name: name,
                 location: location,
-                role: role
+                role: role,
+                sens_group: sensgroups.join(',')
             };
             if(password!=''){param.password=password;}
             accountAjax("put", param, function (data) {

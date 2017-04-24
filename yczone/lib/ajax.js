@@ -550,6 +550,21 @@ function apgrouplistAjax(type, param, callback, errFunc){
     });
 }
 
+// 账户管理-get感知组
+function sensAdminAjax(type, param, callback, errFunc){
+    $.ajax({
+        method: type,
+        url: proUrl+'/sens/admin',
+        data: param,
+        dataType: "json"
+    }).done(function(data){
+        callback(data);
+    }).fail(function(error){
+        console.log(error);
+        if(typeof(errFunc)=="function") errFunc(error);
+    });
+}
+
 // 发送上网账号
 function sendAccountAjax(mobile, param, callback, errFunc){
     $.ajax({

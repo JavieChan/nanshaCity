@@ -87,6 +87,13 @@
                   % endfor
             </select></span></li>
             <li><label><i>*</i>密码：</label><span class="veright"><div class="verify"><input type="text" name="password" class="matchVerify checkEng" /></div></span></li>
+            <li><label><i>*</i>感知组：</label>
+                <span class="veright">
+                    <div class="checklist" id="sensAdmin">
+                        <dl></dl>
+                    </div>
+                </span>
+            </li>
         </ul>
         <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
         <i class="msg"></i>
@@ -115,6 +122,26 @@
     <script type="text/javascript">
         $(function(){
             $('.autoDom').mySelect();
+
+            var sensAdmin = '';
+            var getSensAdmin = function(){
+                sensAdminAjax("get", '', function(data){
+                    if(data.code==200){
+                        var h='';
+                        if(data.groups.length>0){
+                            for(var i=0, len=data.groups.length; i<len; i++){
+                                var sens = data.groups[i];
+                                h += '<dd><i class="uncheck_s"></i><em data-id="'+sens._id+'">'+sens.group+'</em></dd>';
+                            }
+                        }
+                        $('#sensAdmin dl').html(h);
+
+                    }
+                });
+            };
+            if(sensAdmin==''){
+                getSensAdmin();
+            }
         });
     </script>
 </%block>
