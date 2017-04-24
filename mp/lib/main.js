@@ -67,11 +67,13 @@
     var forbinACFlag = true;
     $(document).on('click', '.forbinAC', function(){
         if(forbinACFlag){
+            $(this).text('启用');
             $('.magnet').each(function(i, n){
                 $(n).append('<i title="删除"></i>');
             });
             forbinACFlag=false;
         }else{
+            $(this).text('禁用');
             $('.magnet').each(function(i, n){
                 $(n).find('i').remove();
             });
