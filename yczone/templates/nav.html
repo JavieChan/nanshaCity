@@ -1,8 +1,8 @@
 <%page args="ins,location='',on={'project': 'on'}">
 <div class="nav">
-    % if location:
+    % if location and ins.is_allowed('view', 'resource'):
     <h3 class="${on.pop('project', '')}"><a href="/projectcard.html?location=${location}"><i class="navProjectIco"></i>项目管理</a></h3>
-    % else:
+    % elif ins.is_allowed('view', 'resource'):
     <h3 class="${on.pop('project', '')}"><a href="/index.html"><i class="navProjectIco"></i>项目管理</a></h3>
     % endif
     % if location and ins.is_allowed('view', 'policy'):
@@ -33,7 +33,9 @@
     % if location and ins.is_allowed('view', 'sens'):
     <h3 class="${on.pop('sens', '')}"><a href="/projectsens.html?location=${location}"><i class="navSensIco"></i>感知分析</a></h3>
     % endif
+    % if location and ins.is_allowed('view', 'message'):
     <h3 class="${on.pop('h5', '')}"><a href="/projecth5list.html?location=${location}"><i class="navH5Ico"></i>H5页面管理</a></h3>
+    % endif
     % if location and ins.is_allowed('view', 'message'):
     <h3 class="${on.pop('apgroups', '')}"><a href="/apgroups.html?location=${location}"><i class="navAPgroupIco"></i>AP组管理</a></h3>
     % endif
