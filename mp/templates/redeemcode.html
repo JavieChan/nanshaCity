@@ -33,7 +33,7 @@
                     </div>
                     <div>
                         兑换码数量
-                        <input type="text" v-model.number.trim="count" style="width:50px" />
+                        <input type="text" v-model.trim="count" @blur="checkCount" style="width:50px" />
                         个<span>(1-200个)</span>
                     </div>
                     <div>

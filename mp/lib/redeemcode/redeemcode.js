@@ -59,11 +59,7 @@ var vm = new Vue({
     methods: {
         generateCodes: function(){
             var self = this;
-            if(!/^[1-9]$|^[1-9]\d$|^1\d{2}$|^200$/.test(self.count)){
-                alert("兑换码数量最多可设置200个");
-                self.count = 1;
-                return false;
-            }
+            //self.checkCount();
             ree.createSerial(self.count, self.hours, self.totalExpired, function(data){
                 self.serial= data.serial;
                 self.pageChange(1);
@@ -91,6 +87,19 @@ var vm = new Vue({
             if(!(self.codeList.length>0)){
                 alert("兑换码为空，请生成兑换码");
                 return false;
+            }
+        },
+        checkCount: function(){
+            var self = this;
+            if(!/^[1-9]$|^[1-9]\d$|^1\d{2}$|^200$/.test(self.count)){
+                self.count = 1;
+            }
+        }
+    },
+    watch: {
+        count: function(val, old){
+            if(!/^[1-9]$|^[1-9]\d$|^1\d{2}$|^200$|^$/.test(val)){
+                this.count = 1;
             }
         }
     }
