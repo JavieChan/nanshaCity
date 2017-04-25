@@ -18,7 +18,7 @@
             <div class="toolnav">
                 <h4>监视组列表</h4>
                 <div class="toolbox">
-                    % if ins.is_allowed('create', 'sens'):
+                    % if ins.is_allowed('create', 'sens') and (len(aps) > 0):
                     <button type="button" class="btnGraySmall addbtn">新增监视</button>
                     % endif
                     <div class="search" id="search"><input type="text" placeholder="输入监视名" /><button type="button"><i class="searchIcoGray"></i></button></div>
@@ -65,6 +65,7 @@
             </ul>
             <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
             <i class="msg"></i>
+
             <span class="closed">X</span>
         </div>
     </div>
