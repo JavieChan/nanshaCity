@@ -27,42 +27,45 @@
             <div class="toolnav">
                 <h3>功能选择：</h3>
             </div>
-        ##    <%
-        ##      r = ins.mdb.role.find_one({'role': roles[0]}, {'_id': 0})
-        ##      def check_allowed(operate, resource):
-        ##          for a in r['acl']:
-        ##              if a['resource'] == resource and operate in a['operation']:
-        ##                  return True
-        ##          return False
+            <%
+              from utils import ServiceFactory
+              r = ServiceFactory.create('account.admin').get_role(roles[0])
+              def check_allowed(operate, resource):
+                  print(r['acl'])
+                  for a in r['acl']:
+                      print(a)
+                      if a['resource'] == resource and operate in a['operation']:
+                          return True
+                  return False
 
-        ##      def check_resource(resource):
-        ##          for a in r['acl']:
-        ##              if a['resource'] == resource and len(a['operation']) > 0:
-        ##                      return True
-        ##          return False
-        ##    %>
-        ##    <div class="areabox" id="roleOpra">
-        ##        % for p in permissions:
-        ##        <p><label data-resource="${p['resource']}">
-        ##            % if check_resource(p['resource']):
-        ##            <i class="headunchk headchk"></i>
-        ##            % else:
-        ##            <i class="headunchk"></i>
-        ##            % endif
-        ##            ${p['label']}</label></p>
-        ##        <div>
-        ##            % for op in p['operation']:
-        ##            <label data-operation="${op['name']}">
-        ##              % if check_allowed(op['name'], p['resource']):
-        ##              <i class="unchk chk"></i>
-        ##              % else:
-        ##              <i class="unchk"></i>
-        ##              % endif
-        ##              ${op['label']}</label>
-        ##            % endfor
-        ##        </div>
-        ##        % endfor
-        ##    </div>
+              def check_resource(resource):
+                  for a in r['acl']:
+                      if a['resource'] == resource and len(a['operation']) > 0:
+                              return True
+                  return False
+            %>
+            <div class="areabox" id="roleOpra">
+                % for p in permissions:
+                <p><label data-resource="${p['resource']}">
+                    % if check_resource(p['resource']):
+                    <i class="headunchk headchk"></i>
+                    % else:
+                    <i class="headunchk"></i>
+                    % endif
+                    ${p['label']}</label></p>
+                <div>
+                    % for op in p['operation']:
+                    <label data-operation="${op['name']}">
+                      % if check_allowed(op['name'], p['resource']):
+                      <i class="unchk chk"></i>
+                      % else:
+                      <i class="unchk"></i>
+                      % endif
+                      ${op['label']}</label>
+                    % endfor
+                </div>
+                % endfor
+            </div>
         </div>
     </div>
 </div>

@@ -2,11 +2,11 @@
 <%inherit file="base.html" />
 
 <div class="wrapper">
-    ##<input type="hidden" name="" id="pms-create-message" value="${ins.is_allowed('create', 'message')}">
-    ##<input type="hidden" name="" id="pms-delete-message" value="${ins.is_allowed('delete', 'message')}">
-    ##<input type="hidden" name="" id="pms-update-message" value="${ins.is_allowed('update', 'message')}">
-    ##<input type="hidden" value="${location}" id="location" />
-    ##<input type="hidden" value="${location.split(',')[-1]}" id="groups">
+    <input type="hidden" name="" id="pms-create-message" value="${ins.is_allowed('create', 'message')}">
+    <input type="hidden" name="" id="pms-delete-message" value="${ins.is_allowed('delete', 'message')}">
+    <input type="hidden" name="" id="pms-update-message" value="${ins.is_allowed('update', 'message')}">
+    <input type="hidden" value="${location}" id="location" />
+    <input type="hidden" value="${location.split(',')[-1]}" id="groups">
     <!--导航-->
     <%include file="nav.html" args="on={'message': 'on'}"/>
     <!--右侧功能栏-->
