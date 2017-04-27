@@ -238,6 +238,16 @@
   width: 32px;
   height: 32px;
 }
+.navRedeenIco{
+  background: url("../img/sprites/nav_redeem.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
+.on .navRedeenIco{
+  background: url("../img/sprites/nav_redeem_on.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
 .arrowDownIco, .ico_arrowDown:after{
   background: url("../img/sprites/ico_arrow_down.png") no-repeat;
   width: 16px;
