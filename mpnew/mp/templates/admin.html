@@ -33,14 +33,14 @@
                 <ul>
                     <li><p>${ins.user}</p><h4>账号</h4></li>
                     <%
-                      from utils import ServiceFactory
+                      from web.common.g import sf
                       def get_projectname(_location):
                           try:
-                              return ServiceFactory.create('project.project').get_by_location(ins.session, _location).name
+                              return sf['project.project'].get_by_location(ins.session, _location).name
                           except:
                               return ''
 
-                      current_user = ServiceFactory.create('account.admin').get_by_user(ins.user);
+                      current_user = sf['account.admin'].get_by_user(ins.user);
                     %>
                     % if ins._location:
                     <li><p>${get_projectname(current_user._location)}</p><h4>所属项目</h4></li>

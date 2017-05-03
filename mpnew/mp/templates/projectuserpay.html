@@ -52,19 +52,14 @@
                 <li><a href="/projectuseronline.html?location=${location}">在线用户</a></li>
                 <li><a href="/projectuserguest.html?location=${location}">在线访客</a></li>
                 <li><a href="/projectuseraccount.html?location=${location}">上网账号</a></li>
-                ##<%
-                ##import resource
-                ##res = resource.get(ins, location)
-                ##%>
-                ##% if res.type_id == 8:
-                ##<li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
-                ##% endif
-                ##% if location.startswith('29946'):
-                ##<li><a href="/projectuserinner.html?location=${location}">内网用户</a></li>
-                ##% endif
-                ##% if not location.startswith('29946'):
-                ##<li class="on"><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
-                ##% endif
+                <%
+                from web.common.g import sf
+                res = sf['project'].get_by_location(location)
+                %>
+                % if res.type.id == 8:
+                <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
+                % endif
+                <li class="on"><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
             </ul>
             <div class="toolnav">
                 <div class="toolbox">

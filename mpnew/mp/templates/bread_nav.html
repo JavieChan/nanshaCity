@@ -1,12 +1,12 @@
 <%page args="location,ins,suffix=None,remain=None,compress=False">
 <h2>
 <%
-from utils import ServiceFactory
+from web.common.g import sf
 locs = location.split(',')
 def get_resource_name(locs, title=False):
     try:
         _location = ','.join(locs)
-        name = ServiceFactory.create('project.project').get_by_location(_location).name
+        name = sf['project.project'].get_by_location(_location).name
         if not title and compress and len(list(name)) > 5:
             return ''.join(list(name)[:5]) + '...'
         else:

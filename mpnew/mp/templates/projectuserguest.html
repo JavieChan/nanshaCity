@@ -53,12 +53,13 @@
                 <li class="on"><a href="/projectuserguest.html?location=${location}">在线访客</a></li>
                 <li><a href="/projectuseraccount.html?location=${location}">上网账号</a></li>
                 <%
-                from utils import ServiceFactory
-                res = ServiceFactory.create('project.project').get_by_location(location)
+                from web.common.g import sf
+                res = sf['project'].get_by_location(location)
                 %>
                 % if res.type.id == 8:
                 <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
                 % endif
+                <li><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
             </ul>
             <div class="toolnav">
                 <div class="toolbox">
