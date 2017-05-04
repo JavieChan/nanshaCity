@@ -707,13 +707,15 @@
 
     // 图片缩放
     $(document).on('click', '.veright img', function(){
-        $('#modalImg img').attr('src', $(this).attr('src')).load(function(){
-            var w = this.width;
-            $('.modal_img').css({'width': w+'px', 'margin-left':-Math.ceil(w/2)+'px'});
-        });
-        //$('.modal_img').css({'width': '800px', 'margin-left':'-400px'});
-        //$('#modalImg img').attr('src', $(this).attr('src'));
-        $('#modalImg').modal('open');
+        if(!$(this).hasClass('staySize')) {
+            $('#modalImg img').attr('src', $(this).attr('src')).load(function () {
+                var w = this.width;
+                $('.modal_img').css({'width': w + 'px', 'margin-left': -Math.ceil(w / 2) + 'px'});
+            });
+            //$('.modal_img').css({'width': '800px', 'margin-left':'-400px'});
+            //$('#modalImg img').attr('src', $(this).attr('src'));
+            $('#modalImg').modal('open');
+        }
     });
     $(document).on('click', '#modalImg, #modalImg .closed', function(){
         $('#modalImg').modal('closed');
