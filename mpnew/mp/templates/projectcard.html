@@ -125,7 +125,7 @@
                 s1 = time.time()
                 %>
                 <div class="ns_deCtx" style="overflow: inherit;">
-                    <% import device %>
+                    <% from web.common.g import sf %>
                     <%
                     def get_imgurl(sens_maps):
                         try:
@@ -142,7 +142,7 @@
                             sens_aps = ins.mdb.list.distinct('mac', {'sens': 1})
                             %>
                             % for pnt in ins.mdb.sens_map_ap.find({'imgurl': _imgurl}):
-                                % if not device.ap_is_online(ins, pnt['mac'].upper()):
+                                % if not sf['device.ap'].is_online(ins, pnt['mac'].upper()):
                                 <i class="dodot doRed" data-left="${pnt['left']}" data-top="${pnt['top']}" style="left: ${pnt['left']}px; top:${pnt['top']}px;"><em class="doem" data-mac="${pnt['mac']}" data-x="${pnt['pos_x']}" data-y="${pnt['pos_y']}" data-id="${str(pnt['_id'])}"></em></i>
                                 % elif pnt['mac'] in sens_aps:
                                 <i class="dodot doBlue" data-left="${pnt['left']}" data-top="${pnt['top']}" style="left: ${pnt['left']}px; top:${pnt['top']}px;"><em class="doem" data-mac="${pnt['mac']}" data-x="${pnt['pos_x']}" data-y="${pnt['pos_y']}" data-id="${str(pnt['_id'])}"></em></i>
