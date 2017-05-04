@@ -13,13 +13,11 @@ var renderList = {
         <td>{{ promote.account }}</td>\
         <td>{{ promote.password }}</td>\
         <td><img :src="promote.image_uri" /></td>\
-        <td><span class="edit">编辑</span><span :class="[promote.status==0 ? useClass : usingClass]">应用</span><span class="delete">删除</span></td>\
+        <td><span class="edit">编辑</span><span class="use" v-show="!promote.status">应用</span><span class="using" v-show="promote.status">已用</span><span class="delete">删除</span></td>\
     </tr>',
     props: ['promote'],
     data: function(){
         return {
-            useClass: 'use',
-            usingClass: 'using'
         }
     },
     methods: {
