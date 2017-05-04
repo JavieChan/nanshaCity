@@ -50,7 +50,7 @@
                 <h3 class="${on.pop('redeem', '')}"><a href="/redeemcode.html?location=${location}"><i class="navRedeenIco"></i>兑换码管理</a></h3>
             </div>
             <!--右侧功能栏-->
-            <div class="projects">
+            <div class="projects" id="promote">
                 <div class="tabbox">
                     <div class="bread">
                         <h2>
@@ -58,7 +58,7 @@
                         </h2>
                     </div>
                 </div>
-                <div class="tabbox wechat-using-wrapper">
+                <div class="tabbox wechat-using-wrapper" v-show="haspromote">
                     <div class="toolnav">
                         <h3>推广中的微信号</h3>
                         <div class="toolbox">
@@ -69,20 +69,20 @@
                         <div class="wechat-using-panel">
                             <div class="wechat-using-info">
                                 <div>
-                                    <label>微信号ID</label><span>fulijun</span>
+                                    <label>微信号ID</label><span>{{ using.wechatId }}</span>
                                 </div>
                                 <div>
-                                    <label>微信号名称</label><span>福利君</span>
+                                    <label>微信号名称</label><span>{{ using.nickname }}</span>
                                 </div>
                                 <div>
-                                    <label>微信登录名</label><span>18897654321</span>
+                                    <label>微信登录名</label><span>{{ using.account }}</span>
                                 </div>
                                 <div>
-                                    <label>登录密码</label><span>woshimima</span>
+                                    <label>登录密码</label><span>{{ using.password }}</span>
                                 </div>
                             </div>
                             <div class="wechat-using-qrcode">
-                                <img src="/static/images/QRcode.jpg" />
+                                <img :src="using.qrcode" />
                             </div>
                         </div>
                     </div>
@@ -113,33 +113,7 @@
                                         <th>二维码</th>
                                         <th>操作</th>
                                     </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="wechat-checkbox" /></td>
-                                        <td>fulijun</td>
-                                        <td>福利君</td>
-                                        <td>18897654321</td>
-                                        <td>woshimima</td>
-                                        <td><img src="/static/images/QRcode.jpg" /></td>
-                                        <td><span class="edit">编辑</span><span class="using">已用</span><span class="delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="wechat-checkbox" /></td>
-                                        <td>fulijun</td>
-                                        <td>福利君</td>
-                                        <td>18897654321</td>
-                                        <td>woshimima</td>
-                                        <td><img src="/static/images/QRcode.jpg" /></td>
-                                        <td><span class="edit">编辑</span><span class="using">已用</span><span class="delete">删除</span></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input type="checkbox" class="wechat-checkbox" /></td>
-                                        <td>fulijun</td>
-                                        <td>福利君</td>
-                                        <td>18897654321</td>
-                                        <td>woshimima</td>
-                                        <td><img src="/static/images/QRcode.jpg" /></td>
-                                        <td><span class="edit">编辑</span><span class="using">已用</span><span class="delete">删除</span></td>
-                                    </tr>
+                                    <tr is="render-list" v-for="promote in promoteList" :promote="promote" :key="promote.id"></tr>
                                 </table>
                             </div>
                         </div>
@@ -169,13 +143,13 @@
                 <li>
                     <label>微信号名称：</label>
                     <span class="veright">
-                        <div class="verify"><input type="text" name="name" class="matchVerify shouldVerify fill" /></div>
+                        <div class="verify"><input type="text" name="nickname" class="matchVerify shouldVerify fill" /></div>
                     </span>
                 </li>
                 <li>
                     <label>微信登录名：</label>
                     <span class="veright">
-                        <div class="verify"><input type="text" name="loginName" class="matchVerify shouldVerify fill" /></div>
+                        <div class="verify"><input type="text" name="account" class="matchVerify shouldVerify fill" /></div>
                     </span>
                 </li>
                 <li>
