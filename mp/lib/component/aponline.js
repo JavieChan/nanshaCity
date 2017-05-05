@@ -38,6 +38,7 @@ class Table extends Component {
                             '<td>'+list.user+'</td>'+
                             '<td>'+((!list.name)?'':list.name)+'</td>'+
                             '<td>'+((!list.mobile)?'':list.mobile)+'</td>'+
+                            '<td>'+((!list.ip)?'':list.ip)+'</td>'+
                             '<td>'+list.traffic+'M</td>'+
                             '<td>'+list.platform+'</td>';
                         if(self.state.update){
@@ -113,11 +114,12 @@ class InsideTr extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th width="22%">用户唯一ID</th>
-                                    <th width="12%">姓名</th>
-                                    <th width="22%">手机号</th>
-                                    <th width="12%">流量</th>
-                                    <th width="12%">客户端</th>
+                                    <th width="20%">用户唯一ID</th>
+                                    <th width="10%">姓名</th>
+                                    <th width="20%">手机号</th>
+                                    <th width="20%">IP</th>
+                                    <th width="10%">流量</th>
+                                    <th width="10%">客户端</th>
                                     {
                                         this.props.update ? <th width="10%">操作</th> : null
                                     }
