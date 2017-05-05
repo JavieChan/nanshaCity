@@ -42,5 +42,8 @@
     % if location and ins.is_allowed('view', 'redeem'):
     <h3 class="${on.pop('redeem', '')}"><a href="/redeemcode.html?location=${location}"><i class="navRedeenIco"></i>兑换码管理</a></h3>
     % endif
+    % if location and ins.is_allowed('view', 'promote'):
+    <h3 class="${on.pop('promote', '')}"><a href="/redeemcode.html?location=${location}"><i class="navPromoteIco"></i>微信号管理</a></h3>
+    % endif
 </div>
 </%page>
