@@ -39,8 +39,10 @@ function dateSub(str){
 function checkInput(elem){
     var $elem = elem.find('input.shouldVerify');
     $elem.each(function(i,n){
-        if($(n).hasClass('checkFile') && $(n).siblings('em').text()==''){
-            inputError('*上传文件/图片', n);
+        if($(n).hasClass('checkFile')){
+            if(($(n).siblings('em').length>0 && $(n).siblings('em').text()=='') || $(n).val()==''){
+                inputError('*上传文件/图片', n);
+            }
         }else if($(n).val()=='' || $(n).val()==null){
             if(!$(n).hasClass('error')){
                 inputError('*必填', n);
