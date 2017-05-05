@@ -106,7 +106,7 @@
 	                        for (var i = 0, h = ''; i < users.length; i++) {
 	                            var list = users[i];
 	                            var mask = (list.mask & 1 << 30) <= 0;
-	                            h += '<tr class="' + (mask ? '' : "dab") + '">' + '<td>' + list.user + '</td>' + '<td>' + (!list.name ? '' : list.name) + '</td>' + '<td>' + (!list.mobile ? '' : list.mobile) + '</td>' + '<td>' + list.traffic + 'M</td>' + '<td>' + list.platform + '</td>';
+	                            h += '<tr class="' + (mask ? '' : "dab") + '">' + '<td>' + list.user + '</td>' + '<td>' + (!list.name ? '' : list.name) + '</td>' + '<td>' + (!list.mobile ? '' : list.mobile) + '</td>' + '<td>' + (!list.ip ? '' : list.ip) + '</td>' + '<td>' + list.traffic + 'M</td>' + '<td>' + list.platform + '</td>';
 	                            if (self.state.update) {
 	                                h += '<td><a href="/projectuseraccountinfo.html?user_id=' + list.user + '&location=' + self.state.location + '">详情</a>' + (mask ? '<span class="forbin">停用</span>' : '<span class="unforbin">启用</span>') + '<input type="hidden" class="id" value="' + list.user + '" /><input type="hidden" class="mask" value="' + list.mask + '" /><input type="hidden" class="mac" value="' + list.mac + '" /></td>';
 	                            }
@@ -289,27 +289,32 @@
 	                                    null,
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "22%" },
+	                                        { width: "20%" },
 	                                        "\u7528\u6237\u552F\u4E00ID"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "12%" },
+	                                        { width: "10%" },
 	                                        "\u59D3\u540D"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "22%" },
+	                                        { width: "20%" },
 	                                        "\u624B\u673A\u53F7"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "12%" },
+	                                        { width: "20%" },
+	                                        "IP"
+	                                    ),
+	                                    _react2.default.createElement(
+	                                        "th",
+	                                        { width: "10%" },
 	                                        "\u6D41\u91CF"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "12%" },
+	                                        { width: "10%" },
 	                                        "\u5BA2\u6237\u7AEF"
 	                                    ),
 	                                    this.props.update ? _react2.default.createElement(
