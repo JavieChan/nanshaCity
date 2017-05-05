@@ -1,0 +1,76 @@
+## redeemcodetotal.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" args="on={'redeem': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <h2>
+                    <a href="/index.html">所有项目</a> > <a href="/redeemcode.html?location=${location}">兑换码管理</a> > <span style="color:#0faee5">运营统计</span>
+                </h2>
+                <div class="widget">
+                    <a href="/redeemcode.html?location=${location}" class="btnBlue">生成兑换码</a>
+                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue">兑换码列表</a>
+                    <a href="javascript:;" class="btnBlue disabled">运营统计</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="redeemcodetotal">
+            <div class="total-panel">
+                <div class="total">总时长：{{ total }}小时</div><div class="used">已兑换：{{ used }}小时</div><div class="usable">待兑换：{{ usable }}小时</div><div class="expired">已过期：{{ expired }}小时</div>
+            </div>
+            <div class="toolnav">
+                <div class="toolbox">
+                    <div>
+                        运营人员：
+                        <select v-model.lazy="operator">
+                            <option v-for="option in operatorOptions" :value="option.value">{{ option.text }}</option>
+                        </select>
+                    </div>
+                    <div>
+                        统计周期：
+                        <input type="text" v-model="start" id="start" />
+                        —
+                        <input type="text" v-model="end" id="end" />
+                    </div>
+                    <button type="button" class="btnBlueSmall" @click="changeFilter">确定</button>
+                </div>
+            </div>
+            <div class="areabox">
+                <table>
+                    <tr>
+                        <th width="20%">运营人员</th>
+                        <th width="20%">总时长</th>
+                        <th width="20%">已兑换</th>
+                        <th width="20%">待兑换</th>
+                        <th width="20%">已过期</th>
+                    </tr>
+                    <tr is="render-list" v-for="code in codeList" :code="code" :key="code.id"></tr>
+                    <tr>
+                        <td><b>合计</b></td>
+                        <td>{{ total }}</td>
+                        <td>{{ used }}</td>
+                        <td>{{ usable }}</td>
+                        <td>{{ expired }}</td>
+                    </tr>
+                </table>
+                <div class="page-panel" style="text-align:right;margin-top:16px">
+                    <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+<link rel="stylesheet" href="/static/css/redeemcodetotal.css" />
+</%block>
+
+<%block name="aside">
+<script src="/static/js/lib/jqueryui.min.js"></script>
+<script src="/static/js/lib/vue.js"></script>
+<script src="/static/js/redeemcodetotal.min.js"></script>
+</%block>

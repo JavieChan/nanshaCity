@@ -1,0 +1,539 @@
+.searchIco, button:hover .searchIcoGray, button:focus .searchIcoGray{
+  background: url("../img/sprites/ico_search_white.png") no-repeat;
+  width: 22px;
+  height: 22px;
+}
+.searchIcoGray{
+  background: url("../img/sprites/ico_search_gray.png") no-repeat;
+  width: 22px;
+  height: 22px;
+}
+/*button:hover .searchIco, button:focus .searchIco{*/
+  /*background: url("../img/sprites/ico_search_blue.png") no-repeat;*/
+  /*width: 22px;*/
+  /*height: 22px;*/
+/*}*/
+.addIco, button:hover .addGrayIco, .simbtn:hover i{
+  background: url("../img/sprites/ico_add.png") no-repeat;
+  width: 18px;
+  height: 18px;
+}
+.customIco{
+  background: url("../img/sprites/ico_custom.png") no-repeat;
+  width: 24px;
+  height: 23px;
+}
+.custom:hover .customIco{
+  background: url("../img/sprites/ico_custom_hover.png") no-repeat;
+  width: 24px;
+  height: 23px;
+}
+.forkIco{
+  background: url("../img/sprites/ico_fork.png") no-repeat;
+  width: 13px;
+  height: 13px;
+}
+.forkIco:hover{
+  background: url("../img/sprites/ico_fork_hover.png") no-repeat;
+  width: 13px;
+  height: 13px;
+}
+.tipsIco{
+  background: url("../img/sprites/ico_tips.png") no-repeat;
+  width: 16px;
+  height: 16px;
+}
+.userIco{
+  background: url("../img/sprites/ico_user.png") no-repeat;
+  width: 22px;
+  height: 24px;
+}
+.userHoverIco, button:hover .userIco, button.on .userIco{
+  background: url("../img/sprites/ico_user_hover.png") no-repeat;
+  width: 22px;
+  height: 24px;
+}
+.appsIco{
+  background: url("../img/sprites/ico_apps.png") no-repeat;
+  width: 24px;
+  height: 24px;
+}
+.appsHoverIco, button:hover .appsIco, button.on .appsIco{
+  background: url("../img/sprites/ico_apps_hover.png") no-repeat;
+  width: 24px;
+  height: 24px;
+}
+.navProjectIco{
+  background: url("../img/sprites/nav_project.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.on .navProjectIco{
+  background: url("../img/sprites/nav_project_on.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.navPolicyIco{
+  background: url("../img/sprites/nav_policy.png") no-repeat;
+  width: 32px;
+  height: 30px;
+}
+.on .navPolicyIco{
+  background: url("../img/sprites/nav_policy_on.png") no-repeat;
+  width: 32px;
+  height: 30px;
+}
+.navWareIco{
+  background: url("../img/sprites/nav_ware.png") no-repeat;
+  width: 32px;
+  height: 18px;
+}
+.on .navWareIco{
+  background: url("../img/sprites/nav_ware_on.png") no-repeat;
+  width: 32px;
+  height: 18px;
+}
+.navACIco{
+  background: url("../img/sprites/nav_ac.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.on .navACIco{
+  background: url("../img/sprites/nav_ac_on.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.navAPIco{
+  background: url("../img/sprites/nav_ap.png") no-repeat;
+  width: 32px;
+  height: 22px;
+}
+.on .navAPIco{
+  background: url("../img/sprites/nav_ap_on.png") no-repeat;
+  width: 32px;
+  height: 22px;
+}
+.navFiberIco{
+  background: url("../img/sprites/nav_fiber.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navFiberIco{
+  background: url("../img/sprites/nav_fiber_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navUserIco{
+  background: url("../img/sprites/nav_user.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navUserIco{
+  background: url("../img/sprites/nav_user_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navManagerIco{
+  background: url("../img/sprites/nav_manager.png") no-repeat;
+  width: 32px;
+  height: 34px;
+}
+.on .navManagerIco{
+  background: url("../img/sprites/nav_manager_on.png") no-repeat;
+  width: 32px;
+  height: 34px;
+}
+.navBedataIco{
+  background: url("../img/sprites/nav_bedata.png") no-repeat;
+  width: 32px;
+  height: 30px;
+}
+.on .navBedataIco{
+  background: url("../img/sprites/nav_bedata_on.png") no-repeat;
+  width: 32px;
+  height: 30px;
+}
+.navUserdataIco{
+  background: url("../img/sprites/nav_userdata.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.on .navUserdataIco{
+  background: url("../img/sprites/nav_userdata_on.png") no-repeat;
+  width: 32px;
+  height: 26px;
+}
+.navDatamapIco{
+  background: url("../img/sprites/nav_datamap.png") no-repeat;
+  width: 32px;
+  height: 28px;
+}
+.navAccessIco{
+  background: url("../img/sprites/nav_access.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navAccessIco{
+  background: url("../img/sprites/nav_access_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navAdsIco{
+  background: url("../img/sprites/nav_ads.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navAdsIco{
+  background: url("../img/sprites/nav_ads_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navBillIco{
+  background: url("../img/sprites/nav_bill.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navBillIco{
+  background: url("../img/sprites/nav_bill_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navH5Ico{
+  background: url("../img/sprites/nav_h5.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navH5Ico{
+  background: url("../img/sprites/nav_h5_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navNewsIco{
+  background: url("../img/sprites/nav_news.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navNewsIco{
+  background: url("../img/sprites/nav_news_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navSensIco{
+  background: url("../img/sprites/nav_sens.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navSensIco{
+  background: url("../img/sprites/nav_sens_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navAPgroupIco{
+  background: url("../img/sprites/nav_apgroup.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.on .navAPgroupIco{
+  background: url("../img/sprites/nav_apgroup_on.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.navRedeenIco{
+  background: url("../img/sprites/nav_redeem.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
+.on .navRedeenIco{
+  background: url("../img/sprites/nav_redeem_on.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
+.arrowDownIco, .ico_arrowDown:after{
+  background: url("../img/sprites/ico_arrow_down.png") no-repeat;
+  width: 16px;
+  height: 8px;
+}
+.arrowGrayIco, .autoInput:after, .selIco i{
+  background: url("../img/sprites/ico_arrowGray_down.png") no-repeat;
+  width: 16px;
+  height: 8px;
+}
+.selIco:hover i, .selIco.on i{
+  background: url("../img/sprites/ico_arrowWhite_down.png") no-repeat;
+  width: 16px;
+  height: 8px;
+}
+.hadpayIco, .ico_hadpay:before{
+  background: url("../img/sprites/dot_gray.png") no-repeat;
+  width: 12px;
+  height: 12px;
+}
+.waitpayIco, .ico_waitpay:before{
+  background: url("../img/sprites/dot_oranger.png") no-repeat;
+  width: 12px;
+  height: 12px;
+}
+.deluploadImg, .delsgt{
+  background: url("../img/sprites/del_form.png") no-repeat;
+  width: 21px;
+  height: 21px;
+}
+.allUserIco{
+  background: url("../img/sprites/ico_alluser.png") no-repeat;
+  width: 32px;
+  height: 24px;
+}
+button:hover .allUserIco, button.on .allUserIco{
+  background: url("../img/sprites/ico_alluser_hover.png") no-repeat;
+  width: 32px;
+  height: 24px;
+}
+.mobileIco{
+  background: url("../img/sprites/ico_mobile.png") no-repeat;
+  width: 18px;
+  height: 26px;
+}
+button:hover .mobileIco, button.on .mobileIco{
+  background: url("../img/sprites/ico_mobile_hover.png") no-repeat;
+  width: 18px;
+  height: 26px;
+}
+.uncheck{
+  background: url("../img/sprites/uncheck.png") no-repeat;
+  width: 26px;
+  height: 26px;
+}
+.check{
+  background: url("../img/sprites/check.png") no-repeat;
+  width: 26px;
+  height: 26px;
+}
+.uncheck_s{
+  background: url("../img/sprites/uncheck_small.png") no-repeat;
+  width: 24px;
+  height: 24px;
+}
+.uncheck_s.on{
+  background: url("../img/sprites/check_small.png") no-repeat;
+  width: 24px;
+  height: 24px;
+}
+.modalClose{
+  background: url("../img/sprites/modal_close.png") no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.modalClose:hover{
+  background: url("../img/sprites/modal_close_hover.png") no-repeat;
+  width: 30px;
+  height: 30px;
+}
+.addGrayIco{
+  background: url("../img/sprites/ico_add_gray.png") no-repeat;
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+.delIco{
+  background: url("../img/sprites/ico_del.png") no-repeat;
+  width: 24px;
+  height: 20px;
+}
+a:hover .delIco{
+  background: url("../img/sprites/ico_del_hover.png") no-repeat;
+  width: 24px;
+  height: 20px;
+}
+.editIco{
+  background: url("../img/sprites/ico_edit.png") no-repeat;
+  width: 18px;
+  height: 18px;
+}
+a:hover .editIco{
+  background: url("../img/sprites/ico_edit_hover.png") no-repeat;
+  width: 18px;
+  height: 18px;
+}
+.bill_tab span i, .ns_card a i, .magnet i, .imgShow i{
+  background: url("../img/sprites/del_bill.png") no-repeat;
+  width: 13px;
+  height: 13px;
+}
+.arrowRight, .wailink tr td:first-child:before{
+  background: url("../img/sprites/tableHover.png") no-repeat;
+  width: 15px;
+  height: 14px;
+}
+.aDwn{
+  background: url("../img/sprites/arrow_down.png") no-repeat;
+  width: 14px;
+  height: 16px;
+}
+.aUp{
+  background: url("../img/sprites/arrow_up.png") no-repeat;
+  width: 14px;
+  height: 16px;
+}
+span.on .aDwn, span:hover .aDwn, .smore .aDwn{
+  background: url("../img/sprites/arrow_pre-down.png") no-repeat;
+  width: 14px;
+  height: 16px;
+}
+span.on .aUp, span:hover .aUp, .smore .aUp{
+  background: url("../img/sprites/arrow_pre-up.png") no-repeat;
+  width: 14px;
+  height: 16px;
+}
+.dataTotalIco{
+  background: url("../img/sprites/dataTotal.png") no-repeat;
+  width: 44px;
+  height: 36px;
+}
+.dataHotsIco{
+  background: url("../img/sprites/dataHots.png") no-repeat;
+  width: 44px;
+  height: 32px;
+}
+.dataAppIco{
+  background: url("../img/sprites/dataApp.png") no-repeat;
+  width: 44px;
+  height: 36px;
+}
+.sortOn:hover i{
+  background: url("../img/sprites/con_pre.png") no-repeat;
+  width: 12px;
+  height: 16px;
+}
+.sortUp i, .sortUp:hover i{
+  background: url("../img/sprites/con_pre_up.png") no-repeat;
+  width: 12px;
+  height: 16px;
+}
+.sortDown i, .sortDown:hover i{
+  background: url("../img/sprites/con_pre_down.png") no-repeat;
+  width: 12px;
+  height: 16px;
+}
+.xm_work{
+  background: url("../img/sprites/xm_wifi.png") no-repeat;
+  width: 42px;
+  height: 42px;
+}
+.xm_online{
+  background: url("../img/sprites/xm_tik.png") no-repeat;
+  width: 42px;
+  height: 42px;
+}
+.xm_unwork{
+  background: url("../img/sprites/xm_bug.png") no-repeat;
+  width: 42px;
+  height: 42px;
+}
+.uptotop i{
+  background: url("../img/sprites/back_normal.png") no-repeat;
+  width: 18px;
+  height: 17px;
+}
+.uptotop:hover i{
+  background: url("../img/sprites/back_pre.png") no-repeat;
+  width: 18px;
+  height: 17px;
+}
+i.unchk, i.unchk_b{
+  background: url("../img/sprites/unchk.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+i.chk{
+  background: url("../img/sprites/chk.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+i.chk_b{
+  background: url("../img/sprites/chk2.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.headunchk{
+  background: url("../img/sprites/box_normal.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.headchk{
+  background: url("../img/sprites/box_input.png") no-repeat;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.insideTable td div:before{
+  background: url("../img/sprites/insideTable_arrow.png") no-repeat;
+  width: 30px;
+  height: 12px;
+}
+.slideTable td i.st{
+  background: url("../img/sprites/grayIco_right.png") no-repeat;
+  width: 36px;
+  height: 36px;
+}
+.slideTable td i.st.on{
+  background: url("../img/sprites/grayIco_btm.png") no-repeat;
+  width: 36px;
+  height: 36px;
+}
+.siTable i{
+  background: url("../img/sprites/tableIco.png") no-repeat;
+  width: 20px;
+  height: 11px;
+}
+.arrowNext{
+  background: url("../img/sprites/arrow_next.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+button:hover .arrowNext{
+  background: url("../img/sprites/arrow_next_hover.png") no-repeat;
+  width: 32px;
+  height: 32px;
+}
+.searchIco, .addIco, .customIco, .forkIco, .tipsIco, .userIco, .userHoverIco, .appsIco, .appsHoverIco, .navProjectIco, .navACIco, .navAPIco, .navFiberIco, .navUserIco, .navWareIco, .navManagerIco, .navBedataIco, .navUserdataIco, .arrowDownIco, .hadpayIco, .waitpayIco, .deluploadImg, .delsgt, .allUserIco, .userIco, .mobileIco, .check, .uncheck, .modalClose, .addGrayIco, .delIco, .editIco, .arrowGrayIco, .searchIcoGray, .navPolicyIco, .bill_tab span i, .ns_card a i, .arrowRight, .uncheck_s, .aDwn, .aUp, span.on .aDwn, span:hover .aDwn, span.on .aUp, span:hover .aUp, .smore .aDwn, .smore .aUp, .dataTotalIco, .dataHotsIco, .dataAppIco,  .sortUp i, .sortDown i, .sortOn:hover i, .xm_work, .xm_online, .xm_unwork, i.unchk, i.chk, i.unchk_b, .headunchk, .headchk, .magnet i, .navDatamapIco, .navAccessIco, .navAdsIco, .navBillIco, .navH5Ico, .navNewsIco, .navSensIco, .navAPgroupIco, .navRedeenIco, .imgShow i, .slideTable td i.st, .slideTable td i.st.on, .siTable i, .arrowNext, button:hover .arrowNext{
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+.arrowNext, button:hover .arrowNext{margin-top: 0;}
+.ico_arrowDown:after, .ico_hadpay:before, .ico_waitpay:before, .autoInput:after, .wailink tr td:first-child:before, .insideTable td div:before, .selIco i, .selIco:hover i, .selIco.on i{
+  content: ' ';
+  display: inline-block;
+  vertical-align: middle;
+}
+.ico_arrowDown:after{
+  margin-left: 20px;
+}
+.ico_hadpay:before, .ico_waitpay:before{
+  margin-right: 10px;
+}
+.autoInput:after{
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  margin-top: -4px;
+}
+.wailink tr td:first-child:before{
+  position: absolute;
+  top: 13px;
+  left: 15px;
+}
+.sortUp i, .sortDown i, .sortOn:hover i{
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  margin-top: -8px;
+}
+.uptotop i{
+  margin: 0 auto 5px;
+  display: block;
+}
