@@ -103,7 +103,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "用户唯一ID"
+	                                "\u7528\u6237\u552F\u4E00ID"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -113,7 +113,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "位置"
+	                                "\u4F4D\u7F6E"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -123,7 +123,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "姓名"
+	                                "\u59D3\u540D"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -133,7 +133,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "手机号"
+	                                "\u624B\u673A\u53F7"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -143,7 +143,7 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "流量"
+	                                "\u6D41\u91CF"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
@@ -153,14 +153,14 @@
 	                            _react2.default.createElement(
 	                                "em",
 	                                null,
-	                                "客户端"
+	                                "\u5BA2\u6237\u7AEF"
 	                            ),
 	                            _react2.default.createElement("i", null)
 	                        ),
 	                        _react2.default.createElement(
 	                            "i",
 	                            null,
-	                            "操作"
+	                            "\u64CD\u4F5C"
 	                        )
 	                    )
 	                ),
@@ -170,11 +170,11 @@
 	                    var forbin = mask ? _react2.default.createElement(
 	                        "span",
 	                        { className: "forbin" },
-	                        "停用"
+	                        "\u505C\u7528"
 	                    ) : _react2.default.createElement(
 	                        "span",
 	                        { className: "unforbin" },
-	                        "启用"
+	                        "\u542F\u7528"
 	                    );
 	                    return _react2.default.createElement(
 	                        "tbody",
@@ -219,7 +219,7 @@
 	                                _this2.state.view ? _react2.default.createElement(
 	                                    "a",
 	                                    { href: "/projectuseraccountinfo.html?user_id=" + list.user + "&location=" + location + "&mac=" + list.user + "&ip=" + list.ip },
-	                                    "详情"
+	                                    "\u8BE6\u60C5"
 	                                ) : null,
 	                                _this2.state.update ? forbin : null,
 	                                _react2.default.createElement("input", { type: "hidden", className: "id", value: list.user }),
@@ -660,8 +660,15 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -682,7 +689,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -711,7 +718,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -731,8 +738,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -1139,12 +1146,18 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 
 	  if (!condition) {
 	    var error;
@@ -21809,9 +21822,9 @@
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "page" },
-	                _react2.default.createElement("input", { type: "button", value: "跳转", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u8DF3\u8F6C", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement("input", { type: "text", className: "pagesize", placeholder: "1", ref: "jumpIpu" }),
-	                _react2.default.createElement("input", { type: "button", value: "下一页", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0B\u4E00\u9875", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement(
 	                    "div",
 	                    null,
@@ -21827,7 +21840,7 @@
 	                        this.props.pagecount
 	                    )
 	                ),
-	                _react2.default.createElement("input", { type: "button", value: "上一页", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0A\u4E00\u9875", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
 	            );
 	        }
 	    }]);

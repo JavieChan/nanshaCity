@@ -8,26 +8,26 @@ wechatRequest.prototype.getWxpromote = function(callback){
         callback(data);
     });
 };
-wechatRequest.prototype.pustWxpromote = function(wechatId, nickname, account, password, uploadImg, callback){
+wechatRequest.prototype.pustWxpromote = function(wechatId, nickname, account, password, imageUrl, callback){
     var params = {
         wechat_id: wechatId,
         nickname: nickname,
         account: account,
         password: password,
-        image_url: uploadImg
+        image_uri: imageUrl
     };
     this._post('/wxpromote', JSON.stringify(params), function(data){
         callback(data);
     });
 };
-wechatRequest.prototype.putWxpromote = function(id, wechatId, nickname, account, password, uploadImg, callback){
+wechatRequest.prototype.putWxpromote = function(id, wechatId, nickname, account, password, imageUrl, callback){
     var params = {
         id: id,
         wechat_id: wechatId,
         nickname: nickname,
         account: account,
         password: password,
-        image_url: uploadImg
+        image_uri: imageUrl
     };
     this._put('/wxpromote', JSON.stringify(params), function(data){
         callback(data);
@@ -45,7 +45,7 @@ wechatRequest.prototype.deleteWxpromotes = function(wechatIdList, callback){
     var params = {
         wechat_id_list: wechatIdList
     };
-    this._delete('/wxpromote/bulk-delete', JSON.stringify(params), function(data){
+    this._post('/wxpromote/bulk-delete', JSON.stringify(params), function(data){
         callback(data);
     });
 };

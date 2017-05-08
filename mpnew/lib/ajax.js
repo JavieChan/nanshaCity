@@ -576,6 +576,7 @@ function ajaxImg(fileElementId, imgElementId, $tis){
     $tis.parent().find('.loading').show();
     $.ajaxFileUpload({
         url: proUrl+'image',
+        //url: 'http://10.20.1.34:9092/image',
         secureuri: false,
         fileElementId: fileElementId,
         dataType: 'json',
@@ -584,7 +585,8 @@ function ajaxImg(fileElementId, imgElementId, $tis){
             $id.attr('src', data.imgurl);
             $id.parent().show();
             $id.parent().prev().find('.loading').hide();
-            $id.parent().prev().find('input[type=hidden]').val(data.imgurl);
+            $id.parent().prev().find('input[type=hidden]').removeClass('error').val(data.imgurl);
+            $id.parent().prev().find('.errormsg').remove();
         },
         error: function(data, status, e){
             console.log(e);

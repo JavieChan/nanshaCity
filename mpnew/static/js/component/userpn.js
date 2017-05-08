@@ -127,7 +127,7 @@
 	                        _react2.default.createElement(
 	                            "i",
 	                            null,
-	                            "操作"
+	                            "\u64CD\u4F5C"
 	                        )
 	                    )
 	                ),
@@ -136,11 +136,11 @@
 	                    var forbin = (list.mask & 1 << 30) == 0 ? _react2.default.createElement(
 	                        "span",
 	                        { className: "forbin" },
-	                        "停用"
+	                        "\u505C\u7528"
 	                    ) : _react2.default.createElement(
 	                        "span",
 	                        { className: "unforbin" },
-	                        "启用"
+	                        "\u542F\u7528"
 	                    );
 	                    return _react2.default.createElement(
 	                        "tbody",
@@ -161,33 +161,33 @@
 	                                (list.mask & 1 << 25) > 0 && location == '50001,59920,15914' ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "sta checkup" },
-	                                    "已审核"
+	                                    "\u5DF2\u5BA1\u6838"
 	                                ) : null,
 	                                (list.mask & 1 << 21) > 0 && location == '50001,59920,15914' ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "sta hasreject" },
-	                                    "已驳回"
+	                                    "\u5DF2\u9A73\u56DE"
 	                                ) : null,
 	                                (list.mask & 1 << 20) > 0 && location == '50001,59920,15914' ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "sta wait" },
-	                                    "待审核"
+	                                    "\u5F85\u5BA1\u6838"
 	                                ) : null,
 	                                _this2.state.view ? _react2.default.createElement(
 	                                    "a",
 	                                    { href: "/projectuserpninfo.html?location=" + location + "&mask=1&user_id=" + list.id },
-	                                    "详情"
+	                                    "\u8BE6\u60C5"
 	                                ) : null,
 	                                _this2.state.update ? forbin : null,
 	                                _this2.state.delete ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "delete", onClick: _this2.handleDel.bind(_this2), "data-key": index },
-	                                    "删除"
+	                                    "\u5220\u9664"
 	                                ) : null,
 	                                _this2.state.update && location == '50001,59920,15914' ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "reject", "data-mobile": list.mobile },
-	                                    "驳回"
+	                                    "\u9A73\u56DE"
 	                                ) : null,
 	                                _react2.default.createElement("input", { type: "hidden", className: "id", value: list.id }),
 	                                _react2.default.createElement("input", { type: "hidden", className: "mask", value: list.mask })
@@ -701,8 +701,15 @@
 /* 4 */
 /***/ function(module, exports) {
 
+	/*
+	object-assign
+	(c) Sindre Sorhus
+	@license MIT
+	*/
+
 	'use strict';
 	/* eslint-disable no-unused-vars */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
 	var hasOwnProperty = Object.prototype.hasOwnProperty;
 	var propIsEnumerable = Object.prototype.propertyIsEnumerable;
 
@@ -723,7 +730,7 @@
 			// Detect buggy property enumeration order in older V8 versions.
 
 			// https://bugs.chromium.org/p/v8/issues/detail?id=4118
-			var test1 = new String('abc');  // eslint-disable-line
+			var test1 = new String('abc');  // eslint-disable-line no-new-wrappers
 			test1[5] = 'de';
 			if (Object.getOwnPropertyNames(test1)[0] === '5') {
 				return false;
@@ -752,7 +759,7 @@
 			}
 
 			return true;
-		} catch (e) {
+		} catch (err) {
 			// We don't expect any of the above to throw, but better to be safe.
 			return false;
 		}
@@ -772,8 +779,8 @@
 				}
 			}
 
-			if (Object.getOwnPropertySymbols) {
-				symbols = Object.getOwnPropertySymbols(from);
+			if (getOwnPropertySymbols) {
+				symbols = getOwnPropertySymbols(from);
 				for (var i = 0; i < symbols.length; i++) {
 					if (propIsEnumerable.call(from, symbols[i])) {
 						to[symbols[i]] = from[symbols[i]];
@@ -1180,12 +1187,18 @@
 	 * will remain to ensure logic does not differ in production.
 	 */
 
-	function invariant(condition, format, a, b, c, d, e, f) {
-	  if (process.env.NODE_ENV !== 'production') {
+	var validateFormat = function validateFormat(format) {};
+
+	if (process.env.NODE_ENV !== 'production') {
+	  validateFormat = function validateFormat(format) {
 	    if (format === undefined) {
 	      throw new Error('invariant requires an error message argument');
 	    }
-	  }
+	  };
+	}
+
+	function invariant(condition, format, a, b, c, d, e, f) {
+	  validateFormat(format);
 
 	  if (!condition) {
 	    var error;
@@ -21850,9 +21863,9 @@
 	            return _react2.default.createElement(
 	                "div",
 	                { className: "page" },
-	                _react2.default.createElement("input", { type: "button", value: "跳转", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u8DF3\u8F6C", className: "btnWhiteSmall jump", onClick: this.pageJump.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement("input", { type: "text", className: "pagesize", placeholder: "1", ref: "jumpIpu" }),
-	                _react2.default.createElement("input", { type: "button", value: "下一页", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0B\u4E00\u9875", className: "btnWhiteSmall next", onClick: this.pageNext.bind(this), disabled: this.props.btnDis }),
 	                _react2.default.createElement(
 	                    "div",
 	                    null,
@@ -21868,7 +21881,7 @@
 	                        this.props.pagecount
 	                    )
 	                ),
-	                _react2.default.createElement("input", { type: "button", value: "上一页", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
+	                _react2.default.createElement("input", { type: "button", value: "\u4E0A\u4E00\u9875", className: "btnWhiteSmall prev", onClick: this.pagePrev.bind(this), disabled: this.props.btnDis })
 	            );
 	        }
 	    }]);

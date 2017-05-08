@@ -101,3 +101,6 @@
 .modal_change_wechat .modal-change-wechat-panel div table tr td .using:disabled {
   background: #dfdfdf;
 }
+.modal_change_wechat .modal-change-wechat-panel div table tr:hover {
+  background: #c1edf5;
+}
