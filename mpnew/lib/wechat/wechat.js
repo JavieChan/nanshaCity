@@ -78,8 +78,9 @@ var vm = new Vue({
         getUsingPromote: function(){
             var self = this;
             wcr.getUsingWxpromote(function(data){
-                console.log(data.wechat);
                 if(!data.wechat){
+                    console.log(data.wechat);
+                    self.haspromote = false;
                     return false;
                 }else{
                     var wechat = data.wechat;
