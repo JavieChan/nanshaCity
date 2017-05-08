@@ -248,6 +248,16 @@
   width: 32px;
   height: 27px;
 }
+.navPromoteIco{
+  background: url("../img/sprites/nav_promote.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
+.on .navPromoteIco{
+  background: url("../img/sprites/nav_promote_on.png") no-repeat;
+  width: 32px;
+  height: 27px;
+}
 .arrowDownIco, .ico_arrowDown:after{
   background: url("../img/sprites/ico_arrow_down.png") no-repeat;
   width: 16px;
@@ -499,7 +509,7 @@ button:hover .arrowNext{
   width: 32px;
   height: 32px;
 }
-.searchIco, .addIco, .customIco, .forkIco, .tipsIco, .userIco, .userHoverIco, .appsIco, .appsHoverIco, .navProjectIco, .navACIco, .navAPIco, .navFiberIco, .navUserIco, .navWareIco, .navManagerIco, .navBedataIco, .navUserdataIco, .arrowDownIco, .hadpayIco, .waitpayIco, .deluploadImg, .delsgt, .allUserIco, .userIco, .mobileIco, .check, .uncheck, .modalClose, .addGrayIco, .delIco, .editIco, .arrowGrayIco, .searchIcoGray, .navPolicyIco, .bill_tab span i, .ns_card a i, .arrowRight, .uncheck_s, .aDwn, .aUp, span.on .aDwn, span:hover .aDwn, span.on .aUp, span:hover .aUp, .smore .aDwn, .smore .aUp, .dataTotalIco, .dataHotsIco, .dataAppIco,  .sortUp i, .sortDown i, .sortOn:hover i, .xm_work, .xm_online, .xm_unwork, i.unchk, i.chk, i.unchk_b, .headunchk, .headchk, .magnet i, .navDatamapIco, .navAccessIco, .navAdsIco, .navBillIco, .navH5Ico, .navNewsIco, .navSensIco, .navAPgroupIco, .navRedeenIco, .imgShow i, .slideTable td i.st, .slideTable td i.st.on, .siTable i, .arrowNext, button:hover .arrowNext{
+.searchIco, .addIco, .customIco, .forkIco, .tipsIco, .userIco, .userHoverIco, .appsIco, .appsHoverIco, .navProjectIco, .navACIco, .navAPIco, .navFiberIco, .navUserIco, .navWareIco, .navManagerIco, .navBedataIco, .navUserdataIco, .arrowDownIco, .hadpayIco, .waitpayIco, .deluploadImg, .delsgt, .allUserIco, .userIco, .mobileIco, .check, .uncheck, .modalClose, .addGrayIco, .delIco, .editIco, .arrowGrayIco, .searchIcoGray, .navPolicyIco, .bill_tab span i, .ns_card a i, .arrowRight, .uncheck_s, .aDwn, .aUp, span.on .aDwn, span:hover .aDwn, span.on .aUp, span:hover .aUp, .smore .aDwn, .smore .aUp, .dataTotalIco, .dataHotsIco, .dataAppIco,  .sortUp i, .sortDown i, .sortOn:hover i, .xm_work, .xm_online, .xm_unwork, i.unchk, i.chk, i.unchk_b, .headunchk, .headchk, .magnet i, .navDatamapIco, .navAccessIco, .navAdsIco, .navBillIco, .navH5Ico, .navNewsIco, .navSensIco, .navAPgroupIco, .navRedeenIco, .navPromoteIco, .imgShow i, .slideTable td i.st, .slideTable td i.st.on, .siTable i, .arrowNext, button:hover .arrowNext{
   display: inline-block;
   vertical-align: middle;
   margin-top: -2px;

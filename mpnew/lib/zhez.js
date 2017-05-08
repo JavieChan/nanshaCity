@@ -28,6 +28,8 @@
                 inputError('', n);
             });
 
+            $(obj).find('.loading').hide();
+
             $('.amount input').val(2);
 
             $(obj).find('.msg').text('');

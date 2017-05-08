@@ -1,6 +1,6 @@
 function Request(){
     this.protocol= "http",                // 请求协议
-    this.host= "10.20.1.34",       // 请求域名或IP test.bidongwifi.com
+    this.host= "10.20.1.40",       // 请求域名或IP test.bidongwifi.com
     this.port= "9092",                      // 请求端口 80
     this.version= "v0"                   // API版本号
 }
