@@ -160,7 +160,7 @@ var vm = new Vue({
         deletePromotes: function(){
             var self = this;
             if($.inArray(self.using.wechatId, self.checkGroup)>=0){
-                alert("此操作中包含了推广中微信号，删除失败！");
+                alert("尝试删除的微信号正在被使用，无法删除！");
                 return false;
             }
             if(confirm("确定要删除这些微信号吗？")){
