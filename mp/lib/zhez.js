@@ -23,12 +23,12 @@
         else if(type=='closed'){
             $(obj).removeClass('in').fadeOut(150);
 
-            if(!$(obj).hasClass('notCloseInput')){
-                $(obj).find('input').each(function(i, n){
-                    $(n).val('');
-                    inputError('', n);
-                });
-            }
+            $(obj).find('input').each(function(i, n){
+                $(n).val('');
+                inputError('', n);
+            });
+
+            $(obj).find('.loading').hide();
 
             $('.amount input').val(2);
 

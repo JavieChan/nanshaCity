@@ -1,220 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>
-        分布式认证系统
-    </title>
-    <link rel="shortcut icon" type="image/ico" href="/favicon.ico">
-    <link rel="stylesheet" href="/static/css/jqueryui.css" />
-    <link rel="stylesheet" href="/static/css/main.css" />
-    <script type="text/javascript" src="/static/js/lib/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/main.min.js"></script>
-    <link rel="stylesheet" href="/static/css/wechat.css" />
-</head>
+## wechat.html
+<%inherit file="base.html" />
 
-<body>
-    <div class="header">
-        <div class="wrapper">
-            <a href="/index.html" title="${get_project_name()}分布式认证系统" class="logo">${get_project_name()}分布式认证系统</a>
-            <div class="admin">
-                <img src="../static/images/logo_bidong.png" />
-                <span class="username">${ins.user}</span>
-                <span class="cutofline"><i></i></span>
-                <a href="/logout" class="logout">退出</a>
-            </div>
-            <div class="search">
-                <input type="text" />
-                <button><i class="searchIco"></i></button>
+<div class="wrapper" id="promote">
+    <!--导航-->
+    <%include file="nav.html" args="on={'promote': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <h2>
+                    <a href="/index.html">所有项目</a> > <span style="color:#0faee5">微信号管理</span>
+                </h2>
             </div>
         </div>
-    </div>
-    <div class="content">
-        <div class="wrapper" id="promote">
-            <!--导航-->
-            <%include file="nav.html" args="on={'wechat': 'on'}"/>
-            <div class="nav">
-                <h3 class="${on.pop('project', '')}"><a href="/projectcard.html?location=${location}"><i class="navProjectIco"></i>项目管理</a></h3>
-                <h3 class="${on.pop('policy', '')}"><a href="/projectpn.html?location=${location}"><i class="navPolicyIco"></i>网络管理</a></h3>
-                <h3 class="${on.pop('ac', '')}"><a href="/ac.html?location=${location}"><i class="navACIco"></i>AC管理</a></h3>
-                <h3 class="${on.pop('ap', '')}"><a href="/ap.html?location=${location}"><i class="navAPIco"></i>AP管理</a></h3>
-                <h3 class="${on.pop('admin', '')}"><a href="/admin.html?location=${location}"><i class="navManagerIco"></i>账户管理</a></h3>
-                <h3 class="${on.pop('user', '')}"><a href="/projectuseronline.html?location=${location}"><i class="navUserIco"></i>用户列表</a></h3>
-                <h3 class="${on.pop('pay', '')}"><a href="/projectbill.html?location=${location}"><i class="navBillIco"></i>计费模块</a></h3>
-                <h3 class="${on.pop('message', '')}"><a href="/projectmsg.html?location=${location}"><i class="navNewsIco"></i>新闻公告</a></h3>
-                <h3 class="${on.pop('sens', '')}"><a href="/projectsens.html?location=${location}"><i class="navSensIco"></i>感知分析</a></h3>
-                <h3 class="${on.pop('h5', '')}"><a href="/projecth5list.html?location=${location}"><i class="navH5Ico"></i>H5页面管理</a></h3>
-                <h3 class="${on.pop('apgroups', '')}"><a href="/apgroups.html?location=${location}"><i class="navAPgroupIco"></i>AP组管理</a></h3>
-                <h3 class="${on.pop('redeem', '')}"><a href="/redeemcode.html?location=${location}"><i class="navRedeenIco"></i>兑换码管理</a></h3>
-            </div>
-            <!--右侧功能栏-->
-            <div class="projects">
-                <div class="tabbox">
-                    <div class="bread">
-                        <h2>
-                            <a href="/index.html">所有项目</a> > <span style="color:#0faee5">微信号管理</span>
-                        </h2>
-                    </div>
-                </div>
-                <div class="tabbox wechat-using-wrapper" v-show="haspromote">
-                    <div class="toolnav">
-                        <h3>推广中的微信号</h3>
-                        <div class="toolbox">
-                            <button type="button" class="btnBlueSmall" @click="openPromoteModal">更换微信号</button>
-                        </div>
-                    </div>
-                    <div class="areabox">
-                        <div class="wechat-using-panel">
-                            <div class="wechat-using-info">
-                                <div>
-                                    <label>微信号ID</label><span>{{ using.wechatId }}</span>
-                                </div>
-                                <div>
-                                    <label>微信号名称</label><span>{{ using.nickname }}</span>
-                                </div>
-                                <div>
-                                    <label>微信登录名</label><span>{{ using.account }}</span>
-                                </div>
-                                <div>
-                                    <label>登录密码</label><span>{{ using.password }}</span>
-                                </div>
-                            </div>
-                            <div class="wechat-using-qrcode">
-                                <img :src="using.qrcode" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tabbox ns_table">
-                    <div class="toolnav">
-                        <h3>微信号清单</h3>
-                    </div>
-                    <div class="areabox">
-                        <div class="wechat-list-panel">
-                            <div class="wechat-list-head">
-                                <div class="wechat-list-head-left">
-                                    <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中{{ checkGroup.length }}个文件
-                                </div>
-                                <div class="wechat-list-head-right">
-                                    <button type="button" class="btnGraySmall" @click="deletePromotes">删除</button>
-                                    <button type="button" class="btnBlueSmall" @click="openModal(-1)">添加新微信号</button>
-                                </div>
-                            </div>
-                            <div class="wechat-list-body">
-                                <table>
-                                    <tr>
-                                        <th></th>
-                                        <th>微信号ID</th>
-                                        <th>微信号名称</th>
-                                        <th>微信登录名</th>
-                                        <th>微信登录密码</th>
-                                        <th>二维码</th>
-                                        <th>操作</th>
-                                    </tr>
-                                    <tr v-for="(promote, index) in promoteList" :key="promote.id">
-                                        <td><input type="checkbox" class="wechat-checkbox" :value="promote.wechat_id" v-model="checkGroup" /></td>
-                                        <td>{{ promote.wechat_id }}</td>
-                                        <td>{{ promote.nickname }}</td>
-                                        <td>{{ promote.account }}</td>
-                                        <td>{{ promote.password }}</td>
-                                        <td><img :src="promote.image_uri" /></td>
-                                        <td><span class="edit" @click="openModal(index)">编辑</span><span class="use" v-if="!promote.status" @click="usingWxpromote(index)">应用</span><span class="using" v-else>已用</span><span class="delete" @click="deletePromote(index)">删除</span></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+        <div class="tabbox wechat-using-wrapper" v-show="haspromote">
+            <div class="toolnav">
+                <h3>推广中的微信号</h3>
+                <div class="toolbox">
+                    <button type="button" class="btnBlueSmall" @click="openPromoteModal">更换微信号</button>
                 </div>
             </div>
-            <div class="modal fade" id="modalWechat">
-                <div class="modal_wechat modal_body">
-                    <h3 v-if="editStatus">编辑微信号</h3>
-                    <h3 v-else>新增微信号</h3>
-                    <ul class="vertical">
-                        <li>
-                            <label>微信号ID：</label>
-                            <span class="veright">
-                                <div class="verify"><input type="text" name="wechatId" class="matchVerify shouldVerify" v-model="editArr.wechatId" /></div>
-                            </span>
-                        </li>
-                        <li>
-                            <label>微信号名称：</label>
-                            <span class="veright">
-                                <div class="verify"><input type="text" name="nickname" class="matchVerify shouldVerify" v-model="editArr.nickname" /></div>
-                            </span>
-                        </li>
-                        <li>
-                            <label>微信登录名：</label>
-                            <span class="veright">
-                                <div class="verify"><input type="text" name="account" class="matchVerify shouldVerify" v-model="editArr.account" /></div>
-                            </span>
-                        </li>
-                        <li>
-                            <label>微信登录密码：</label>
-                            <span class="veright">
-                                <div class="verify"><input type="text" name="password" class="matchVerify shouldVerify" v-model="editArr.password" /></div>
-                            </span>
-                        </li>
-                        <li>
-                            <label>二维码：</label>
-                            <span class="veright">
-                                <div class="file">
-                                    <input type="hidden" class="shouldVerify checkFile" name="wechatQrcode" v-model="editArr.imageUrl"  />
-                                    <input type="file" class="uploadImg proImg" id="wechatQrcode" imgElementId="imgWechatQrcode" name="uploadImg" />
-                                    <button type="button" class="btnGreen">选择图片</button>
-                                    <div class="loading"></div>
-                                </div>
-                                <div class="showImg">
-                                    <img :src="editArr.imageUrl" id="imgWechatQrcode" class="staySize" />
-                                    <i class="deluploadImg deleteuploadImg" @click="deleteUploadImg"></i>
-                                </div>
-                            </span>
-                        </li>
-                    </ul>
-                    <div class="btngroups">
-                        <button type="button" class="btnBlue" v-if="editStatus" @click="savePromote">保存</button>
-                        <button type="button" class="btnBlue" v-else @click="addPromote">确定</button>
-                    </div>
-                    <i class="msg"></i>
-                    <span class="closed">X</span>
-                    <input type="hidden" name="id" v-model="editArr.id" />
-                </div>
-            </div>
-            <div class="modal fade" id="modalChangeWechat">
-                <div class="modal_change_wechat modal_body">
-                    <h3>更换推广微信号</h3>
-                    <div class="modal-change-wechat-panel">
-                        <ul>
-                            <li>微信号ID</li><li>微信号名称</li><li>微信登录名</li><li>操作</li>
-                        </ul>
+            <div class="areabox">
+                <div class="wechat-using-panel">
+                    <div class="wechat-using-info">
                         <div>
-                            <table>
-                                <tr v-for="(promote, index) in promoteList" :key="promote.id">
-                                    <td>{{ promote.wechat_id }}</td>
-                                    <td>{{ promote.nickname }}</td>
-                                    <td>{{ promote.account }}</td>
-                                    <td><button type="button" class="btnBlueSmall using" :disabled="!!promote.status" @click="usingWxpromote(index)">推广中</button></td>
-                                </tr>
-                            </table>
+                            <label>微信号ID</label><span>{{ using.wechatId }}</span>
+                        </div>
+                        <div>
+                            <label>微信号名称</label><span>{{ using.nickname }}</span>
+                        </div>
+                        <div>
+                            <label>微信登录名</label><span>{{ using.account }}</span>
+                        </div>
+                        <div>
+                            <label>登录密码</label><span>{{ using.password }}</span>
                         </div>
                     </div>
-                    <span class="closed">X</span>
+                    <div class="wechat-using-qrcode">
+                        <img :src="using.qrcode" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table">
+            <div class="toolnav">
+                <h3>微信号清单</h3>
+            </div>
+            <div class="areabox">
+                <div class="wechat-list-panel">
+                    <div class="wechat-list-head">
+                        <div class="wechat-list-head-left">
+                            <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中{{ checkGroup.length }}个文件
+                        </div>
+                        <div class="wechat-list-head-right">
+                            <button type="button" class="btnGraySmall" @click="deletePromotes">删除</button>
+                            <button type="button" class="btnBlueSmall" @click="openModal(-1)">添加新微信号</button>
+                        </div>
+                    </div>
+                    <div class="wechat-list-body">
+                        <table>
+                            <tr>
+                                <th></th>
+                                <th>微信号ID</th>
+                                <th>微信号名称</th>
+                                <th>微信登录名</th>
+                                <th>微信登录密码</th>
+                                <th>二维码</th>
+                                <th>操作</th>
+                            </tr>
+                            <tr v-for="(promote, index) in promoteList" :key="promote.id">
+                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.wechat_id" v-model="checkGroup" /></td>
+                                <td>{{ promote.wechat_id }}</td>
+                                <td>{{ promote.nickname }}</td>
+                                <td>{{ promote.account }}</td>
+                                <td>{{ promote.password }}</td>
+                                <td><img :src="promote.image_uri" /></td>
+                                <td><span class="edit" @click="openModal(index)">编辑</span><span class="use" v-if="!promote.status" @click="usingWxpromote(index)">应用</span><span class="using" v-else>已用</span><span class="delete" @click="deletePromote(index)">删除</span></td>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer">
-        <div class="wrapper">
-            <p>广州中国科学院计算机网络信息中心</p>
-            <p>电话：020-22992549<span></span>邮箱：gd-xub@chinaunicom.cn</p>
+    <div class="modal fade" id="modalWechat">
+        <div class="modal_wechat modal_body">
+            <h3 v-if="editStatus">编辑微信号</h3>
+            <h3 v-else>新增微信号</h3>
+            <ul class="vertical">
+                <li>
+                    <label>微信号ID：</label>
+                    <span class="veright">
+                        <div class="verify"><input type="text" name="wechatId" class="matchVerify shouldVerify" v-model="editArr.wechatId" /></div>
+                    </span>
+                </li>
+                <li>
+                    <label>微信号名称：</label>
+                    <span class="veright">
+                        <div class="verify"><input type="text" name="nickname" class="matchVerify shouldVerify" v-model="editArr.nickname" /></div>
+                    </span>
+                </li>
+                <li>
+                    <label>微信登录名：</label>
+                    <span class="veright">
+                        <div class="verify"><input type="text" name="account" class="matchVerify shouldVerify" v-model="editArr.account" /></div>
+                    </span>
+                </li>
+                <li>
+                    <label>微信登录密码：</label>
+                    <span class="veright">
+                        <div class="verify"><input type="text" name="password" class="matchVerify shouldVerify" v-model="editArr.password" /></div>
+                    </span>
+                </li>
+                <li>
+                    <label>二维码：</label>
+                    <span class="veright">
+                        <div class="file">
+                            <input type="hidden" class="shouldVerify checkFile" name="wechatQrcode" v-model="editArr.imageUrl"  />
+                            <input type="file" class="uploadImg proImg" id="wechatQrcode" imgElementId="imgWechatQrcode" name="uploadImg" />
+                            <button type="button" class="btnGreen">选择图片</button>
+                            <div class="loading"></div>
+                        </div>
+                        <div class="showImg">
+                            <img :src="editArr.imageUrl" id="imgWechatQrcode" class="staySize" />
+                            <i class="deluploadImg deleteuploadImg" @click="deleteUploadImg"></i>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+            <div class="btngroups">
+                <button type="button" class="btnBlue" v-if="editStatus" @click="savePromote">保存</button>
+                <button type="button" class="btnBlue" v-else @click="addPromote">确定</button>
+            </div>
+            <i class="msg"></i>
+            <span class="closed">X</span>
+            <input type="hidden" name="id" v-model="editArr.id" />
         </div>
     </div>
-    <div class="uptotop"><i></i>返回顶部</div>
+    <div class="modal fade" id="modalChangeWechat">
+        <div class="modal_change_wechat modal_body">
+            <h3>更换推广微信号</h3>
+            <div class="modal-change-wechat-panel">
+                <ul>
+                    <li>微信号ID</li><li>微信号名称</li><li>微信登录名</li><li>操作</li>
+                </ul>
+                <div>
+                    <table>
+                        <tr v-for="(promote, index) in promoteList" :key="promote.id">
+                            <td>{{ promote.wechat_id }}</td>
+                            <td>{{ promote.nickname }}</td>
+                            <td>{{ promote.account }}</td>
+                            <td><button type="button" class="btnBlueSmall using" :disabled="!!promote.status" @click="usingWxpromote(index)">推广中</button></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <span class="closed">X</span>
+        </div>
+    </div>
+</div>
 
-    <script src="/static/js/lib/vue.js"></script>
-    <script src="/static/js/lib/ajaxfileupload.js"></script>
-    <script src="/static/js/wechat.min.js"></script>
-</body>
-</html>
+<%block name="jscode">
+<link rel="stylesheet" href="/static/css/wechat.css" />
+</%block>
+
+<%block name="aside">
+<script src="/static/js/lib/vue.js"></script>
+<script src="/static/js/lib/ajaxfileupload.js"></script>
+<script src="/static/js/wechat.min.js"></script>
+</%block>

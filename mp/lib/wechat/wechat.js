@@ -144,7 +144,7 @@ var vm = new Vue({
             var self = this;
             var item = self.promoteList[index];
             if(item.status==1){
-                alert("该微信号正在推广中，无法删除该微信号！");
+                alert("该微信号正在推广中，无法删除该微信号，请先取消应用该微信号后再尝试删除！");   //该微信号正在推广中，无法删除该微信号！
                 return false;
             }
             if(confirm("确定要删除该微信号吗？")){
