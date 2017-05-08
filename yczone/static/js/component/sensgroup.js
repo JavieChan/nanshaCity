@@ -297,8 +297,7 @@
 	            btnStatus: false, // button状态
 	            groupId: document.querySelector('#groupId').value,
 	            start: document.querySelector('#dateStart').value, // 开始时间
-	            end: document.querySelector('#dateEnd').value, // 结束时间
-	            sensInnerTotalMem: document.querySelector('#sensInnerTotalMem').text()
+	            end: document.querySelector('#dateEnd').value // 结束时间
 	        };
 	        return _this3;
 	    }
