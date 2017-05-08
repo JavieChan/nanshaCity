@@ -53,7 +53,7 @@
                             <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中{{ checkGroup.length }}个文件
                         </div>
                         <div class="wechat-list-head-right">
-                            <button type="button" class="btnGraySmall" @click="deletePromotes">删除</button>
+                            <button type="button" class="btnGraySmall" @click="deletePromotes" v-show="haspromote">删除</button>
                             <button type="button" class="btnBlueSmall" @click="openModal(-1)">添加新微信号</button>
                         </div>
                     </div>
