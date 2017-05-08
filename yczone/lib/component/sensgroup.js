@@ -94,7 +94,8 @@ class Box extends Component {
             btnStatus: false,  // button状态
             groupId: document.querySelector('#groupId').value,
             start: document.querySelector('#dateStart').value,   // 开始时间
-            end: document.querySelector('#dateEnd').value   // 结束时间
+            end: document.querySelector('#dateEnd').value,   // 结束时间
+            sensInnerTotalMem: document.querySelector('#sensInnerTotalMem').text()
         };
     };
     componentDidMount(){
@@ -109,6 +110,7 @@ class Box extends Component {
         console.log(param);
         sensMemberAjax("get", self.state.groupId, param, function(data){
             if(data.code==200){
+                $('#sensInnerTotalMem').text(data.total);
                 this.setState({list: data.members, pagecount:data.page_count, btnStatus: false});
             }
         }.bind(this));
