@@ -149,11 +149,11 @@
                 </ul>
                 <div>
                     <table>
-                        <tr v-for="(promote, index) in promoteList" :key="promote.id">
+                        <tr v-for="(promote, index) in allPromotes" :key="promote.id">
                             <td>{{ promote.wechat_id }}</td>
                             <td>{{ promote.nickname }}</td>
                             <td>{{ promote.account }}</td>
-                            <td><button type="button" class="btnBlueSmall using" :disabled="!!promote.status" @click="usingWxpromote(index)">推广中</button></td>
+                            <td><button type="button" class="btnBlueSmall using" :disabled="!!promote.status" @click="usingAllWxpromote(index)">推广中</button></td>
                         </tr>
                     </table>
                 </div>

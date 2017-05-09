@@ -30,6 +30,7 @@ var vm = new Vue({
         jumpPage: '',
 
         promoteList: [],
+        allPromotes: [],
         nowIndex: -1,
         editStatus: false,
 
@@ -39,6 +40,7 @@ var vm = new Vue({
         var self = this;
         self.getUsingPromote();
         self.pageChange(1);
+        self.getAllpromotes();
     },
     computed: {
         editArr: function(){
@@ -101,10 +103,24 @@ var vm = new Vue({
                 }
             });
         },
+        getAllpromotes: function(){
+            var self = this;
+            wcr.getAllWxpromote(function(data){
+                self.allPromotes = data.wechat_list;
+            });
+        },
         usingWxpromote: function(index){
             var self = this;
             if(confirm("确定要应用该微信号？")){
                 wcr.usingWxpromote(self.promoteList[index].id, function(data){
+                    window.location.reload();
+                });
+            }
+        },
+        usingAllWxpromote: function(index){
+            var self = this;
+            if(confirm("确定要应用该微信号？")){
+                wcr.usingWxpromote(self.allPromotes[index].id, function(data){
                     window.location.reload();
                 });
             }
