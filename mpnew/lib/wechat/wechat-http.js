@@ -33,17 +33,17 @@ wechatRequest.prototype.putWxpromote = function(id, wechatId, nickname, account,
         callback(data);
     });
 };
-wechatRequest.prototype.deleteWxpromote = function(wechatId, callback){
+wechatRequest.prototype.deleteWxpromote = function(id, callback){
     var params = {
-        wechat_id: wechatId
+        id: id
     };
     this._delete('/wxpromote', JSON.stringify(params), function(data){
         callback(data);
     });
 };
-wechatRequest.prototype.deleteWxpromotes = function(wechatIdList, callback){
+wechatRequest.prototype.deleteWxpromotes = function(idList, callback){
     var params = {
-        wechat_id_list: wechatIdList
+        id_list: idList
     };
     this._post('/wxpromote/bulk-delete', JSON.stringify(params), function(data){
         callback(data);
@@ -54,9 +54,9 @@ wechatRequest.prototype.getUsingWxpromote = function(callback){
         callback(data);
     });
 };
-wechatRequest.prototype.usingWxpromote = function(wechatId, callback){
+wechatRequest.prototype.usingWxpromote = function(id, callback){
     var params = {
-        wechat_id: wechatId
+        id: id
     };
     this._post('/wxpromote/promoting', JSON.stringify(params), function(data){
         callback(data);
