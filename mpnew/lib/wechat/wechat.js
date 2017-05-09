@@ -1,6 +1,9 @@
 $(function(){
     $(document).on('click', '#modalWechat, #modalWechat .closed', function(){
         vm.nowIndex = -1;
+        $('#modalWechat .file input').val('');
+        $('#modalWechat .showImg img').attr('src', '');
+        $('#modalWechat .showImg').hide();
         $('#modalWechat').modal('closed');
     });
     $(document).on('click', '#modalChangeWechat, #modalChangeWechat .closed', function(){
