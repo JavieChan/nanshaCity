@@ -1,0 +1,48 @@
+.wrapper #redeemcode .generate-code-panel {
+  background: #f4f4f4;
+  padding: 14px;
+}
+.wrapper #redeemcode .generate-code-panel > div {
+  display: inline-block;
+  font-size: 14px;
+  margin-right: 30px;
+}
+.wrapper #redeemcode .generate-code-panel > div select {
+  width: 50px;
+  background: #fff;
+}
+.wrapper #redeemcode .generate-code-panel > div span {
+  color: #f36144;
+  font-size: 12px;
+}
+.wrapper #redeemcode .generate-code-panel button {
+  float: right;
+}
+.wrapper #redeemcode .tool-panel {
+  margin: 15px 0;
+}
+.wrapper #redeemcode .tool-panel a {
+  display: inline-block;
+  text-align: center;
+}
+.wrapper #redeemcode .tool-panel button {
+  height: 32px;
+  line-height: 32px;
+  width: 90px;
+}
+.wrapper #redeemcode .page-panel {
+  text-align: right;
+  margin-top: 16px;
+}
+.wrapper #redeemcode .page-panel button,
+.wrapper #redeemcode .page-panel span,
+.wrapper #redeemcode .page-panel input {
+  display: inline-block;
+  vertical-align: middle;
+}
+.wrapper #copyBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
