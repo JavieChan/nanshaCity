@@ -25,6 +25,10 @@ var vm = new Vue({
             qrcode: ''
         },
 
+        currentPage: 1,
+        totalPage: 1,
+        jumpPage: '',
+
         promoteList: [],
         nowIndex: -1,
         editStatus: false,
@@ -34,7 +38,7 @@ var vm = new Vue({
     mounted: function(){
         var self = this;
         self.getUsingPromote();
-        self.getPromotes();
+        self.pageChange(1);
     },
     computed: {
         editArr: function(){
@@ -95,12 +99,6 @@ var vm = new Vue({
                         qrcode: wechat.image_uri
                     }
                 }
-            });
-        },
-        getPromotes: function(){
-            var self = this;
-            wcr.getWxpromote(function(data){
-                self.promoteList = data.wechat_list;
             });
         },
         usingWxpromote: function(index){
@@ -189,6 +187,15 @@ var vm = new Vue({
                     window.location.reload();
                 });
             }
+        },
+        pageChange: function(page){
+            var self = this;
+            wcr.getWxpromote(page, function(data){
+                self.checkGroup = [];
+                self.currentPage = data.current_page;
+                self.totalPage = data.total_pages;
+                self.promoteList = data.wechat_list;
+            });
         }
     }
 });

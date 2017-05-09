@@ -171,6 +171,7 @@ class Box extends Component {
         console.log(param);
         sensMemberAjax("get", this.state.groupId, param, function(data){
             if(data.code==200){
+                $('#sensInnerTotalMem').text(data.total);
                 this.setState({list: data.members, pagecount:data.page_count, btnStatus: false});
                 removeLoad();
             }
