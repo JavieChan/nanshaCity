@@ -78,6 +78,9 @@
                                 <td><span class="edit" @click="openModal(index)">编辑</span><span class="use" v-if="!promote.status" @click="usingWxpromote(index)">应用</span><span class="using" v-else>已用</span><span class="delete" @click="deletePromote(index)">删除</span></td>
                             </tr>
                         </table>
+                        <div class="page-panel" style="text-align:right;margin:16px">
+                            <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
+                        </div>
                     </div>
                 </div>
             </div>

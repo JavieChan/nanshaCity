@@ -3,8 +3,11 @@ function wechatRequest(){
     Request.call(this);
 }
 wechatRequest.prototype = new Request();
-wechatRequest.prototype.getWxpromote = function(callback){
-    this._get('/wxpromote', '', function(data){
+wechatRequest.prototype.getWxpromote = function(page, callback){
+    var params = {
+        page: page
+    };
+    this._get('/wxpromote', params, function(data){
         callback(data);
     });
 };
