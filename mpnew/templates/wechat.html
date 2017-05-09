@@ -69,7 +69,7 @@
                                 <th>操作</th>
                             </tr>
                             <tr v-for="(promote, index) in promoteList" :key="promote.id">
-                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.wechat_id" v-model="checkGroup" /></td>
+                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.id" v-model="checkGroup" /></td>
                                 <td>{{ promote.wechat_id }}</td>
                                 <td>{{ promote.nickname }}</td>
                                 <td>{{ promote.account }}</td>
