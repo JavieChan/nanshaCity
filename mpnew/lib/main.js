@@ -349,9 +349,16 @@
             location: $('#location').val(),
             group_id: $('#groupId').val(),
             start: $('#dateStart').val(),
-            end: $('#dateEnd').val()
+            end: $('#dateEnd').val(),
+            keyword: $('#search input').val()
         };
-        $(this).attr('href', '/sensmembers.xls?'+$.param(param));
+        if(confirm("是否导出所有mac?")){
+            param.mac = 1;
+        }else{
+            param.mac = 0;
+        }
+        $('#sensExportHref').attr('href', '/sensmembers.xls?'+$.param(param));
+        $('#sensExportHref span').click();
     });
     // 导出漫游纪录
     $(document).on('click', '#connectRecordExport', function(){

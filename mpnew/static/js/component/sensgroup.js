@@ -101,12 +101,12 @@
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "\u624B\u673A\u53F7"
+	                            "MAC"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "MAC"
+	                            "\u90E8\u95E8"
 	                        ),
 	                        _react2.default.createElement(
 	                            "th",
@@ -117,11 +117,6 @@
 	                            "th",
 	                            null,
 	                            "\u505C\u7559\u65F6\u957F"
-	                        ),
-	                        _react2.default.createElement(
-	                            "th",
-	                            null,
-	                            "\u4FE1\u53F7\u5F3A\u5EA6(dbm)"
 	                        )
 	                    )
 	                ),
@@ -131,7 +126,7 @@
 	                        { key: index },
 	                        _react2.default.createElement(
 	                            "tr",
-	                            { className: "ouTable", "data-group-id": list._id, "data-mac": list.sta_mac },
+	                            { className: "ouTable", "data-group-id": list._id, "data-mac": list.sta_mac, "data-name": list.name },
 	                            _react2.default.createElement(
 	                                "td",
 	                                null,
@@ -146,12 +141,12 @@
 	                            _react2.default.createElement(
 	                                "td",
 	                                null,
-	                                list.mobile
+	                                list.sta_mac
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",
 	                                null,
-	                                list.sta_mac
+	                                list.department
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",
@@ -163,11 +158,6 @@
 	                                null,
 	                                list.time,
 	                                "h"
-	                            ),
-	                            _react2.default.createElement(
-	                                "td",
-	                                null,
-	                                list.rssi
 	                            )
 	                        ),
 	                        _react2.default.createElement(InsideTr, { aps: list.section })
@@ -216,33 +206,28 @@
 	                                    null,
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "17%" },
+	                                        { width: "20%" },
 	                                        "\u611F\u77E5\u8BBE\u5907"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "17%" },
+	                                        { width: "20%" },
 	                                        "\u611F\u77E5\u65E5\u671F"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "16%" },
+	                                        { width: "20%" },
 	                                        "\u51FA\u73B0\u65F6\u95F4"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "16%" },
+	                                        { width: "20%" },
 	                                        "\u6D88\u5931\u65F6\u95F4"
 	                                    ),
 	                                    _react2.default.createElement(
 	                                        "th",
-	                                        { width: "17%" },
+	                                        { width: "20%" },
 	                                        "\u505C\u7559\u65F6\u957F"
-	                                    ),
-	                                    _react2.default.createElement(
-	                                        "th",
-	                                        { width: "17%" },
-	                                        "\u4FE1\u53F7\u5F3A\u5EA6(dbm)"
 	                                    )
 	                                )
 	                            ),
@@ -255,34 +240,29 @@
 	                                        { key: index },
 	                                        _react2.default.createElement(
 	                                            "td",
-	                                            { width: "17%" },
+	                                            { width: "20%" },
 	                                            ap[4]
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            "td",
-	                                            { width: "17%" },
+	                                            { width: "20%" },
 	                                            ap[0]
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            "td",
-	                                            { width: "16%" },
+	                                            { width: "20%" },
 	                                            ap[1]
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            "td",
-	                                            { width: "16%" },
+	                                            { width: "20%" },
 	                                            ap[2]
 	                                        ),
 	                                        _react2.default.createElement(
 	                                            "td",
-	                                            { width: "17%" },
+	                                            { width: "20%" },
 	                                            ap[3],
 	                                            "h"
-	                                        ),
-	                                        _react2.default.createElement(
-	                                            "td",
-	                                            { width: "17%" },
-	                                            ap[5]
 	                                        )
 	                                    );
 	                                })
@@ -336,6 +316,7 @@
 	            console.log(param);
 	            sensMemberAjax("get", self.state.groupId, param, function (data) {
 	                if (data.code == 200) {
+	                    $('#sensInnerTotalMem').text(data.total);
 	                    this.setState({ list: data.members, pagecount: data.page_count, btnStatus: false });
 	                }
 	            }.bind(this));

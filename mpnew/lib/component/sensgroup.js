@@ -12,25 +12,23 @@ class Table extends Component {
                     <tr>
                         <th>头像</th>
                         <th>姓名</th>
-                        <th>手机号</th>
                         <th>MAC</th>
+                        <th>部门</th>
                         <th>客户端</th>
                         <th>停留时长</th>
-                        <th>信号强度(dbm)</th>
                     </tr>
                </thead>
                 {
                     this.props.datalist.map((list, index) => {
                         return (
                             <tbody key={index}>
-                                <tr className="ouTable" data-group-id={list._id} data-mac={list.sta_mac}>
+                                <tr className="ouTable" data-group-id={list._id} data-mac={list.sta_mac} data-name={list.name}>
                                     <td><i className="st"></i><img src={list.avatar} className="txx" /></td>
                                     <td>{list.name}</td>
-                                    <td>{list.mobile}</td>
                                     <td>{list.sta_mac}</td>
+                                    <td>{list.department}</td>
                                     <td>{list.platform}</td>
                                     <td>{list.time}h</td>
-                                    <td>{list.rssi}</td>
                                 </tr>
                                 <InsideTr aps={list.section} />
                             </tbody>
@@ -53,12 +51,11 @@ class InsideTr extends Component {
                         <table>
                             <thead>
                                 <tr>
-                                    <th width="17%">感知设备</th>
-                                    <th width="17%">感知日期</th>
-                                    <th width="16%">出现时间</th>
-                                    <th width="16%">消失时间</th>
-                                    <th width="17%">停留时长</th>
-                                    <th width="17%">信号强度(dbm)</th>
+                                    <th width="20%">感知设备</th>
+                                    <th width="20%">感知日期</th>
+                                    <th width="20%">出现时间</th>
+                                    <th width="20%">消失时间</th>
+                                    <th width="20%">停留时长</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,12 +63,11 @@ class InsideTr extends Component {
                                 this.props.aps.map((ap, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td width="17%">{ap[4]}</td>
-                                            <td width="17%">{ap[0]}</td>
-                                            <td width="16%">{ap[1]}</td>
-                                            <td width="16%">{ap[2]}</td>
-                                            <td width="17%">{ap[3]}h</td>
-                                            <td width="17%">{ap[5]}</td>
+                                            <td width="20%">{ap[4]}</td>
+                                            <td width="20%">{ap[0]}</td>
+                                            <td width="20%">{ap[1]}</td>
+                                            <td width="20%">{ap[2]}</td>
+                                            <td width="20%">{ap[3]}h</td>
                                         </tr>
                                     )
                                 })
@@ -113,6 +109,7 @@ class Box extends Component {
         console.log(param);
         sensMemberAjax("get", self.state.groupId, param, function(data){
             if(data.code==200){
+                $('#sensInnerTotalMem').text(data.total);
                 this.setState({list: data.members, pagecount:data.page_count, btnStatus: false});
             }
         }.bind(this));

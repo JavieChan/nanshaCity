@@ -12,29 +12,28 @@
             </div>
         </div>
         <div class="tabbox sensmember">
-            ##<div class="areabox">
-            ##    <div class="member">
-            ##        <input type="hidden" name="" value="${sta_mac}">
-            ##        <h4>人员信息</h4>
-            ##        <p>头像：
-            ##          % if photo:
-            ##          <img src="${photo}" />
-            ##          % endif
-            ##        </p>
-            ##        <p>姓名：${name}</p>
-            ##        <p>手机号：${mobile}</p>
-            ##    </div>
-            ##    <div class="sedv">
-            ##        <h4>人员信息</h4>
-            ##        % if section:
-            ##        <p>当前位置：${section[0][4]}</p>
-            ##        <p>停留时长：${sum([s[3] for s in section])}h</p>
-            ##        % else:
-            ##        <p>当前位置：</p>
-            ##        <p>停留时长：</p>
-            ##        % endif
-            ##    </div>
-            ##</div>
+            <div class="areabox">
+                <div class="member">
+                    <input type="hidden" name="" value="${sta_mac}">
+                    <h4>人员信息</h4>
+                    <p>头像：
+                      % if photo:
+                      <img src="${photo}" />
+                      % endif
+                    </p>
+                    <p>姓名：${name}</p>
+                </div>
+                <div class="sedv">
+                    <h4>人员信息</h4>
+                    % if section:
+                    <p>当前位置：${section[0][4]}</p>
+                    <p>停留时长：${sum([s[3] for s in section])}h</p>
+                    % else:
+                    <p>当前位置：</p>
+                    <p>停留时长：</p>
+                    % endif
+                </div>
+            </div>
         </div>
         <div class="tabbox ns_table">
             <div class="toolnav">
@@ -48,18 +47,16 @@
                         <th>出现时间</th>
                         <th>消失时间</th>
                         <th>停留时长</th>
-                        <th>信号强度</th>
                     </tr>
-                    ##% for s in section:
-                    ##<tr>
-                    ##    <td>${s[4]}</td>
-                    ##    <td>${s[0]}</td>
-                    ##    <td>${s[1]}</td>
-                    ##    <td>${s[2]}</td>
-                    ##    <td>${s[3]}h</td>
-                    ##    <td>${s[5]}</td>
-                    ##</tr>
-                    ##% endfor
+                    % for s in section:
+                    <tr>
+                        <td>${s[4]}</td>
+                        <td>${s[0]}</td>
+                        <td>${s[1]}</td>
+                        <td>${s[2]}</td>
+                        <td>${s[3]}h</td>
+                    </tr>
+                    % endfor
                 </table>
             </div>
         </div>
