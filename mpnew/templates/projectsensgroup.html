@@ -2,13 +2,13 @@
 <%inherit file="base.html" />
 
 <%
-def get_label(ap):
-    if ap.get('address'):
-        return ap['address']
-    else:
-        return ap.get('name')
-%>
+import datetime
 
+end = datetime.datetime.now()
+start = end - datetime.timedelta(minutes=5)
+end = end.strftime('%Y-%m-%d %H:%M')
+start = start.strftime('%Y-%m-%d %H:%M')
+%>
 <div class="wrapper">
     <input type="hidden" value="${location}" id="location" />
     <input type="hidden" value="${str(group['_id'])}" id="groupId" />
@@ -21,35 +21,6 @@ def get_label(ap):
               <%include file="bread_nav.html" args="location=location,ins=ins,suffix='感知组',remain=[('感知分析', '/projectsens.html?location={}'.format(location))]"/>
             </div>
         </div>
-        ##<div class="tabbox ns_total">
-        ##    <div class="toolnav">
-        ##        <h3>监视组信息</h3>
-        ##    </div>
-            <%
-              import sens
-              from bson import ObjectId
-              from datetime import datetime, timedelta
-              end = datetime.now()
-              start = end - timedelta(minutes=5)
-              end = end.strftime('%Y-%m-%d %H:%M')
-              start = start.strftime('%Y-%m-%d %H:%M')
-
-              def get_total_sens_count(ins, group_id, start, end):
-                  ap_ids = ins.mdb.sens.find_one({'_id': group_id})['aps']
-                  return sum([sens.get_sens_count(ins, group_id, start, end) for _id in ap_ids])
-            %>
-        ##    <div class="areabox">
-        ##        <a href="javascript:;" class="ns_sens">
-        ##            <span>总感知人数：<em>${get_total_sens_count(ins, group['_id'], start, end)}</em>人</span>
-        ##        </a>
-        ##        <a href="javascript:;" class="ns_device">
-        ##            <span>在线设备数：<em>${len([ap for ap in aps if ap['online'] == '1'])}</em>个</span>
-        ##        </a>
-        ##        <a href="javascript:;" class="ns_off" style="margin-right: 0;">
-        ##            <span>故障数：<em>${len([ap for ap in aps if ap['online'] != '1'])}</em>个</span>
-        ##        </a>
-        ##    </div>
-        ##</div>
         <div class="tabbox ns_table" id="sensRoom">
             <div class="toolnav">
                 <h3>感知组名称: ${group['group']}</h3>
@@ -63,9 +34,8 @@ def get_label(ap):
             </div>
             <ul class="mw880 navlink" id="sensDevice">
                 % for ap in aps:
-                  <li data-groupId="${str(ap['_id'])}">
-                    <span class="name" title="${get_label(ap)}">${get_label(ap)}</span>
-                    ##<span class="member">感应人数：${sens.get_sens_count(ins, ap['_id'], start, end)}</span>
+                  <li data-groupId="${ap.mac}">
+                    <span class="name" title="${ap.address}">${ap.address}</span>
                   </li>
                 % endfor
             </ul>
@@ -84,13 +54,6 @@ def get_label(ap):
 </div>
 
 <%block name="aside">
-    <%
-    def get_label(ap):
-        if ap.get('address'):
-            return ap['address']
-        else:
-            return ap.get('name')
-    %>
     <div class="modal fade" id="modalAP">
         <div class="modal_ap modal_body">
             <h3>编辑AP</h3>
@@ -100,10 +63,10 @@ def get_label(ap):
                         <div class="checklist height358">
                             <dl>
                                 % for ap in aps:
-                                <dd><i class="uncheck_s on"></i><em data-id="${str(ap['_id'])}">${get_label(ap)}</em></dd>
+                                <dd><i class="uncheck_s on"></i><em data-id="${ap.address}">${ap.address}</em></dd>
                                 % endfor
                                 % for ap in other_aps:
-                                <dd><i class="uncheck_s"></i><em data-id="${str(ap['_id'])}">${get_label(ap)}</em></dd>
+                                <dd><i class="uncheck_s"></i><em data-id="${str(ap.address)}">${ap.address}</em></dd>
                                 % endfor
                             </dl>
                         </div>
