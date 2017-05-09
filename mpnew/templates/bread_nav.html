@@ -2,6 +2,8 @@
 <h2>
 <%
 from web.common.g import sf
+if not location:
+    location = ''
 locs = location.split(',')
 def get_resource_name(locs, title=False):
     try:
