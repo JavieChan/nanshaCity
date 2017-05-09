@@ -173,6 +173,10 @@ var vm = new Vue({
         },
         deletePromotes: function(){
             var self = this;
+            if(self.checkGroup.length==0){
+                alert("请选择要删除的微信号！");
+                return false;
+            }
             if($.inArray(self.using.id, self.checkGroup)>=0){
                 alert("尝试删除的微信号正在被使用，无法删除！");
                 return false;
