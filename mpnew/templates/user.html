@@ -2,9 +2,11 @@
 <%inherit file="base.html" />
 
 <div class="wrapper">
-    <input type="hidden" name="" id="pms-create-user" value="${ins.is_allowed('create', 'user')}">
-    <input type="hidden" name="" id="pms-update-user" value="${ins.is_allowed('update', 'user')}">
-    <input type="hidden" name="" id="pms-delete-user" value="${ins.is_allowed('delete', 'user')}">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'user')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'user')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'user')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'user')}">
+    <input type="hidden" value="${location}" id="location" />
     <!--导航-->
     <%include file="nav.html" args="on={'user': 'on'}"/>
     <!--右侧功能栏-->
@@ -22,68 +24,9 @@
             %>
             <div class="toolnav">
                 <h3>用户列表</h3>
-                ##<div class="toolbox">
-                ##    % if is_allowed_create_user:
-                ##    <button type="button" class="btnGraySmall addbtn">新增</button>
-                ##    % endif
-                ##</div>
             </div>
-            <div class="areabox">
-                <table class="centerAlign">
-                    <tr>
-                        <th>账户</th>
-                        <th>密码</th>
-                        <th>所属</th>
-                        <th>到期时间</th>
-                        <th>缴纳经费</th>
-                        <th>积分</th>
-                        <th>在线充值</th>
-                        % if is_allowed_update_user and is_allowed_delete_user:
-                        <th>操作</th>
-                        % endif
-                    </tr>
-                    % for user in users:
-                        % if user.mask & (1 << 30) <= 0:
-                        <tr>
-                        % else:
-                        <tr class="dab">
-                        % endif
-                        <td>${user.user}</td>
-                        <td data-value="${user.password}" data-tip="${user.password}" class="pwdtip">***</td>
-                        <td>
-                            <span>
-                                % if user.holder and resources.get(str(user.holder)):
-                                ${resources[str(user.holder)].name}
-                                % endif
-                            </span>
-                        </td>
-                        <td>${user.expired}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        % if is_allowed_update_user and is_allowed_delete_user:
-                        <td><span class="changePwd">修改密码</span><span class="forbin">停用</span><span class="delete">删除</span><button type="button" class="btnGrayAutoMin save">保存</button><button type="button" class="btnGrayAutoMin cancel">取消</button><input type="hidden" value="${user.user}" /></td>
-                        % endif
-                    </tr>
-                    % endfor
-                </table>
-                <div class="page">
-                    <input type="button" value="跳转" class="btnWhiteSmall jump" />
-                    <input type="text" class="pagesize" placeholder="1" />
-                    <input type="button" value="下一页" class="btnWhiteSmall next" />
-                    <div>
-                        <span class="nowpage">1</span> /
-                        <span class="pagecount">
-                        % if page_count==0:
-                        1
-                        % else:
-                        ${page_count}
-                        % endif
-                        </span>
-                    </div>
-                    <input type="button" value="上一页" class="btnWhiteSmall prev" />
-                </div>
-            </div>
+            <div id="userAccountMemTable"></div>
+            <script src="/static/js/component/useraccount.js"></script>
         </div>
     </div>
 </div>
@@ -110,16 +53,4 @@
         <span class="closed">X</span>
     </div>
 </div>
-</%block>
-
-<%block name="jscode">
-    <script src="/static/js/lib/jqueryui.min.js"></script>
-    <script src="/static/js/lib/chart/echarts-all.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            $(".datepicker").datepicker({
-                dateFormat: 'yy-mm-dd'
-            });
-        });
-    </script>
 </%block>
