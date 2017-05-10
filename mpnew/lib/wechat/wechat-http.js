@@ -11,6 +11,11 @@ wechatRequest.prototype.getWxpromote = function(page, callback){
         callback(data);
     });
 };
+wechatRequest.prototype.getAllWxpromote = function(callback){
+    this._get('/wxpromote', '', function(data){
+        callback(data);
+    });
+};
 wechatRequest.prototype.pustWxpromote = function(wechatId, nickname, account, password, imageUrl, callback){
     var params = {
         wechat_id: wechatId,
