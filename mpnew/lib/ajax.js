@@ -707,6 +707,8 @@ function uploadfile(id){
             $tid.parent().find('input[type=hidden]').val(data.url);
         },
         error: function(data, status, e){
+            console.log(data);
+            console.log(status);
             console.log(e);
         }
     });
