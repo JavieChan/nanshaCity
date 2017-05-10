@@ -139,6 +139,7 @@ var vm = new Vue({
                 self.editArr.imageUrl = imgurl;
                 wcr.pustWxpromote(self.editArr.wechatId, self.editArr.nickname, self.editArr.account, self.editArr.password, self.editArr.imageUrl, function(data){
                     self.promoteList.unshift(data.wechat);
+                    self.allPromotes.unshift(data.wechat);
                     $('#modalWechat').modal('closed');
                     self.nowIndex = -2;
                 });
@@ -163,6 +164,16 @@ var vm = new Vue({
                     }
 
                     self.promoteList.splice(self.nowIndex, 1, editData);
+
+                    var index = '';
+                    self.allPromotes.forEach(function(v, i){
+                        if(r.data.id == v.id){
+                            index = i;
+                            return false;
+                        }
+                    });
+                    self.allPromotes.splice(index, 1, editData);
+
                     $('#modalWechat').modal('closed');
                     self.nowIndex = -1;
                 });
