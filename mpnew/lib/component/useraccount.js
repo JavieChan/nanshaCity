@@ -118,57 +118,61 @@ class Box extends Component {
         }
         // 搜索监听
         var searchBtn = document.querySelector('#search');
-        searchBtn.firstChild.addEventListener('change', function(){
-            console.log(this.value);
-            self.setState({keyword: this.value.trim()});
-        });
-        searchBtn.lastChild.addEventListener('click', function(){
-            self.setState({page: 1}, function(){
-                self.ajaxHandle();
+        if(!!searchBtn){
+            searchBtn.firstChild.addEventListener('change', function(){
+                console.log(this.value);
+                self.setState({keyword: this.value.trim()});
             });
-        });
+            searchBtn.lastChild.addEventListener('click', function(){
+                self.setState({page: 1}, function(){
+                    self.ajaxHandle();
+                });
+            });
+        }
         // 新增
         var addBtn = document.querySelector('#add');
-        addBtn.addEventListener('click', function(){
-            if(checkInput($('#modalRoomAccount .veright'))==0){
-                var location = $('#location').val();
-                var param={
-                    location: location,
-                    mobile: $('input[name=mobile]').val(),
-                    user: $('input[name=user]').val(),
-                    password: $('input[name=password]').val(),
-                    expired: $('input[name=expired]').val(),
-                    ends: $('input[name=ends]').val()
-                };
-                if(location.indexOf('29946')!=0){
-                    param.note = $('input[name=note]').val();
-                }
-                if(location.indexOf('206386')==0){
-                    param.mac = $('input[name=mac]').val();
-                }
-                userAccountAjax("post", "", param, function(data){
-                    if(data.code==200){
-                        $('#modalRoomAccount').modal('closed');
-                        var rows = self.state.list;
-                        var $data = {
-                            mobile: data.mobile,
-                            user: data.user,
-                            password: data.password,
-                            expired: data.expired,
-                            ends: data.ends,
-                            mask: data.mask
-                        };
-                        if(location.indexOf('29946')!=0){
-                            $data.note = data.note;
-                        }
-                        rows.unshift($data);
-                        self.setState({list: rows});
-                    }else{
-                        alert(data.reason);
+        if(!!addBtn){
+            addBtn.addEventListener('click', function(){
+                if(checkInput($('#modalRoomAccount .veright'))==0){
+                    var location = $('#location').val();
+                    var param={
+                        location: location,
+                        mobile: $('input[name=mobile]').val(),
+                        user: $('input[name=user]').val(),
+                        password: $('input[name=password]').val(),
+                        expired: $('input[name=expired]').val(),
+                        ends: $('input[name=ends]').val()
+                    };
+                    if(location.indexOf('29946')!=0){
+                        param.note = $('input[name=note]').val();
                     }
-                });
-            }
-        });
+                    if(location.indexOf('206386')==0){
+                        param.mac = $('input[name=mac]').val();
+                    }
+                    userAccountAjax("post", "", param, function(data){
+                        if(data.code==200){
+                            $('#modalRoomAccount').modal('closed');
+                            var rows = self.state.list;
+                            var $data = {
+                                mobile: data.mobile,
+                                user: data.user,
+                                password: data.password,
+                                expired: data.expired,
+                                ends: data.ends,
+                                mask: data.mask
+                            };
+                            if(location.indexOf('29946')!=0){
+                                $data.note = data.note;
+                            }
+                            rows.unshift($data);
+                            self.setState({list: rows});
+                        }else{
+                            alert(data.reason);
+                        }
+                    });
+                }
+            });
+        }
     };
     ajaxHandle() {
         addLoad('正在加载中...');
