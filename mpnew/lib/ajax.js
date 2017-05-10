@@ -698,7 +698,9 @@ function uploadfile(id){
         fileElementId: id,
         dataType: 'json',
         success: function(data, status){
+            console.log(data);
             var $tid = $('#' + id);
+            console.log($tid);
             $tid.parent().find('.loading').hide();
             $tid.parent().find('i.errormsg').remove();
             $tid.parent().find('em').text(data.url);
