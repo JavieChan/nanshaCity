@@ -3134,7 +3134,7 @@
                 $('.ns_deinfo h5 span').html('('+data.address+')');
                 var mem=data.members;
                 for(var i=0, h=''; i<mem.length; i++){
-                    h+='<li><a href="/projectsensmember.html?location='+location+'&sta_mac='+mem[i].sta_mac+'&ap_mac='+mem[i].ap_mac+'" title="'+mem[i].name+'"><span class="name"><em class="off"></em><p>'+mem[i].name+'</p></span><span class="mobile">'+mem[i].mobile+'</span></a></li>';
+                    h+='<li><a href="/projectsensmember.html?location='+location+'&sta_mac='+mem[i].sta_mac+'&ap_mac='+mem[i].ap_mac+'" title="'+mem[i].name+'"><span class="name"><em class="off"></em><p>'+mem[i].name+'</p></span></a></li>';
                 }
                 $('.ns_deinfo ul.bbody').html(h);
                 $('.ns_page').data('page', page);
