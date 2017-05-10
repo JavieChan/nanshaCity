@@ -204,7 +204,7 @@
                 <li><label>安全校验码：</label><span class="veright" data-value="${alipay_account['key']}"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="skey" /></div></span></li>
                 <li><label>商家私钥：</label><span class="veright" data-value="${alipay_account['rsa_private_key_url']}">
                     <div class="file">
-                        <input type="hidden" class="matchVerify shouldVerify checkFile" name="rsa" />
+                        <input type="hidden" class="matchVerify shouldVerify checkFile" name="rsa" value="${alipay_account['rsa_private_key_url']}" />
                         <input type="file" class="uploadImg profile" id="rsakey" name="file" />
                         <button type="button" class="btnGreen">上传私钥文件</button>
                         <div class="loading"></div>
