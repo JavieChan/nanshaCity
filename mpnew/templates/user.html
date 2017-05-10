@@ -16,7 +16,7 @@
                 <%include file="bread_nav.html" args="location=location,ins=ins,suffix='总用户管理'"/>
             </div>
         </div>
-        <div class="tabbox ns_table" id="totallist">
+        <div class="tabbox ns_table" id="userlistAccount">  <!--id="totallist"-->
             <%
             is_allowed_update_user = ins.is_allowed('update', 'user')
             is_allowed_delete_user = ins.is_allowed('delete', 'user')
