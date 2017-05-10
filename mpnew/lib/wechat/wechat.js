@@ -167,7 +167,7 @@ var vm = new Vue({
 
                     var index = '';
                     self.allPromotes.forEach(function(v, i){
-                        if(r.data.id == v.id){
+                        if(editData.id == v.id){
                             index = i;
                             return false;
                         }
