@@ -10,9 +10,6 @@
     <!--导航-->
     <%include file="nav.html" args="on={'user': 'on'}"/>
     <!--右侧功能栏-->
-    <%
-        online_count = online_count2 = offline_count = 0
-    %>
     <div class="projects">
         <div class="tabbox">
             <div class="bread">
@@ -57,9 +54,6 @@
                 <li><label>电话号码：</label><span class="veright"><div class="verify"><input type="text" name="mobile" class="matchVerify shouldVerify checkPhone"></div></span></li>
                 <li><label>上网账号：</label>
                     <span class="veright">
-                        % if not location.startswith('29946'):
-                        <em style="float:left;line-height:32px">${location.split(',')[-1]}</em>
-                        % endif
                         <div class="verify" style="width:158px;float: left"><input type="text" name="user" class="matchVerify shouldVerify" data-type="string" style="width:158px;margin-right:0" /></div>
                     </span>
                 </li>
@@ -72,9 +66,7 @@
                       <button type="button" class="btnWhiteSmall addOne">+</button>
                     </div>
                 </span></li>
-                % if not location.startswith('29946'):
                 <li><label>备注：</label><span class="veright"><div class="verify"><input type="text" name="note" class="matchVerify"></div></span></li>
-                % endif
                 % if location.startswith('206386'):
                 <li><label>绑定MAC：</label>
                     <span class="veright">
