@@ -578,9 +578,10 @@
         $('#modalpay input[name=payHid]').val('alipay');
         $('#modalpay .veright').each(function(i, n){
             var v=$(n).data('value');
-            if(!$(n).find('input[type=file]').length>0){
-                $(n).find('input').val(v);
-            }
+            //if(!$(n).find('input[type=file]').length>0){
+            //    $(n).find('input').val(v);
+            //}
+            $(n).find('input').val(v);
         });
         $('#modalpay').modal('open');
     });
