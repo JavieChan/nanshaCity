@@ -10,7 +10,6 @@ var ajaxUrls = {
 }
 
 var ajaxQ = function(url,type,param,callback,errFunc){
-	console.log(url)
 	$.ajax({
 		url:ajaxDomain+url,
 		type:type,

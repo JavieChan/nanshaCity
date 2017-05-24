@@ -126,12 +126,12 @@
 					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
 					<h4 class="on"><a href="terminal.html">终端分析</a></h4>
 					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="users.html">人群画像</a></h4>
+					<h4 class=""><a href="userhx.html">人群画像</a></h4>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
 					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<h4 class=""><a href="#">区域热力趋势</a></h4>
+					<!--<h4 class=""><a href="#">区域热力趋势</a></h4>
 					<h4 class=""><a href="#">城市寻迹</a></h4>
-					<h4 class=""><a href="#">AP感知预警</a></h4>
+					<h4 class=""><a href="#">AP感知预警</a></h4>-->
 				</div>
 
 				<!--右侧功能栏-->
@@ -313,10 +313,6 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
-				console.log(ajaxUrls.totalnum+"ajaxUrls.totalnum, ");
-				ajaxQ(ajaxUrls.totalnum, "get", null, function(data) {
-					console.log(data);
-				})
 				// 基于准备好的dom，初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
 				var hoursChart = echarts.init(document.getElementById('hoursChart'));

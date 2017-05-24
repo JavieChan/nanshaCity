@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="renderer" content="webkit">
@@ -9,7 +10,8 @@
 		<link rel="stylesheet" href="../static/css/main.css" />
 		<link rel="stylesheet" href="../static/css/2qi.css" />
 		<style type="text/css">
-			.sort-panel,.search-echart-box {
+			.sort-panel,
+			.search-echart-box {
 				overflow: hidden;
 				width: 880px;
 				margin: 0 auto;
@@ -19,55 +21,54 @@
 			.sort-echart-box {
 				float: left;
 			}
-			
+			.sort-list-box .circles{
+				position: relative;
+				width: 400px;
+				height: 300px;
+				overflow: hidden;
+			}
+			.sort-list-box .circles>div{
+				position: absolute;
+				width: 48px;
+				height: 48px;
+				background: #ccc;
+				text-align: center;
+				border-radius:100%;
+				float: left;
+			}
+			.sort-list-box .circles>div span{
+				display: inline-block;
+				margin-top: 25%;
+				color: #fff;
+				cursor: default;
+			}
+			.circles>div:nth-child(1){	left:5px; top: 75px; width: 93px; height: 93px; background: #39C;}
+			.circles>div:nth-child(2){	left:75px; top: 160px;width: 89px; height: 89px; background: #969;}
+			.circles>div:nth-child(3){	left:98px; top: 25px;width: 87px; height: 87px; background: #2BC2EB;}
+			.circles>div:nth-child(4){	left:165px; top: 105px;width: 79px; height: 79px; background: #EFDAF8;}
+			.circles>div:nth-child(5){	left:195px; top: 185px;width: 78px; height: 78px; background: #fc9;}
+			.circles>div:nth-child(6){	left:215px; top: 40px; width: 73px; height: 73px; background: #06c;}
+			.circles>div:nth-child(7){	left:275px; top: 135px; width: 71px; height: 71px; background: #2BC2EB;}
+			.circles>div:nth-child(8){	left:305px; top: 60px; width: 67px; height: 67px; background: #f99;}
 			.sort-echart-box {
 				margin-left: 25px;
 			}
 			
-			#searchChart,
+			#hoursChart,
 			#sortChart {
 				min-height: 300px;
 				min-width: 400px;
 			}
 			
-			.item-list {
-				float: left;
-				font-size: 14px;
-			}
-			
-			.item-list li:nth-child(2n+1) {
-				background-color: #f2f2f2;
-			}
-			
-			.item-list li.item-list-title,
-			.item-list-title .item-hd:hover {
-				background-color: #D2F0FF;
-				cursor: default;
-			}
-			
-			.item-hd {
-				padding: 5px 10px;
-			}
-			
-			.item-hd:hover {
-				background: #ffc;
-				cursor: pointer;
-			}
-			
-			.item-hd i {
-				display: inline-block;
-				width: 4em;
-				text-indent: 0.6em;
-			}
-			
-			.duration{
+			.duration {
 				font-size: 12px;
 				line-height: 30px;
 				vertical-align: middle;
 			}
-			.duration span{
+			
+			.duration span {
 				display: inline-block;
-				width:30px;
+				width: 30px;
 				height: 30px;
 				border: 1px solid #ccc;
 				border-radius: 100%;
@@ -75,11 +76,13 @@
 				text-align: center;
 				cursor: pointer;
 			}
-			.duration span.on{
+			
+			.duration span.on {
 				background: #08c3e5;
 				color: #fff;
 			}
-			.added-keywords i{
+			
+			.added-keywords i {
 				display: inline-block;
 				padding: 1px 3px;
 				border: 1px solid #ccc;
@@ -112,10 +115,10 @@
 				<div class="nav">
 					<h3 class=""><a href="#"><i class="navProjectIco"></i>AP管理</a></h3>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
-					<h4 class="on"><a href="keywords.html">关键词分析</a></h4>
+					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
 					<h4 class=""><a href="terminal.html">终端分析</a></h4>
 					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="userhx.html">人群画像</a></h4>
+					<h4 class="on"><a href="userhx.html">人群画像</a></h4>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
 					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
 					<!--<h4 class=""><a href="#">区域热力趋势</a></h4>
@@ -130,115 +133,39 @@
 							<h2>
 								<a href="#">所有项目</a>
 								&gt; <span style="color:#333">数据分析平台</span>
-								&gt; <span style="color:#0faee5">关键词分析</span>
+								&gt; <span style="color:#0faee5">人群画像</span>
 							</h2>
 						</div>
 					</div>
 					<div class="tabbox " id="">
 						<div class="toolnav">
-							<h3>关键词排行榜</h3>
+							<h3>终端品牌</h3>
 						</div>
 						<!--<div class="content-title"></div>-->
 						<div class="sort-panel">
 							<div class="sort-list-box">
-
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-top">1</i><span>柯洁对战阿尔法狗</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-top">2</i><span>文在寅保镖辞职</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-top">3</i><span>女子高速光脚开车</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">4</i><span>百度联盟峰会</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">5</i><span>赵丽颖张碧晨同框</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">6</i><span>英国曼城发生爆炸</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">7</i><span>生化危机确认重启</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">8</i><span>刷卡买包烟欠3亿</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">9</i><span>蹭伤豪车丈夫离婚</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">10</i><span>北电老师回应性侵</span></div>
-									</li>
-								</ul>
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">11</i><span>6名日本间谍被抓</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">12</i><span>80后夫妻捐1亿</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">13</i><span>戒指戴太多险截肢</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">14</i><span>偷买手机退货遭拒</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">15</i><span>女子30年吃1吨土</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">16</i><span>广东数十马仔袭警</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">17</i><span>老师群里指责家长</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">18</i><span>开奥迪买菜被绑架</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">19</i><span>170头猪被烧死</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">20</i><span>小学学生集体呕吐</span></div>
-									</li>
-								</ul>
+								<div class="circles">
+									<div><span>六镇<br>2712</span></div>
+									<div><span>四镇<br>2212</span></div>
+									<div><span>一镇<br>2312</span></div>
+									<div><span>二镇<br>1541</span></div>
+									<div><span>五镇<br>1812</span></div>
+									<div><span>一街<br>1712</span></div>
+									<div><span>三镇<br>1712</span></div>
+									<div><span>二街<br>1333</span></div>
+								</div>								
 							</div>
 							<div id="sortChart" class="sort-echart-box">
-								<!--饼图-->
+								<!--设备品牌喜好-->
 							</div>
 						</div>
-						</div>
-						<div class="tabbox " id="">
+					</div>
+					<div class="tabbox " id="">
 						<div class="toolnav">
-							<h3>关键词查询</h3>
-							<div class="toolbox batch">
-								<input type="text" class="txt-keyToAdd" placeholder="请输入要查询的关键词" maxlength="10"><button class="btnGraySmall btn-add-keyword">+添加对比词</button>
-								<button class="btnBlueSmall chaxun">查询</button>
-							</div>
-						</div>
-						<div class="toolnav">
-							<span class="added-keywords"></span> <span>2017-5-15 至 2017-5-21</span>
-							
-							<div class="toolbox duration">								
-								<span class="on">7天</span>
-								<span>30天</span>
-								<span>90天</span>
-								<span>半年</span>
-								<span>全部</span>
-							</div>
+							<h3>用户上网时段</h3>
 						</div>
 
-						<div id="searchChart" class="search-echart-box">
+						<div id="hoursChart" class="search-echart-box">
 							<!--曲线图-->
 						</div>
 					</div>
@@ -347,63 +274,53 @@
 		</div>
 
 		<div class="uptotop"><i></i>返回顶部</div>
-		
+
 		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
-				//				ajaxQ("http://top.baidu.com/clip?b=1&hd_h_info=1&line=20","get",null,function(data){
-				//					console.log(data);
-				//				})
+				
 				// 基于准备好的dom，初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
-				var searchChart = echarts.init(document.getElementById('searchChart'));
+				var hoursChart = echarts.init(document.getElementById('hoursChart'));
+
+				var townArr = ["全部", "一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"];
 
 				var keywordData = {
-					subtext: "",
-					legendData: ['一镇', '二镇', '三镇', '四镇', '五镇', '六镇', '一街', '二街'],
+					subtext: "全部",
+					legendData: ['华为', 'Apple', '步步高', 'Vivo', '小米'],
 					seriesData: [{
+							value: 1548,
+							name: '华为'
+						},
+						{
 							value: 335,
-							name: '一镇'
+							name: 'Apple'
 						},
 						{
 							value: 310,
-							name: '二镇'
+							name: '步步高'
 						},
 						{
 							value: 234,
-							name: '三镇'
+							name: 'Vivo'
 						},
 						{
 							value: 135,
-							name: '四镇'
-						},
-						{
-							value: 248,
-							name: '五镇'
-						},
-						{
-							value: 348,
-							name: '六镇'
-						},
-						{
-							value: 148,
-							name: '一街'
-						},
-						{
-							value: 188,
-							name: '二街'
+							name: '小米'
 						}
 					]
 				}
+				var townTmnNumsAll = [1548, 335, 310, 234, 135];
+				var townTmnNums = [196, 42, 38, 29, 18];
 
 				function getSortChartOption() {
 
 					// 指定图表的配置项和数据
 					var sortChartOption = {
 						title: {
-							text: '关键词搜索来源',
+							text: '移动终端品牌统计',
 							subtext: keywordData.subtext,
 							x: 'center'
 						},
@@ -437,115 +354,96 @@
 				}
 				getSortChartOption();
 
-				$(document).on("click", ".item-list li:not('.item-list-title')", function() {
-					keywordData.subtext = $(this).find("span").html();
-					for(var i = 0; i < keywordData.seriesData.length; i++) {
-						keywordData.seriesData[i].value = 100 + parseInt(Math.random() * 300);
-					}
-					getSortChartOption();
-					console.log(keywordData.subtext)
-				})
-				
-				
-				var searchData = {
-					legendData: [],
-					xAxisData:['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-					seriesData: []
-				}
-				
-				$(document).on("click", ".duration span", function() {
-					$(".duration span").removeClass("on");
-					$(this).addClass("on");
-				})
-				
-				var addedKeyWords = [];
-				$(document).on("click", ".btn-add-keyword", function() {
-					var keytoadd = $(".txt-keyToAdd").val();
-					if(keytoadd==""){return}
-					if(addedKeyWords.length>=3){
-						alert("最多查询三个关键字");
-						return false;
-					}
-					if(addedKeyWords.indexOf(keytoadd)>-1){
-						alert("关键字已存在");
-						return false;
-					}
-					$(".added-keywords").append("<i>"+keytoadd+"</i>");
-					addedKeyWords.push(keytoadd);
-				})
-				
-				var curWordsNum=0;
-				$(document).on("click", ".chaxun", function() {
-					if(addedKeyWords.length<1){
-						alert("请添加关键字");
-						return false;
-					}
-					if(curWordsNum==addedKeyWords.length){
-						return;
-					}
-//					searchData.seriesData=[];
-					for(var i = curWordsNum; i < addedKeyWords.length; i++) {
-						var seriesData = {
-							name:addedKeyWords[i],
-							type: 'line',
-							smooth: true,
-							areaStyle: {
-								normal: {}
-							},
-							data: [10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100)]
+
+
+				function getHoursChartOption() {
+
+					var hoursChartOption = {
+					title: {
+						text: '',
+						subtext: ''
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'cross'
 						}
-						//						
-						searchData.seriesData.push(seriesData);
-					}
-					curWordsNum=addedKeyWords.length;
-					getSearchChartOption();
-				})
+					},
+					toolbox: {
+						show: true,
+						feature: {
+//							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
+					},
+					yAxis: {
+						type: 'value',
+						axisLabel: {
+							formatter: '{value} 人'
+						},
+						axisPointer: {
+							snap: true
+						}
+					},
+					visualMap: {
+						show: false,
+						dimension: 0,
+						pieces: [{
+							lte: 6,
+							color: 'green'
+						}, {
+							gt: 6,
+							lte: 8,
+							color: 'red'
+						}, {
+							gt: 8,
+							lte: 14,
+							color: 'green'
+						}, {
+							gt: 14,
+							lte: 17,
+							color: 'red'
+						}, {
+							gt: 17,
+							color: 'green'
+						}]
+					},
+					series: [{
+						name: '上网人数',
+						type: 'line',
+						smooth: true,
+						data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
+						markArea: {
+							data: [
+								[{
+									name: '早高峰',
+									xAxis: '07:30'
+								}, {
+									xAxis: '10:00'
+								}],
+								[{
+									name: '晚高峰',
+									xAxis: '17:30'
+								}, {
+									xAxis: '21:15'
+								}]
+							]
+						}
+					}]
+				};
+				hoursChart.setOption(hoursChartOption);
 
-				function getSearchChartOption() {
+			}
+			getHoursChartOption();
 
-					var searchChartOption = {
-						title: {
-							text: ''
-						},
-						tooltip: {
-							trigger: 'axis',
-							axisPointer: {
-								type: 'cross',
-								label: {
-									backgroundColor: '#6a7985'
-								}
-							}
-						},
-//						legend: {
-//							data: searchData.legendData
-//						},
-						toolbox: {
-//							feature: {
-//								saveAsImage: {}
-//							}
-						},
-						grid: {
-							left: '3%',
-							right: '4%',
-							bottom: '3%',
-							containLabel: true
-						},
-						xAxis: [{
-							type: 'category',
-							boundaryGap: false,
-							data: searchData.xAxisData
-						}],
-						yAxis: [{
-							type: 'value'
-						}],
-						series: searchData.seriesData
-					};
-
-					searchChart.setOption(searchChartOption);
-				}
-				getSearchChartOption();
+			
 
 			})
 		</script>
 	</body>
+
 </html>
