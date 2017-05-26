@@ -17,6 +17,11 @@
 				margin: 0 auto;
 			}
 			
+			.toolnav h3{
+				width:400px;
+				border-left: 3px solid #39f;
+				text-indent: 0.5em;
+			}
 			.sort-list-box,
 			.sort-echart-box {
 				float: left;
@@ -403,6 +408,10 @@
 
 				function getHoursChartOption() {
 					var hoursChartOption = {
+						title: {
+							text: '区域终端联网时间',
+							x: 'center'
+						},
 						color: ['#3398DB'],
 						tooltip: {
 							trigger: 'axis',

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="renderer" content="webkit">
@@ -9,10 +10,17 @@
 		<link rel="stylesheet" href="../static/css/main.css" />
 		<link rel="stylesheet" href="../static/css/2qi.css" />
 		<style type="text/css">
-			.sort-panel,.search-echart-box {
+			.sort-panel,
+			.search-echart-box {
 				overflow: hidden;
 				width: 880px;
 				margin: 0 auto;
+			}
+			
+			.toolnav h3 {
+				width: 400px;
+				border-left: 3px solid #39f;
+				text-indent: 0.5em;
 			}
 			
 			.sort-list-box,
@@ -60,14 +68,15 @@
 				text-indent: 0.6em;
 			}
 			
-			.duration{
+			.duration {
 				font-size: 12px;
 				line-height: 30px;
 				vertical-align: middle;
 			}
-			.duration span{
+			
+			.duration span {
 				display: inline-block;
-				width:30px;
+				width: 30px;
 				height: 30px;
 				border: 1px solid #ccc;
 				border-radius: 100%;
@@ -75,15 +84,27 @@
 				text-align: center;
 				cursor: pointer;
 			}
-			.duration span.on{
+			
+			.duration span.on {
 				background: #08c3e5;
 				color: #fff;
 			}
-			.added-keywords i{
+			
+			.duration span.label {
+				border: 1px solid transparent;
+				cursor: text;
+			}
+			
+			.added-keywords i {
 				display: inline-block;
 				padding: 1px 3px;
 				border: 1px solid #ccc;
 				margin-right: 10px;
+				cursor: pointer;
+			}
+			.added-keywords i:hover::after {
+				content: ' ×';
+				color: #c00;
 			}
 		</style>
 	</head>
@@ -217,8 +238,8 @@
 								<!--饼图-->
 							</div>
 						</div>
-						</div>
-						<div class="tabbox " id="">
+					</div>
+					<div class="tabbox " id="">
 						<div class="toolnav">
 							<h3>关键词查询</h3>
 							<div class="toolbox batch">
@@ -227,9 +248,10 @@
 							</div>
 						</div>
 						<div class="toolnav">
-							<span class="added-keywords"></span> <span>2017-5-15 至 2017-5-21</span>
-							
-							<div class="toolbox duration">								
+							<span class="added-keywords"></span> <span class="duration-box"></span>
+
+							<div class="toolbox duration">
+								<span class="label">最近</span>
 								<span class="on">7天</span>
 								<span>30天</span>
 								<span>90天</span>
@@ -347,7 +369,7 @@
 		</div>
 
 		<div class="uptotop"><i></i>返回顶部</div>
-		
+
 		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
@@ -359,6 +381,7 @@
 				// 基于准备好的dom，初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
 				var searchChart = echarts.init(document.getElementById('searchChart'));
+				searchChart.showLoading();
 
 				var keywordData = {
 					subtext: "",
@@ -445,63 +468,153 @@
 					getSortChartOption();
 					console.log(keywordData.subtext)
 				})
-				
-				
+
+				var xAxisDataArr = [
+					[], //7
+					[], //30
+					[], //90
+					[], //180
+					[], //360
+				];
+
+				//7天
+				for(var i = 7; i > 0; i--) {
+					var d = new Date();
+					d.setDate(d.getDate() - i);
+					xAxisDataArr[0].push((d.getMonth() + 1) + "月" + d.getDate());
+				}
+				//30天
+				for(var i = 30; i > 0; i -= 2) {
+					var d = new Date();
+					d.setDate(d.getDate() - i);
+					xAxisDataArr[1].push((d.getMonth() + 1) + "月" + d.getDate());
+				}
+				//90天
+				for(var i = 90; i > 0; i -= 3) {
+					var d = new Date();
+					d.setDate(d.getDate() - i);
+					xAxisDataArr[2].push((d.getMonth() + 1) + "月" + d.getDate());
+				}
+				//180天
+				for(var i = 180; i > 0; i -= 4) {
+					var d = new Date();
+					d.setDate(d.getDate() - i);
+					xAxisDataArr[3].push((d.getMonth() + 1) + "月" + d.getDate());
+				}
+				//360天
+				for(var i = 360; i > 0; i -= 5) {
+					var d = new Date();
+					d.setDate(d.getDate() - i);
+					xAxisDataArr[4].push(d.getFullYear() + "年" + (d.getMonth() + 1) + "月" + d.getDate());
+				}
+				//				for(var i=0;i<xAxisDataArr.length;i++){
+				//					console.log(xAxisDataArr[i].length)
+				//				}
 				var searchData = {
-					legendData: [],
-					xAxisData:['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+					//					legendData: [],
+					xAxisData: xAxisDataArr[0],
 					seriesData: []
 				}
-				
+
+				var durationNum = 0,durArr=[7,30,90,180,360];
+				var setDurationStr = function(){
+					//时间区间
+					var d = new Date();
+					var durationStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+					d.setDate(d.getDate() - durArr[durationNum]);
+					durationStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+" 至 "+durationStr;
+					$(".duration-box").html(durationStr);
+				}
+				setDurationStr();
 				$(document).on("click", ".duration span", function() {
+					if($(this).hasClass("label") || $(this).hasClass("on")) {
+						return;
+					}
+					durationNum = $(this).index() - 1;					
+					setDurationStr();
+					searchData.xAxisData = xAxisDataArr[durationNum];
+					if(addedKeyWords.length > 0) {
+						searchChart.showLoading();
+						getSearchChartOption();
+					}
 					$(".duration span").removeClass("on");
 					$(this).addClass("on");
 				})
-				
+
 				var addedKeyWords = [];
 				$(document).on("click", ".btn-add-keyword", function() {
 					var keytoadd = $(".txt-keyToAdd").val();
-					if(keytoadd==""){return}
-					if(addedKeyWords.length>=3){
-						alert("最多查询三个关键字");
+					if(keytoadd == "") {
+						return
+					}
+					if(addedKeyWords.length >= 3) {
+						alert("最多查询三个对比词");
 						return false;
 					}
-					if(addedKeyWords.indexOf(keytoadd)>-1){
-						alert("关键字已存在");
+					if(addedKeyWords.indexOf(keytoadd) > -1) {
+						alert("对比词已存在");
 						return false;
 					}
-					$(".added-keywords").append("<i>"+keytoadd+"</i>");
+					$(".added-keywords").append("<i>" + keytoadd + "</i>");
 					addedKeyWords.push(keytoadd);
 				})
-				
-				var curWordsNum=0;
-				$(document).on("click", ".chaxun", function() {
-					if(addedKeyWords.length<1){
-						alert("请添加关键字");
-						return false;
-					}
-					if(curWordsNum==addedKeyWords.length){
-						return;
-					}
-//					searchData.seriesData=[];
-					for(var i = curWordsNum; i < addedKeyWords.length; i++) {
-						var seriesData = {
-							name:addedKeyWords[i],
-							type: 'line',
-							smooth: true,
-							areaStyle: {
-								normal: {}
-							},
-							data: [10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100), 10 + parseInt(Math.random() * 100)]
-						}
-						//						
-						searchData.seriesData.push(seriesData);
-					}
-					curWordsNum=addedKeyWords.length;
+
+//				$(document).on("mouseover", ".added-keywords i", function() {
+//					$(this).addClass("over");
+//				})
+				$(document).on("click", ".added-keywords i", function() {
+					var idx = $(this).index();
+					$(this).remove();
+					addedKeyWords.splice(idx, 1);
+					searchChart.showLoading();
 					getSearchChartOption();
 				})
 
+				var curWordsNum = 0;
+				$(document).on("click", ".chaxun", function() {
+					if(addedKeyWords.length < 1) {
+						alert("请添加关键字");
+						return false;
+					}
+					
+					searchChart.showLoading();
+					getSearchChartOption();
+				})
+				
+				
 				function getSearchChartOption() {
+					var allSeriesData = [];					
+					for(var i = 0; i < 3; i++) {
+						if(i+1>addedKeyWords.length){
+							//填坑：如果没有这个空数据，echart在重新加载数据渲染图形时，会遗留原有数据
+							var seriesData = {
+								name: '',
+								type: 'line',
+								smooth: true,
+								areaStyle: {
+									normal: {}
+								},
+								data: []//空
+							}
+						}else{							
+							var seriesData = {
+								name: addedKeyWords[i],
+								type: 'line',
+								smooth: true,
+								areaStyle: {
+									normal: {}
+								},
+								data: []
+							}
+							var nRandom = 2 * parseInt(Math.random() * 200)
+							for(var j = 0; j < searchData.xAxisData.length; j++) {
+								seriesData.data.push(nRandom + parseInt(Math.random() * 100));
+							}							
+						}
+						allSeriesData.push(seriesData);
+					}
+					//					curWordsNum=addedKeyWords.length;
+//					searchChart.setOption({});
 
 					var searchChartOption = {
 						title: {
@@ -516,14 +629,21 @@
 								}
 							}
 						},
-//						legend: {
-//							data: searchData.legendData
-//						},
+						//						legend: {
+						//							data: searchData.legendData
+						//						},
 						toolbox: {
-//							feature: {
-//								saveAsImage: {}
-//							}
+							//							feature: {
+							//								saveAsImage: {}
+							//							}
 						},
+						dataZoom: [
+					        {   // 这个dataZoom组件，默认控制x轴。
+					            type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+					            start: 0,      // 左边在 10% 的位置。
+					            end: 100         // 右边在 60% 的位置。
+					        }
+					    ],
 						grid: {
 							left: '3%',
 							right: '4%',
@@ -538,14 +658,25 @@
 						yAxis: [{
 							type: 'value'
 						}],
-						series: searchData.seriesData
+						series: allSeriesData
 					};
+					console.log(searchChartOption.series)
 
-					searchChart.setOption(searchChartOption);
+//					searchChart.setOption(initSearchChartOption);
+//					setTimeout(function(){
+						searchChart.hideLoading();
+						searchChart.setOption(searchChartOption);
+//					},200)
+					
 				}
 				getSearchChartOption();
+				$(".label").click(function(){
+					console.log("sad")
+					searchChart.setOption(initSearchChartOption);
+				})
 
 			})
 		</script>
 	</body>
+
 </html>
