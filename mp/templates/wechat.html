@@ -24,16 +24,16 @@
                 <div class="wechat-using-panel">
                     <div class="wechat-using-info">
                         <div>
-                            <label>微信号ID</label><span>{{ using.wechatId }}</span>
+                            <label>微信号ID</label><span v-text="using.wechatId"></span>
                         </div>
                         <div>
-                            <label>微信号名称</label><span>{{ using.nickname }}</span>
+                            <label>微信号名称</label><span v-text="using.nickname"></span>
                         </div>
                         <div>
-                            <label>微信登录名</label><span>{{ using.account }}</span>
+                            <label>微信登录名</label><span v-text="using.account"></span>
                         </div>
                         <div>
-                            <label>登录密码</label><span>{{ using.password }}</span>
+                            <label>登录密码</label><span v-text="using.password"></span>
                         </div>
                     </div>
                     <div class="wechat-using-qrcode">
@@ -50,10 +50,10 @@
                 <div class="wechat-list-panel">
                     <div class="wechat-list-head">
                         <div class="wechat-list-head-left">
-                            <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中{{ checkGroup.length }}个文件
+                            <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中<span v-text="checkGroup.length"></span>个文件
                         </div>
                         <div class="wechat-list-head-right">
-                            <button type="button" class="btnGraySmall" @click="deletePromotes">删除</button>
+                            <button type="button" class="btnGraySmall" @click="deletePromotes" v-show="haspromote">删除</button>
                             <button type="button" class="btnBlueSmall" @click="openModal(-1)">添加新微信号</button>
                         </div>
                     </div>
@@ -69,15 +69,18 @@
                                 <th>操作</th>
                             </tr>
                             <tr v-for="(promote, index) in promoteList" :key="promote.id">
-                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.wechat_id" v-model="checkGroup" /></td>
-                                <td>{{ promote.wechat_id }}</td>
-                                <td>{{ promote.nickname }}</td>
-                                <td>{{ promote.account }}</td>
-                                <td>{{ promote.password }}</td>
+                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.id" v-model="checkGroup" /></td>
+                                <td v-text="promote.wechat_id"></td>
+                                <td v-text="promote.nickname"></td>
+                                <td v-text="promote.account"></td>
+                                <td v-text="promote.password"></td>
                                 <td><img :src="promote.image_uri" /></td>
                                 <td><span class="edit" @click="openModal(index)">编辑</span><span class="use" v-if="!promote.status" @click="usingWxpromote(index)">应用</span><span class="using" v-else>已用</span><span class="delete" @click="deletePromote(index)">删除</span></td>
                             </tr>
                         </table>
+                        <div class="page-panel" style="text-align:right;margin:16px">
+                            <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,11 +149,14 @@
                 </ul>
                 <div>
                     <table>
-                        <tr v-for="(promote, index) in promoteList" :key="promote.id">
+                        <tr v-for="(promote, index) in allPromotes" :key="promote.id">
                             <td>{{ promote.wechat_id }}</td>
                             <td>{{ promote.nickname }}</td>
                             <td>{{ promote.account }}</td>
-                            <td><button type="button" class="btnBlueSmall using" :disabled="!!promote.status" @click="usingWxpromote(index)">推广中</button></td>
+                            <td>
+                                <button type="button" class="btnBlueSmall using" disabled v-if="!!promote.status">推广中</button>
+                                <button type="button" class="btnBlueSmall using" @click="usingAllWxpromote(index)" v-else>应用</button>
+                            </td>
                         </tr>
                     </table>
                 </div>

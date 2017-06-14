@@ -1662,6 +1662,7 @@
                         $trThis.eq(2).html(policyTxt+'<input type="hidden" value="'+policy+'" />');
                         $trThis.eq(3).text(ssid);
                         $trThis.eq(4).text(note);
+
                         $trThis.eq(5).text(portal);
                         $trThis.eq(5).data('value', portal);
                         $trThis.eq(6).text(appid);

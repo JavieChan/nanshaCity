@@ -1,6 +1,9 @@
 $(function(){
     $(document).on('click', '#modalWechat, #modalWechat .closed', function(){
         vm.nowIndex = -1;
+        $('#modalWechat .file input').val('');
+        $('#modalWechat .showImg img').attr('src', '');
+        $('#modalWechat .showImg').hide();
         $('#modalWechat').modal('closed');
     });
     $(document).on('click', '#modalChangeWechat, #modalChangeWechat .closed', function(){
@@ -14,6 +17,7 @@ var vm = new Vue({
     data: {
         haspromote: false,
         using: {
+            id: '',
             wechatId: '',
             nickname: '',
             account: '',
@@ -21,7 +25,12 @@ var vm = new Vue({
             qrcode: ''
         },
 
+        currentPage: 1,
+        totalPage: 1,
+        jumpPage: '',
+
         promoteList: [],
+        allPromotes: [],
         nowIndex: -1,
         editStatus: false,
 
@@ -30,7 +39,8 @@ var vm = new Vue({
     mounted: function(){
         var self = this;
         self.getUsingPromote();
-        self.getPromotes();
+        self.pageChange(1);
+        self.getAllpromotes();
     },
     computed: {
         editArr: function(){
@@ -71,18 +81,19 @@ var vm = new Vue({
             }else{
                 self.checkGroup = [];
                 self.promoteList.forEach(function(item){
-                    self.checkGroup.push(item.wechat_id);
+                    self.checkGroup.push(item.id);
                 });
             }
         },
         getUsingPromote: function(){
             var self = this;
             wcr.getUsingWxpromote(function(data){
-                if(data.wechat){
+                if(!$.isEmptyObject(data.wechat)){
                     var wechat = data.wechat;
 
                     self.haspromote = true;
                     self.using = {
+                        id: wechat.id,
                         wechatId: wechat.wechat_id,
                         nickname: wechat.nickname,
                         account: wechat.account,
@@ -92,16 +103,24 @@ var vm = new Vue({
                 }
             });
         },
-        getPromotes: function(){
+        getAllpromotes: function(){
             var self = this;
-            wcr.getWxpromote(function(data){
-                self.promoteList = data.wechat_list;
+            wcr.getAllWxpromote(function(data){
+                self.allPromotes = data.wechat_list;
             });
         },
         usingWxpromote: function(index){
             var self = this;
             if(confirm("确定要应用该微信号？")){
-                wcr.usingWxpromote(self.promoteList[index].wechat_id, function(data){
+                wcr.usingWxpromote(self.promoteList[index].id, function(data){
+                    window.location.reload();
+                });
+            }
+        },
+        usingAllWxpromote: function(index){
+            var self = this;
+            if(confirm("确定要应用该微信号？")){
+                wcr.usingWxpromote(self.allPromotes[index].id, function(data){
                     window.location.reload();
                 });
             }
@@ -120,6 +139,7 @@ var vm = new Vue({
                 self.editArr.imageUrl = imgurl;
                 wcr.pustWxpromote(self.editArr.wechatId, self.editArr.nickname, self.editArr.account, self.editArr.password, self.editArr.imageUrl, function(data){
                     self.promoteList.unshift(data.wechat);
+                    self.allPromotes.unshift(data.wechat);
                     $('#modalWechat').modal('closed');
                     self.nowIndex = -2;
                 });
@@ -131,7 +151,29 @@ var vm = new Vue({
                 var imgurl = $('input[name=wechatQrcode]').val();
                 self.editArr.imageUrl = imgurl;
                 wcr.putWxpromote(self.editArr.id, self.editArr.wechatId, self.editArr.nickname, self.editArr.account, self.editArr.password, self.editArr.imageUrl, function(data){
-                    self.promoteList.splice(self.nowIndex, 1, data.wechat);
+                    var editData = data.wechat;
+
+                    if(self.using.id == editData.id){
+                        self.using = {
+                            wechatId: editData.wechat_id,
+                            nickname: editData.nickname,
+                            account: editData.account,
+                            password: editData.password,
+                            qrcode: editData.image_uri
+                        }
+                    }
+
+                    self.promoteList.splice(self.nowIndex, 1, editData);
+
+                    var index = '';
+                    self.allPromotes.forEach(function(v, i){
+                        if(editData.id == v.id){
+                            index = i;
+                            return false;
+                        }
+                    });
+                    self.allPromotes.splice(index, 1, editData);
+
                     $('#modalWechat').modal('closed');
                     self.nowIndex = -1;
                 });
@@ -148,9 +190,9 @@ var vm = new Vue({
                 return false;
             }
             if(confirm("确定要删除该微信号吗？")){
-                wcr.deleteWxpromote(item.wechat_id, function(data){
+                wcr.deleteWxpromote(item.id, function(data){
                     self.promoteList.splice(index, 1);
-                    var idx = $.inArray(item.wechat_id, self.checkGroup);
+                    var idx = $.inArray(item.id, self.checkGroup);
                     if(idx>=0){
                         self.checkGroup.splice(idx, 1);
                     }
@@ -159,7 +201,11 @@ var vm = new Vue({
         },
         deletePromotes: function(){
             var self = this;
-            if($.inArray(self.using.wechatId, self.checkGroup)>=0){
+            if(self.checkGroup.length==0){
+                alert("请选择要删除的微信号！");
+                return false;
+            }
+            if($.inArray(self.using.id, self.checkGroup)>=0){
                 alert("尝试删除的微信号正在被使用，无法删除！");
                 return false;
             }
@@ -168,6 +214,15 @@ var vm = new Vue({
                     window.location.reload();
                 });
             }
+        },
+        pageChange: function(page){
+            var self = this;
+            wcr.getWxpromote(page, function(data){
+                self.checkGroup = [];
+                self.currentPage = data.current_page;
+                self.totalPage = data.total_pages;
+                self.promoteList = data.wechat_list;
+            });
         }
     }
 });
