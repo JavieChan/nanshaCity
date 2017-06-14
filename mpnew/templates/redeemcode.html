@@ -23,7 +23,7 @@
             </div>
         </div>
         <div class="tabbox ns_table" id="redeemcode">
-            <div class="areabox" v-if="auth.create">
+            <div class="areabox" v-if="auth.create=='True'">
                 <div class="generate-code-panel">
                     <div>
                         兑换码时长
@@ -46,7 +46,7 @@
                     </div>
                     <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
                 </div>
-                <div class="tool-panel" v-if="auth.view">
+                <div class="tool-panel" v-if="auth.view=='True'">
                     <a :href="exportCodes" class="btnBlueSmall" @click="exportEXE">导出Excel</a>
                     <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar">复制兑换码</button>
                 </div>
