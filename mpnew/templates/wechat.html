@@ -2,10 +2,14 @@
 <%inherit file="base.html" />
 
 <div class="wrapper" id="promote">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'promote')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'promote')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'promote')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'promote')}">
     <!--导航-->
     <%include file="nav.html" args="on={'promote': 'on'}"/>
     <!--右侧功能栏-->
-    <div class="projects">
+    <div class="projects" id="promoteAuth">
         <div class="tabbox">
             <div class="bread">
                 <h2>
@@ -17,7 +21,7 @@
             <div class="toolnav">
                 <h3>推广中的微信号</h3>
                 <div class="toolbox">
-                    <button type="button" class="btnBlueSmall" @click="openPromoteModal">更换微信号</button>
+                    <button type="button" class="btnBlueSmall" @click="openPromoteModal" v-if="authUpdate">更换微信号</button>
                 </div>
             </div>
             <div class="areabox">
@@ -49,33 +53,33 @@
             <div class="areabox">
                 <div class="wechat-list-panel">
                     <div class="wechat-list-head">
-                        <div class="wechat-list-head-left">
+                        <div class="wechat-list-head-left" v-if="authDelete">
                             <input type="checkbox" class="wechat-checkbox-all" v-model="checkAll" @click="checkAllPromote" /> 选中<span v-text="checkGroup.length"></span>个文件
                         </div>
                         <div class="wechat-list-head-right">
-                            <button type="button" class="btnGraySmall" @click="deletePromotes" v-show="haspromote">删除</button>
-                            <button type="button" class="btnBlueSmall" @click="openModal(-1)">添加新微信号</button>
+                            <button type="button" class="btnGraySmall" @click="deletePromotes" v-show="haspromote" v-if="authDelete">删除</button>
+                            <button type="button" class="btnBlueSmall" @click="openModal(-1)" v-if="authCreate">添加新微信号</button>
                         </div>
                     </div>
                     <div class="wechat-list-body">
                         <table>
                             <tr>
-                                <th></th>
+                                <th v-if="authDelete"></th>
                                 <th>微信号ID</th>
                                 <th>微信号名称</th>
                                 <th>微信登录名</th>
                                 <th>微信登录密码</th>
                                 <th>二维码</th>
-                                <th>操作</th>
+                                <th v-if="{authUpdate || authDelete}">操作</th>
                             </tr>
                             <tr v-for="(promote, index) in promoteList" :key="promote.id">
-                                <td><input type="checkbox" class="wechat-checkbox" :value="promote.id" v-model="checkGroup" /></td>
+                                <td v-if="authDelete"><input type="checkbox" class="wechat-checkbox" :value="promote.id" v-model="checkGroup" /></td>
                                 <td v-text="promote.wechat_id"></td>
                                 <td v-text="promote.nickname"></td>
                                 <td v-text="promote.account"></td>
                                 <td v-text="promote.password"></td>
                                 <td><img :src="promote.image_uri" /></td>
-                                <td><span class="edit" @click="openModal(index)">编辑</span><span class="use" v-if="!promote.status" @click="usingWxpromote(index)">应用</span><span class="using" v-else>已用</span><span class="delete" @click="deletePromote(index)">删除</span></td>
+                                <td v-if="{authUpdate || authDelete}"><span class="edit" @click="openModal(index)" v-if="authUpdate">编辑</span><span class="use" v-if="!promote.status && authUpdate" @click="usingWxpromote(index)">应用</span><span class="using" v-else-if="authUpdate">已用</span><span class="delete" @click="deletePromote(index)" v-if="authDelete">删除</span></td>
                             </tr>
                         </table>
                         <div class="page-panel" style="text-align:right;margin:16px">

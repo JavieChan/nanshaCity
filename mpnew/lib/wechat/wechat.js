@@ -13,7 +13,7 @@ $(function(){
 
 var wcr = new wechatRequest();
 var vm = new Vue({
-    el: '#promote',
+    el: '#promoteAuth',
     data: {
         haspromote: false,
         using: {
@@ -34,7 +34,14 @@ var vm = new Vue({
         nowIndex: -1,
         editStatus: false,
 
-        checkGroup: []
+        checkGroup: [],
+
+        auth: {
+            update: $('#updateAuth').val(),
+            create: $('#createAuth').val(),
+            delete: $('#deleteAuth').val(),
+            view: $('#viewAuth').val()
+        }
     },
     mounted: function(){
         var self = this;
@@ -71,6 +78,22 @@ var vm = new Vue({
             }else{
                 return false;
             }
+        },
+        authView: function(){
+            var auth = this.auth.update=='True' || this.auth.create=='True' || this.auth.delete=='True' || this.auth.view=='True';
+            return auth;
+        },
+        authUpdate: function(){
+            var auth = this.auth.update=='True';
+            return auth;
+        },
+        authCreate: function(){
+            var auth = this.auth.create=='True';
+            return auth;
+        },
+        authDelete: function(){
+            var auth = this.auth.delete=='True';
+            return auth;
         }
     },
     methods: {
