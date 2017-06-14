@@ -25,17 +25,42 @@ var renderList = {
 
 var ree = new redeemCode();
 var vm = new Vue({
-    el: '#redeemcodelist',
+    el: '#redeemAuth',
     data: {
         codeStatus: '',
         codeList: [],
 
         currentPage: 1,
         totalPage: 1,
-        jumpPage: ''
+        jumpPage: '',
+
+        auth: {
+            update: $('#updateAuth').val(),
+            create: $('#createAuth').val(),
+            delete: $('#deleteAuth').val(),
+            view: $('#viewAuth').val()
+        }
     },
     components: {
         'render-list': renderList
+    },
+    computed: {
+        authView: function(){
+            var auth = this.auth.update=='True' || this.auth.create=='True' || this.auth.delete=='True' || this.auth.view=='True';
+            return auth;
+        },
+        authUpdate: function(){
+            var auth = this.auth.update=='True';
+            return auth;
+        },
+        authCreate: function(){
+            var auth = this.auth.create=='True';
+            return auth;
+        },
+        authDelete: function(){
+            var auth = this.auth.delete=='True';
+            return auth;
+        }
     },
     mounted: function(){
         var self = this;

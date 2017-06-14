@@ -30,7 +30,7 @@ var renderList = {
 
 var ree = new redeemCode();
 var vm = new Vue({
-    el: '#redeemcode',
+    el: '#redeemAuth',
     data: {
         hours: 1,
         count: 1,
@@ -61,6 +61,22 @@ var vm = new Vue({
         exportCodes: function(){
             var url = (this.serial == '') ? 'javascript:;' : '/redeemcode/codes.xls?serial='+this.serial;
             return url;
+        },
+        authView: function(){
+            var auth = this.auth.update=='True' || this.auth.create=='True' || this.auth.delete=='True' || this.auth.view=='True';
+            return auth;
+        },
+        authUpdate: function(){
+            var auth = this.auth.update=='True';
+            return auth;
+        },
+        authCreate: function(){
+            var auth = this.auth.create=='True';
+            return auth;
+        },
+        authDelete: function(){
+            var auth = this.auth.delete=='True';
+            return auth;
         }
     },
     methods: {

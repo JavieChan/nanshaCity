@@ -9,7 +9,7 @@
     <!--导航-->
     <%include file="nav.html" args="on={'redeem': 'on'}"/>
     <!--右侧功能栏-->
-    <div class="projects">
+    <div class="projects" id="redeemAuth">
         <div class="tabbox">
             <div class="bread">
                 <h2>
@@ -17,13 +17,13 @@
                 </h2>
                 <div class="widget">
                     <a href="javascript:;" class="btnBlue disabled">生成兑换码</a>
-                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue">兑换码列表</a>
-                    <a href="/redeemcodetotal.html?location=${location}" class="btnBlue">运营统计</a>
+                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue" v-if="authView">兑换码列表</a>
+                    <a href="/redeemcodetotal.html?location=${location}" class="btnBlue" v-if="authView">运营统计</a>
                 </div>
             </div>
         </div>
         <div class="tabbox ns_table" id="redeemcode">
-            <div class="areabox" v-if="auth.create=='True'">
+            <div class="areabox" v-if="authCreate">
                 <div class="generate-code-panel">
                     <div>
                         兑换码时长
@@ -46,7 +46,7 @@
                     </div>
                     <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
                 </div>
-                <div class="tool-panel" v-if="auth.view=='True'">
+                <div class="tool-panel">
                     <a :href="exportCodes" class="btnBlueSmall" @click="exportEXE">导出Excel</a>
                     <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar">复制兑换码</button>
                 </div>

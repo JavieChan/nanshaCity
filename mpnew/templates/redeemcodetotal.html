@@ -2,23 +2,27 @@
 <%inherit file="base.html" />
 
 <div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'redeem')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'redeem')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'redeem')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'redeem')}">
     <!--导航-->
     <%include file="nav.html" args="on={'redeem': 'on'}"/>
     <!--右侧功能栏-->
-    <div class="projects">
+    <div class="projects" id='redeemAuth'>
         <div class="tabbox">
             <div class="bread">
                 <h2>
                     <a href="/index.html">所有项目</a> > <a href="/redeemcode.html?location=${location}">兑换码管理</a> > <span style="color:#0faee5">运营统计</span>
                 </h2>
                 <div class="widget">
-                    <a href="/redeemcode.html?location=${location}" class="btnBlue">生成兑换码</a>
-                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue">兑换码列表</a>
+                    <a href="/redeemcode.html?location=${location}" class="btnBlue" v-if="authView">生成兑换码</a>
+                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue" v-if="authView">兑换码列表</a>
                     <a href="javascript:;" class="btnBlue disabled">运营统计</a>
                 </div>
             </div>
         </div>
-        <div class="tabbox ns_table" id="redeemcodetotal">
+        <div class="tabbox ns_table" id="redeemcodetotal" v-if="authView">
             <div class="total-panel">
                 <div class="total">总时长：{{ total }}小时</div><div class="used">已兑换：{{ used }}小时</div><div class="usable">待兑换：{{ usable }}小时</div><div class="expired">已过期：{{ expired }}小时</div>
             </div>
