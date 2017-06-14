@@ -42,7 +42,14 @@ var vm = new Vue({
         jumpPage: '',
 
         serial: '',
-        onePageCodes: ''
+        onePageCodes: '',
+
+        auth: {
+            update: $('#updateAuth').val(),
+            create: $('#createAuth').val(),
+            delete: $('#deleteAuth').val(),
+            view: $('#viewAuth').val()
+        }
     },
     components: {
         'render-list': renderList

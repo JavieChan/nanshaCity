@@ -2,6 +2,10 @@
 <%inherit file="base.html" />
 
 <div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'redeem')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'redeem')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'redeem')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'redeem')}">
     <!--导航-->
     <%include file="nav.html" args="on={'redeem': 'on'}"/>
     <!--右侧功能栏-->
@@ -19,7 +23,7 @@
             </div>
         </div>
         <div class="tabbox ns_table" id="redeemcode">
-            <div class="areabox">
+            <div class="areabox" v-if="auth.create">
                 <div class="generate-code-panel">
                     <div>
                         兑换码时长
@@ -42,7 +46,7 @@
                     </div>
                     <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
                 </div>
-                <div class="tool-panel">
+                <div class="tool-panel" v-if="auth.view">
                     <a :href="exportCodes" class="btnBlueSmall" @click="exportEXE">导出Excel</a>
                     <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar">复制兑换码</button>
                 </div>
