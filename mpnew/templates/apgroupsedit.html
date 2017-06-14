@@ -3,7 +3,7 @@
 
 <div class="wrapper">
     <input type="hidden" id="location" value="${location}" />
-    ##<input type="hidden" id="apgroupId" value="${ap_group_id}" />
+    <input type="hidden" id="apgroupId" value="${ap_group_id}" />
     <!--导航-->
     <%include file="nav.html" args="on={'apgroups': 'on'}"/>
     <!--右侧功能栏-->
@@ -19,7 +19,7 @@
                     <li>
                         <label>AP组名称：</label>
                         <span class="veright">
-                          ##<div class="verify"><input type="text" name="name" class="matchVerify shouldVerify" value="${apgroup['name']}" /></div>
+                        <div class="verify"><input type="text" name="name" class="matchVerify shouldVerify" value="${name}" /></div>
                         </span>
                     </li>
                     <li>
