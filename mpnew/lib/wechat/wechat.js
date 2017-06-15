@@ -13,7 +13,7 @@ $(function(){
 
 var wcr = new wechatRequest();
 var vm = new Vue({
-    el: '#promoteAuth',
+    el: '#promote',
     data: {
         haspromote: false,
         using: {
@@ -29,7 +29,15 @@ var vm = new Vue({
         totalPage: 1,
         jumpPage: '',
 
-        promoteList: [],
+        promoteList: [
+            // {
+            //     wechat_id: 1,
+            //     nickname: 1,
+            //     account: 1,
+            //     password: 1,
+            //     image_uri: ''
+            // }
+        ],
         allPromotes: [],
         nowIndex: -1,
         editStatus: false,

@@ -17,7 +17,7 @@
                 </h2>
             </div>
         </div>
-        <div class="tabbox wechat-using-wrapper" v-show="haspromote">
+        <div class="tabbox wechat-using-wrapper" v-show="haspromote" v-if="authView">
             <div class="toolnav">
                 <h3>推广中的微信号</h3>
                 <div class="toolbox">
@@ -46,7 +46,7 @@
                 </div>
             </div>
         </div>
-        <div class="tabbox ns_table">
+        <div class="tabbox ns_table" v-if="authView">
             <div class="toolnav">
                 <h3>微信号清单</h3>
             </div>
