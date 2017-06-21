@@ -1,0 +1,56 @@
+## user.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'user')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'user')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'user')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'user')}">
+    <input type="hidden" value="${location}" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'user': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='总用户管理'"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="userlistAccount">  <!--id="totallist"-->
+            <%
+            is_allowed_update_user = ins.is_allowed('update', 'user')
+            is_allowed_delete_user = ins.is_allowed('delete', 'user')
+            is_allowed_create_user = ins.is_allowed('create', 'user')
+            %>
+            <div class="toolnav">
+                <h3>用户列表</h3>
+            </div>
+            <div id="userAccountMemTable"></div>
+            <script src="/static/js/component/useraccount.js"></script>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+<div class="modal fade" id="modalUser">
+    <div class="modal_user modal_body">
+        <h3>新增用户</h3>
+        <ul>
+            <!--<li><label>手机号：</label><span><input type="text" value="" id="mobile" /></span></li>-->
+            <li><label>所属项目：</label>
+            <span>
+                <select id="projectId">
+                <option value="">--请选择--</option>
+                </select>
+            </span>
+            </li>
+            <li><label>到期时间：</label><span><input type="text" value="" class="datepicker" id="exTime" /></span></li>
+            <li><label>密码：</label><span><input type="password" value="" id="password" /></span></li>
+            <li><label>再次输入密码：</label><span><input type="password" value="" id="expassword" /></span></li>
+        </ul>
+        <div><button type="button" class="btnBlue" id="add">确定</button></div>
+        <i class="msg"></i>
+        <span class="closed">X</span>
+    </div>
+</div>
+</%block>

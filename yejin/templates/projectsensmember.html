@@ -1,0 +1,64 @@
+## projectsensmember.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" />
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+              <%include file="bread_nav.html" args="location=location,ins=ins,suffix='感知人员详情',remain=[('感知分析', '/projectsens.html?location={}'.format(location)), ('感知组', '/projectsensgroup.html?location={}&group_id={}'.format(location, group_id))]"/>
+            </div>
+        </div>
+        <div class="tabbox sensmember">
+            <div class="areabox">
+                <div class="member">
+                    <input type="hidden" name="" value="${sta_mac}">
+                    <h4>人员信息</h4>
+                    <p>头像：
+                      % if photo:
+                      <img src="${photo}" />
+                      % endif
+                    </p>
+                    <p>姓名：${name}</p>
+                </div>
+                <div class="sedv">
+                    <h4>人员信息</h4>
+                    % if section:
+                    <p>当前位置：${section[0][4]}</p>
+                    <p>停留时长：${sum([s[3] for s in section])}h</p>
+                    % else:
+                    <p>当前位置：</p>
+                    <p>停留时长：</p>
+                    % endif
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table">
+            <div class="toolnav">
+                <h3>历史记录</h3>
+            </div>
+            <div class="areabox">
+                <table>
+                    <tr>
+                        <th>感知设备</th>
+                        <th>感知日期</th>
+                        <th>出现时间</th>
+                        <th>消失时间</th>
+                        <th>停留时长</th>
+                    </tr>
+                    % for s in section:
+                    <tr>
+                        <td>${s[4]}</td>
+                        <td>${s[0]}</td>
+                        <td>${s[1]}</td>
+                        <td>${s[2]}</td>
+                        <td>${s[3]}h</td>
+                    </tr>
+                    % endfor
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+## redeemcode.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'redeem')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'redeem')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'redeem')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'redeem')}">
+    <!--导航-->
+    <%include file="nav.html" args="on={'redeem': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects" id="redeemAuth">
+        <div class="tabbox">
+            <div class="bread">
+                <h2>
+                    <a href="/index.html">所有项目</a> > <a href="javascript:;">兑换码管理</a> > <span style="color:#0faee5">生成兑换码</span>
+                </h2>
+                <div class="widget">
+                    <a href="javascript:;" class="btnBlue disabled">生成兑换码</a>
+                    <a href="/redeemcodelist.html?location=${location}" class="btnBlue" v-if="authView">兑换码列表</a>
+                    <a href="/redeemcodetotal.html?location=${location}" class="btnBlue" v-if="authView">运营统计</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="redeemcode">
+            <div class="areabox" v-if="authCreate">
+                <div class="generate-code-panel">
+                    <div>
+                        兑换码时长
+                        <select v-model="hours">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                        </select>
+                        小时
+                    </div>
+                    <div>
+                        兑换码数量
+                        <input type="text" v-model.trim="count" @blur="checkCount" style="width:50px" />
+                        个<span>(1-200个)</span>
+                    </div>
+                    <div>
+                        有效期
+                        <input type="text" v-model.trim="expired" id="expired" />
+                    </div>
+                    <button type="button" class="btnBlueSmall" @click="generateCodes">生成兑换码</button>
+                </div>
+                <div class="tool-panel">
+                    <a :href="exportCodes" class="btnBlueSmall" @click="exportEXE">导出Excel</a>
+                    <button type="button" class="btnGreen" id="clipboard" data-clipboard-target="#copyBar">复制兑换码</button>
+                </div>
+                <textarea id="copyBar" v-model="onePageCodes" style="width:100%;height:100px"></textarea>
+                <table>
+                    <tr>
+                        <th width="33%">兑换码</th>
+                        <th width="33%">时长</th>
+                        <th width="34%">有效期</th>
+                    </tr>
+                    <tr is="render-list" v-for="code in codeList" :code="code" :key="code.id"></tr>
+                </table>
+                <div class="page-panel">
+                    <paginator :current-page="currentPage" :total-page="totalPage" :jump-page="jumpPage" @page-change="pageChange"></paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+<link rel="stylesheet" href="/static/css/redeemcode.css" />
+</%block>
+
+<%block name="aside">
+<script src="/static/js/lib/jqueryui.min.js"></script>
+<script src="/static/js/lib/clipboard.js"></script>
+<script src="/static/js/lib/vue.js"></script>
+<script src="/static/js/redeemcode.min.js"></script>
+</%block>

@@ -1,0 +1,194 @@
+## policy.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" args="on={'policy': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='网络管理'"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="policylist">
+            <div class="toolnav">
+                <h3>网络列表</h3>
+            </div>
+            <div class="areabox">
+                <table class="centerAlign notrbg">
+                    <%
+                    is_allowed_update_policy = ins.is_allowed('update', 'policy');
+                    is_allowed_delete_policy = ins.is_allowed('delete', 'policy')
+                    %>
+                    <tr>
+                        <th>项目名称</th>
+                        <th>联系人</th>
+                        <th>详细地址</th>
+                        <th>开通时间</th>
+                        <th>&nbsp;&nbsp;</th>
+                    </tr>
+                    % for r in resources:
+                    <tr class="ousideTable">
+                        <td>${r.name}</td>
+                        <td>${r.owner}</td>
+                        <td>${r.address}</td>
+                        <td>${r.ctime.strftime('%Y-%m-%d')}</td>
+                        <td><!--<span class="forbin">冻结</span><span class="delete">删除</span>--><span class="smore">展开<i class="aDwn"></i></span></td>
+                    </tr>
+                    <tr class="insideTable">
+                        <td colspan="5">
+                            <div>
+                                <table>
+                                    <tr>
+                                        <th width="15%">ID</th>
+                                        <th width="10%">专网</th>
+                                        <th width="10%">计费方式</th>
+                                        <th width="15%">SSID</th>
+                                        <th width="20%">备注</th>
+                                        <th width="15%">portal</th>
+                                        <th width="15%">操作</th>
+                                    </tr>
+                                    % for p in [_p for _p in policys if _p._location == r._location]:
+                                    <tr>
+                                        <td>${p._location.split(',')[-1]}</td>
+                                        <td>
+                                            % if p.policy & 2 > 0:
+                                            是<input type="hidden" value="1" />
+                                            % else:
+                                            否<input type="hidden" value="0" />
+                                            % endif
+                                        </td>
+                                        <td>
+                                            % if p.policy & 1 > 0:
+                                            免费<input type="hidden" value="1" />
+                                            % else:
+                                            收费<input type="hidden" value="0" />
+                                            % endif
+                                        </td>
+                                        <td>${p.ssid}</td>
+                                        <td>${p.note}</td>
+                                        <td data-value="${p.portal}">${p.portal}</td>
+                                        <td>
+                                            % if is_allowed_update_policy:
+                                            <span class="edit">编辑</span>
+                                            % endif
+                                            % if is_allowed_delete_policy:
+                                            <span class="delete">删除</span>
+                                            % endif
+                                            <input type="hidden" value="${p.appid}" class="appid" />
+                                            <input type="hidden" value="${p.shopid}" class="shopid" />
+                                            <input type="hidden" value="${p.secret}" class="secret" />
+                                            <input type="hidden" value="${p.duration}" class="duration" />
+                                            <input type="hidden" value="${p.policy}" class="policy" />
+                                            <input type="hidden" value="${p.session_timeout}" class="stout" />
+                                            <input type="hidden" value="${p.id}" class="id" />
+                                        </td>
+                                    </tr>
+                                    % endfor
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                    % endfor
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+<div class="modal fade" id="modalPn">
+    <div class="modal_pn modal_body">
+        <h3>新增网络配置</h3>
+        <p class="notice"><em>注：</em>同一个专网只能有唯一的SSID</p>
+        <ul class="vertical">
+            <li>
+                <label><i>*</i>私有网络：</label>
+                <span class="veright">
+                    <select id="pri">
+                        <option value="0">否</option>
+                        <option value="1">是</option>
+                    </select>
+                </span>
+            </li>
+            <li>
+                <label><i>*</i>收费方式：</label>
+                <span class="veright">
+                    <select id="policy">
+                        <option value="0">收费</option>
+                        <option value="1">免费</option>
+                    </select>
+                </span>
+            </li>
+            <!--policy 第8位-->
+            <li>
+                <label><i>*</i>账户认证：</label>
+                <span class="veright">
+                    <select id="accountRZ">
+                        <option value="1">启用</option>
+                        <option value="0">停用</option>
+                    </select>
+                </span>
+            </li>
+            <!--policy 第9位-->
+            <li>
+                <label><i>*</i>微信认证：</label>
+                <span class="veright">
+                    <select id="wechatRZ">
+                        <option value="1">启用</option>
+                        <option value="0">停用</option>
+                    </select>
+                </span>
+            </li>
+            <!--policy 第10位-->
+            <li>
+                <label><i>*</i>手机号认证：</label>
+                <span class="veright">
+                    <select id="mobileRZ">
+                        <option value="1">启用</option>
+                        <option value="0">停用</option>
+                    </select>
+                </span>
+            </li>
+            <li>
+                <label><i>*</i>SSID：</label>
+                <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="ssid" /></div></span>
+            </li>
+            <li>
+                <label>备注：</label>
+                <span class="veright"><div class="verify"><input type="text" name="note" /></div></span>
+            </li>
+            <li class="portalRZ">
+                <label><i>*</i>Portal：</label>
+                <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" id="portal" /></div></span>
+            </li>
+            <li>
+                <label>AppId：</label>
+                <span class="veright"><div class="verify"><input type="text" name="appid" /></div></span>
+            </li>
+            <li>
+                <label>ShopId：</label>
+                <span class="veright"><div class="verify"><input type="text" name="shopid" /></div></span>
+            </li>
+            <li>
+                <label>Secret：</label>
+                <span class="veright"><div class="verify"><input type="text" name="secret" /></div></span>
+            </li>
+            <li class="durationRZ">
+                <label><i>*</i>免认证(天)：</label>
+                <span class="veright"><div class="verify"><input type="text" name="duration" placeholder="输入天数，例如：5" class="matchVerify shouldVerify checkInt" /></div></span>
+            </li>
+            <li>
+                <label>会话过期时间(小时)：</label>
+                <span class="veright"><div class="verify"><input type="text" name="stout" placeholder="输入小时，默认24小时" class="matchVerify checkInt" /></div></span>
+            </li>
+        </ul>
+        <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+        <i class="msg"></i>
+        <span class="closed">X</span>
+        <input type="hidden" name="id" />
+        <input type="hidden" name="idx" />
+    </div>
+</div>
+</%block>

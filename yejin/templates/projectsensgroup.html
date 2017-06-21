@@ -1,0 +1,86 @@
+## projectsensgroup.html
+<%inherit file="base.html" />
+
+<%
+import datetime
+
+end = datetime.datetime.now()
+start = end - datetime.timedelta(minutes=5)
+end = end.strftime('%Y-%m-%d %H:%M')
+start = start.strftime('%Y-%m-%d %H:%M')
+%>
+<div class="wrapper">
+    <input type="hidden" value="${location}" id="location" />
+    <input type="hidden" value="${str(group['_id'])}" id="groupId" />
+    <!--导航-->
+    <%include file="nav.html" />
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+              <%include file="bread_nav.html" args="location=location,ins=ins,suffix='感知组',remain=[('感知分析', '/projectsens.html?location={}'.format(location))]"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="sensRoom">
+            <div class="toolnav">
+                <h3>感知组名称: ${group['group']}</h3>
+                <div class="toolbox">
+                    <button type="button" class="btnGraySmall" id="dateSearch">查询</button>
+                    % if group['is_group'] == '1':
+                    <button type="button" class="btnGraySmall editbtn">编辑AP</button>
+                    % endif
+                    <div class="timebar">感知时间：<div><input type="text" value="${start}" id="dateStart" />至<input type="text" value="${end}" id="dateEnd" /></div></div>
+                </div>
+            </div>
+            <ul class="mw880 navlink" id="sensDevice">
+                % for ap in aps:
+                  <li data-groupId="${ap.mac}">
+                    <span class="name" title="${ap.address}">${ap.address}</span>
+                  </li>
+                % endfor
+            </ul>
+            <div class="toolnav">
+                <h3>当前感知人员（总数：<em id="sensInnerTotalMem"></em>）</h3>
+                <div class="toolbox">
+                    <div class="search" id="search"><input type="text" placeholder="输入姓名/MAC" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                    <a href="javascript:;" id="sensExportHref" style="display:none"><span>导出感知人员</span></a>
+                    <button class="btnGraySmall" id="sensExport">导出感知人员</button>
+                </div>
+            </div>
+            <div id="sensMemTable"></div>
+            <script src="/static/js/component/sensgroup.js"></script>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+    <div class="modal fade" id="modalAP">
+        <div class="modal_ap modal_body">
+            <h3>编辑AP</h3>
+            <ul class="vertical">
+                <li><label><i>*</i>选择AP：</label>
+                    <span class="veright">
+                        <div class="checklist height358">
+                            <dl>
+                                % for ap in aps:
+                                <dd><i class="uncheck_s on"></i><em data-id="${ap.address}">${ap.address}</em></dd>
+                                % endfor
+                                % for ap in other_aps:
+                                <dd><i class="uncheck_s"></i><em data-id="${str(ap.address)}">${ap.address}</em></dd>
+                                % endfor
+                            </dl>
+                        </div>
+                    </span>
+                </li>
+            </ul>
+            <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+            <i class="msg"></i>
+            <span class="closed">X</span>
+        </div>
+    </div>
+</%block>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/jqueryui.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-ui-timepicker-addon.js"></script>
+</%block>

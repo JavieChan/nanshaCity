@@ -1,0 +1,48 @@
+## projectuser.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="updateAuth" value="${ins.is_allowed('update', 'user')}">
+    <input type="hidden" id="createAuth" value="${ins.is_allowed('create', 'user')}">
+    <input type="hidden" id="deleteAuth" value="${ins.is_allowed('delete', 'user')}">
+    <input type="hidden" id="viewAuth" value="${ins.is_allowed('view', 'user')}">
+    <input type="hidden" value="${location}" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'user': 'on'}"/>
+    <!--右侧功能栏-->
+    <%
+    online_count = online_count2 = offline_count = 0
+    %>
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='在线用户',compress=True"/>
+                <div class="widget">
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="userlistOnline">
+            <ul class="adsnav">
+                <li class="on"><a href="/projectuseronline.html?location=${location}">在线用户</a></li>
+                <li><a href="/projectuserguest.html?location=${location}">在线访客</a></li>
+                <li><a href="/projectuseraccount.html?location=${location}">上网账号</a></li>
+                <%
+                from web.common.g import sf 
+                res = sf['project'].get_by_location(location)
+                %>
+                % if res.type.id == 8:
+                <li><a href="/projectuserpn.html?location=${location}">专网用户</a></li>
+                % endif
+                <li><a href="/projectuserpay.html?location=${location}">缴费账户</a></li>
+            </ul>
+            <div class="toolnav">
+                <div class="toolbox">
+                    <div class="search" id="search"><input type="text" placeholder="输入搜索内容" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                    <a href="/export/onlineusers/?location=${location}" class="btnGraySmall">导出报表</a>
+                </div>
+            </div>
+            <div id="userOnlineMemTable"></div>
+            <script src="/static/js/component/useronline.js"></script>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+## projecth5page.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="location" value="${location}" />
+    <input type="hidden" id="id" value="${id}" />
+    <!--导航-->
+    <%include file="nav.html" />
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,remain=[('H5页面管理', '/projecth5list.html?location={}'.format(location))],suffix='编辑'"/>
+            </div>
+        </div>
+        <div class="tabbox ns_portal">
+            <div class="toolnav">
+                <h3>Portal编辑：</h3>
+            </div>
+            <ul class="adsnav">
+                <li class="on">H5</li>
+                <li>PC</li>
+            </ul>
+            <div class="areabox">
+                <div class="pt_h5 pt_area" style="display: block;">
+                    <ul class="ptM">
+                        <li>
+                            <label>背景图片：</label>
+                            <div class="file">
+                                <input type="hidden" name="h5bg" value="${portal['h5']['pic']}" />
+                                <input type="file" class="uploadImg" id="h5bg" name="uploadImg" />
+                                <button type="button" class="btnGreen">图片上传</button>
+                                <i class="loading"></i>
+                            </div>
+                        </li>
+                        <li></li>
+                    </ul>
+                    <div class="ptG">
+                        <button type="button" class="btnGraySmall" id="H5preview">预览</button>
+                        <button type="button" class="btnGraySmall" id="H5save">保存</button>
+                    </div>
+                </div>
+                <div class="pt_pc pt_area">
+                    <ul class="ptM">
+                        <li></li>
+                        <li>
+                            <label>背景图片：</label>
+                            <div class="file">
+                                <input type="hidden" name="pcbg" value="${portal['pc']['pic']}" />
+                                <input type="file" class="uploadImg" id="pcbg" name="uploadImg" />
+                                <button type="button" class="btnGreen">图片上传</button>
+                                <i class="loading"></i>
+                            </div>
+                        </li>
+                        <li></li>
+                    </ul>
+                    <div class="ptG">
+                        <button type="button" class="btnGraySmall" id="PCpreview">预览</button>
+                        <button type="button" class="btnGraySmall" id="PCsave">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>resizeZW();</script>
+
+<%block name="aside">
+    <div class="modal fade" id="modalQrcode">
+        <div class="modal_qrcode modal_ele">
+            <h3>扫描下方二维码即可预览</h3>
+            <div id="qrcode"></div>
+            <span class="closed">X</span>
+        </div>
+    </div>
+</%block>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/ajaxfileupload.js"></script>
+    <script type="text/javascript" src="/static/js/lib/qrgen.min.js"></script>
+</%block>
