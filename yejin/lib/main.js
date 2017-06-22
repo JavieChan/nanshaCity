@@ -419,11 +419,11 @@
         var idx=$(this).index();
         $(this).addClass('on').siblings().removeClass('on');
         if(idx>0){
-            $('.vtime input').removeClass('checkFloat').addClass('checkInt');
-            $('.vtime input').attr('placeholder', '输入天数').val('');
+            $('.vtime input').removeClass('checkInt').addClass('datepicker');
+            $('.vtime input').attr('placeholder', '学期结束日期').val('');
         }else{
-            $('.vtime input').removeClass('checkInt').addClass('checkFloat');
-            $('.vtime input').attr('placeholder', '支持两位小数，例如：1.52').val('');
+            $('.vtime input').removeClass('datepicker').addClass('checkInt');
+            $('.vtime input').attr('placeholder', '输入月数').val('');
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
@@ -2177,6 +2177,9 @@
 
     });
     // 专网用户
+    // 充值
+    $(document).on('click', '.recharge', function(){$('#modalRecharge').modal('open');});
+    $(document).on('click', '#modalRecharge, #modalRecharge .closed', function(){$('#modalRecharge').modal('closed');});
     // 新增用户
     $(document).on('click', '#userlistPn .add', function(){$('#modalRoomPn').modal('open');});
     $(document).on('click', '#modalRoomPn, #modalRoomPn .closed', function(){$('#modalRoomPn').modal('closed');});

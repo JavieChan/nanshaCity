@@ -156,14 +156,14 @@
                     <label>&nbsp;</label>
                     <span class="veright">
                         <ul class="adsnav">
-                            <li class="on">小时</li>
-                            <li>天</li>
+                            <li class="on">月</li>
+                            <li>学期</li>
                         </ul>
                     </span>
                 </li>
                 <li class="vtime">
-                    <label><i>*</i>时间<em>（小时/天数）</em>：</label>
-                    <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify checkFloat" name="time" placeholder="支持两位小数，例如：1.52" /></div></span>
+                    <label><i>*</i>时间<em>（月/学期）</em>：</label>
+                    <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify checkInt" name="time" placeholder="输入月数" /></div></span>
                 </li>
                 <li>
                     <label><i>*</i>金额<em>（元）</em>：</label>
@@ -173,9 +173,9 @@
                     <label>终端<em>（数）</em>：</label>
                     <span class="veright">
                         <div class="amount">
-                            <button type="button" class="btnWhiteSmall reduceOne">-</button>
-                            <input type="text" name="ends" value="2" data-type="int" />
-                            <button type="button" class="btnWhiteSmall addOne">+</button>
+                            <button type="button" class="btnWhiteSmall reduceOne" disabled="disabled">-</button>
+                            <input type="text" name="ends" value="1" data-type="int" />
+                            <button type="button" class="btnWhiteSmall addOne" disabled="disabled">+</button>
                         </div>
                     </span>
                 </li>
