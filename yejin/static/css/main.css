@@ -4192,7 +4192,8 @@ select.sel {
 .modal_newsgroup,
 .modal_room_inner,
 .modal_wechat,
-.modal_change_wechat {
+.modal_change_wechat,
+.modal_recharge {
   background: #fff;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -4231,7 +4232,8 @@ select.sel {
 .modal_newsgroup .adsnav,
 .modal_room_inner .adsnav,
 .modal_wechat .adsnav,
-.modal_change_wechat .adsnav {
+.modal_change_wechat .adsnav,
+.modal_recharge .adsnav {
   margin: 0;
 }
 .modal_project .adsnav li,
@@ -4258,7 +4260,8 @@ select.sel {
 .modal_newsgroup .adsnav li,
 .modal_room_inner .adsnav li,
 .modal_wechat .adsnav li,
-.modal_change_wechat .adsnav li {
+.modal_change_wechat .adsnav li,
+.modal_recharge .adsnav li {
   padding: 0;
   height: 30px;
   line-height: 30px;
@@ -4288,7 +4291,8 @@ select.sel {
 .modal_newsgroup h3,
 .modal_room_inner h3,
 .modal_wechat h3,
-.modal_change_wechat h3 {
+.modal_change_wechat h3,
+.modal_recharge h3 {
   background: url("../images/modal_h_bg.png") no-repeat;
   height: 82px;
   line-height: 82px;
@@ -4320,7 +4324,8 @@ select.sel {
 .modal_newsgroup .notice,
 .modal_room_inner .notice,
 .modal_wechat .notice,
-.modal_change_wechat .notice {
+.modal_change_wechat .notice,
+.modal_recharge .notice {
   margin-bottom: -20px;
 }
 .modal_project ul,
@@ -4347,7 +4352,8 @@ select.sel {
 .modal_newsgroup ul,
 .modal_room_inner ul,
 .modal_wechat ul,
-.modal_change_wechat ul {
+.modal_change_wechat ul,
+.modal_recharge ul {
   margin-top: 40px;
 }
 .modal_project ul label,
@@ -4374,7 +4380,8 @@ select.sel {
 .modal_newsgroup ul label,
 .modal_room_inner ul label,
 .modal_wechat ul label,
-.modal_change_wechat ul label {
+.modal_change_wechat ul label,
+.modal_recharge ul label {
   width: 25%;
   padding-right: 10px;
 }
@@ -4402,7 +4409,8 @@ select.sel {
 .modal_newsgroup ul .veright select,
 .modal_room_inner ul .veright select,
 .modal_wechat ul .veright select,
-.modal_change_wechat ul .veright select {
+.modal_change_wechat ul .veright select,
+.modal_recharge ul .veright select {
   width: 100px;
   text-indent: 5px;
 }
@@ -4430,7 +4438,8 @@ select.sel {
 .modal_newsgroup ul .veright .verify,
 .modal_room_inner ul .veright .verify,
 .modal_wechat ul .veright .verify,
-.modal_change_wechat ul .veright .verify {
+.modal_change_wechat ul .veright .verify,
+.modal_recharge ul .veright .verify {
   width: 400px;
 }
 .modal_project .btngroups,
@@ -4457,7 +4466,8 @@ select.sel {
 .modal_newsgroup .btngroups,
 .modal_room_inner .btngroups,
 .modal_wechat .btngroups,
-.modal_change_wechat .btngroups {
+.modal_change_wechat .btngroups,
+.modal_recharge .btngroups {
   margin: 20px 0 10px;
   text-align: center;
 }
@@ -4485,7 +4495,8 @@ select.sel {
 .modal_newsgroup .msg,
 .modal_room_inner .msg,
 .modal_wechat .msg,
-.modal_change_wechat .msg {
+.modal_change_wechat .msg,
+.modal_recharge .msg {
   color: #d9534f;
   font-size: 14px;
   display: block;
