@@ -418,12 +418,14 @@
     $(document).on('click', '#modalPackageType .adsnav li', function(){
         var idx=$(this).index();
         $(this).addClass('on').siblings().removeClass('on');
-        if(idx>0){
-            $('.vtime input').removeClass('checkInt').addClass('datepicker');
-            $('.vtime input').attr('placeholder', '学期结束日期').val('');
-        }else{
-            $('.vtime input').removeClass('datepicker').addClass('checkInt');
-            $('.vtime input').attr('placeholder', '输入月数').val('');
+        if(idx>0){//学期套餐
+            $('.vtime label').html("<i>*</i>日期：");
+            $('.vtime input.checkInt').hide();
+            $('.vtime input.datepicker').show();
+        }else{//月套餐
+            $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
+            $('.vtime input.datepicker').hide();
+            $('.vtime input.checkInt').show();
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
@@ -433,7 +435,7 @@
         var userTypeId=$('.userType .bill_tab span.on').attr('data-user-type-id'), idx=$('#modalPackageType .adsnav li.on').index(), guest=$('.userType span.on').index();
 
         var price=$('input[name=price]').val(),
-            time=$('input[name=time]').val(),
+            time=$('input[name=time]:visible').val(),
             ends=$('input[name=ends]').val()==""?2:$('input[name=ends]').val(),
             expired=$('input[name=expired]').val(),
             label=$('input[name=label]').val();
