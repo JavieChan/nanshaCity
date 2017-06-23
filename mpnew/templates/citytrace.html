@@ -16,9 +16,51 @@
 				position: relative;
 			}
 			
+			.map-pop {
+				position: absolute;
+				top: 10px;
+				left: 70px;
+				background: rgba(255, 255, 255, 0.92);
+				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+				padding: 1px 5px 5px 5px;
+				border-radius: 5px;
+				display: none;
+			}
+			
+			.map-pop .close {
+				text-align: right;
+			}
+			
+			.map-pop .close span {
+				display: inline-block;
+				font-size: 16px;
+				color: #300;
+				cursor: pointer;
+				width: 24px;
+				height: 16px;
+				line-height: 16px;
+				text-align: center;
+				border-radius: 2px;
+			}
+			
+			.map-pop .close span:hover {
+				background: #c33;
+				color: #fff;
+			}
+			
 			#citymap {
 				width: 100%;
 				height: 600px;
+			}
+			
+			.mark-jt {
+				display: block;
+				border-left: 2px solid transparent;
+				border-top: 2px solid transparent;
+				height: 8px;
+				width: 8px;
+				overflow: hidden;
+				transform-origin: left top;
 			}
 			
 			.marker-ap {
@@ -27,19 +69,73 @@
 				line-height: 16px;
 				text-align: center;
 				border: 1px solid #fff;
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
 				border-radius: 100%;
 				overflow: hidden;
-				background: rgba(20, 160, 220, 1);
 				color: #ff9;
 				font-size: 12px;
 				white-space: nowrap;
+				background: rgba(20, 160, 220, 1);
+				box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.9);
+			}
+			
+			.marker-ap:hover {
+				background: rgba(20, 160, 220, 0.5);
+				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+			}
+			
+			.marker-info-box {
+				max-width: 700px;
+				max-height: 400px;
+				border: 1px solid #ccc;
+				overflow: auto;
+				border-radius: 5px;
+			}
+			
+			.marker-info-line {
+				padding: 10px;
+				white-space: nowrap;
+				font-size: 13px;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.marker-info-line.not-same-day {
+				border-top: 5px solid #ccc;
+			}
+			
+			.marker-info-line:last-child {
+				border-bottom: none;
+			}
+			
+			.marker-info-line label {
+				display: inline-block;
+				min-width: 4em;
 			}
 			
 			.loading-txt {
 				font-size: 13px;
 				color: #333;
 				display: none;
+			}
+			.mark-line{
+				background: rgba(255,255,255,0.7);
+				color: #36f;
+				padding: 3px 10px;
+				border-radius: 3px;
+				font-size: 13px;
+				font-weight: bold;
+				box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
+			}
+			.mark-line i:after{
+				content: ",";
+			}
+			.mark-line i:last-child:after{
+				content: "";
+			}
+			.mark-line.ln-left{
+				transform: translateX(-105%);
+			}
+			.mark-line.ln-right{
+				transform: translateX(5%);
 			}
 		</style>
 	</head>
@@ -106,6 +202,10 @@
 					</div>
 					<div class="map-box">
 						<div id="citymap"></div>
+						<div class="map-pop">
+							<div class="close"><span>×</span></div>
+							<div class="ctt">×</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -220,15 +320,18 @@
 		<script type="text/javascript" src="../static/js/lib/jquery-ui-timepicker-addon.js"></script>
 		<script>
 			$(function() {
-				var macArr = ['00:00:00:03:79:7E', '00:02:87:13:07:16', '00:07:0E:30:0E:71', '00:07:A8:A2:B0:43', '00:08:22:04:2C:02', '00:08:22:68:6A:05', '00:08:22:9D:5F:62', '00:08:22:E4:CD:FD', '00:0A:44:9A:97:30', '00:0A:F5:03:87:24', '00:16:6D:14:7E:FD', '00:17:23:05:76:99', '00:17:23:07:60:55', '00:17:23:07:85:9B', '00:17:23:08:A0:4E', '00:17:23:08:A4:03', '00:17:23:08:A7:DC', '00:17:23:18:BC:B0', '00:17:23:1A:72:12', '00:17:23:1A:72:4D', '00:17:23:1A:74:DA', '00:17:23:1D:B1:16', '00:17:23:1D:B1:52', '00:17:23:1D:B5:6E', '00:17:23:1E:B1:7A', '00:17:23:1E:B1:84', '00:17:23:20:4B:91', '00:17:23:20:4C:33', '00:17:23:20:51:62', '00:17:23:20:51:A0', '00:17:23:20:51:A3', '00:17:23:F0:A3:29', '00:17:23:F0:AF:2A', '00:17:23:F0:AF:67', '00:17:23:F1:0C:F1', '00:17:23:F1:0D:19', '00:17:23:F1:2E:67', '00:17:23:F1:65:E4', '00:17:23:F1:68:FB', '00:17:23:F1:6F:BA', '00:17:23:F1:C4:F6', '00:17:23:F2:20:78', '00:17:23:F2:21:ED', '00:17:23:F2:22:01', '00:17:23:F2:22:28', '00:17:23:F2:22:5A', '00:17:23:F2:22:61', '00:17:23:F2:22:94', '00:17:23:F2:22:97', '00:17:23:FB:2A:38', '00:17:23:FE:0C:31', '00:17:23:FE:0C:EC', '00:17:23:FE:0D:E0', '00:17:23:FE:1C:48', '00:17:23:FE:1C:6B', '00:17:23:FE:1C:7A', '00:17:23:FE:1C:B0', '00:17:23:FE:23:A1', '00:17:23:FE:29:00', '00:17:23:FE:29:18'];
+				//var macArr = ['00:00:00:03:79:7E', '00:02:87:13:07:16', '00:07:0E:30:0E:71', '00:07:A8:A2:B0:43', '00:08:22:04:2C:02', '00:08:22:68:6A:05', '00:08:22:9D:5F:62', '00:08:22:E4:CD:FD', '00:0A:44:9A:97:30', '00:0A:F5:03:87:24', '00:16:6D:14:7E:FD', '00:17:23:05:76:99', '00:17:23:07:60:55', '00:17:23:07:85:9B', '00:17:23:08:A0:4E', '00:17:23:08:A4:03', '00:17:23:08:A7:DC', '00:17:23:18:BC:B0', '00:17:23:1A:72:12', '00:17:23:1A:72:4D', '00:17:23:1A:74:DA', '00:17:23:1D:B1:16', '00:17:23:1D:B1:52', '00:17:23:1D:B5:6E', '00:17:23:1E:B1:7A', '00:17:23:1E:B1:84', '00:17:23:20:4B:91', '00:17:23:20:4C:33', '00:17:23:20:51:62', '00:17:23:20:51:A0', '00:17:23:20:51:A3', '00:17:23:F0:A3:29', '00:17:23:F0:AF:2A', '00:17:23:F0:AF:67', '00:17:23:F1:0C:F1', '00:17:23:F1:0D:19', '00:17:23:F1:2E:67', '00:17:23:F1:65:E4', '00:17:23:F1:68:FB', '00:17:23:F1:6F:BA', '00:17:23:F1:C4:F6', '00:17:23:F2:20:78', '00:17:23:F2:21:ED', '00:17:23:F2:22:01', '00:17:23:F2:22:28', '00:17:23:F2:22:5A', '00:17:23:F2:22:61', '00:17:23:F2:22:94', '00:17:23:F2:22:97', '00:17:23:FB:2A:38', '00:17:23:FE:0C:31', '00:17:23:FE:0C:EC', '00:17:23:FE:0D:E0', '00:17:23:FE:1C:48', '00:17:23:FE:1C:6B', '00:17:23:FE:1C:7A', '00:17:23:FE:1C:B0', '00:17:23:FE:23:A1', '00:17:23:FE:29:00', '00:17:23:FE:29:18'];
+				//macArr = ['00:0C:E7:87:2D:92', '00:1A:8E:63:CC:FA', '00:27:22:26:8B:1A', '00:7E:56:78:28:51', '00:9A:CD:06:12:3E', '00:9A:CD:2C:65:63', '00:DA:F3:09:FD:7F', '00:EC:0A:1B:70:BC', '02:13:A2:88:D3:17', '02:1E:E7:37:30:17', '02:49:AD:ED:3A:6E', '02:DA:F9:65:61:1D', '02:DD:AC:3F:A6:BC', '04:56:04:20:A8:23', '04:56:04:45:8C:64', '04:56:04:EC:AC:D3', '06:60:F9:30:01:DE', '06:8F:0E:85:65:1F', '06:A0:7F:00:F4:81', '06:FE:A8:F3:7D:A1', '08:23:B2:90:B6:76', '08:23:B2:92:4D:82', '0A:65:CD:82:47:D1', '0A:87:26:CA:DF:D4', '0A:92:CA:EA:D3:63', '0A:99:62:4E:1B:54', '0A:C0:5C:4E:FA:9A', '0C:1D:AF:D1:C0:C4', '0C:D6:BD:6B:75:05', '0E:16:7B:55:74:80']
+				var macI = 0;
 				var getParams = function() {
-					$(".txt-mac").val(macArr[0]);
+					//$(".txt-mac").val(macArr[macI]);
+					macI += 1;
 					var ap = $(".txt-mac").val(),
 						start_time = $("#dateStart").val(),
 						end_time = $("#dateEnd").val();
 
 					if(ap == "" || ap == null) {
-						alert("请选择AP");
+						alert("请输入MAC地址");
 						return;
 					}
 					if(start_time == "" || end_time == "") {
@@ -251,12 +354,322 @@
 					return params;
 				}
 
-				var aplistData = null;
 				var getClientTrace = function() {
-//					var params = getParams();
+					var params = getParams();
+					if(typeof(params) == "undefined") {
+						return;
+					}
 					$(".loading-txt").show();
-					//					ajaxQ(ajaxUrls.clientTrace, "post", params, function(data) {
-					var apList = [{
+					
+//					//直接用测试数据
+//					showMapData(apList1);
+//					return;
+
+					$.ajax({
+						url: ajaxDomain + ajaxUrls.clientTrace,
+						type: "post",
+						data: JSON.stringify(params),
+						contentType: "application/json",
+						success: function(data) {
+							if(data.Code.Code == 200) {
+								var apList = data["ap_list"];
+								if(typeof(apList) == "undefined") {
+									$(".loading-txt").hide();
+//									console.log("无数据。" + macI)
+//									console.warn("换MAC继续请求。")
+//									getClientTrace();
+									alert("暂无数据。")
+									return;
+								}
+								if(apList.length < 1) {
+									alert("暂无数据。");
+								} else {
+									showMapData(apList);
+									$(".loading-txt").hide();
+								}
+							}
+						}
+					})
+				}
+				$(document).on("click", ".btn-search", function() {
+					getClientTrace();
+				})
+
+				var myMap;
+				var pileLng = 0,
+					pileLat = 0;
+				var cluster, markers = null,lineMakers=null;;
+				var pointMark = null,
+					infoWindow = null,
+					zoomN;
+
+				function initMap() {
+					var scale = new AMap.Scale(),
+						toolBar = new AMap.ToolBar();
+					myMap = new AMap.Map('citymap', {
+						resizeEnable: true,
+						zoom: 10,
+						center: [113.513364, 22.732559], //南沙区域正中心点	//[113.53141,22.808029],//南沙区政府点
+					});
+
+					myMap.addControl(scale);
+					myMap.addControl(toolBar);
+					infoWindow = new AMap.InfoWindow({
+						offset: new AMap.Pixel(0, -30)
+					});
+				}
+				initMap();
+
+				myMap.on("zoomchange", function() {
+					var zoomLV = myMap.getZoom();
+					$(".mark-jt").css({
+						width: zoomLV * zoomLV / 10 + "px",
+						height: zoomLV * zoomLV / 10 + "px"
+					})
+					//					if(zoomLV){
+					//						mark-jt
+					//					}
+				})
+
+				function showMapData(apList) {
+					myMap.clearMap(); // 清除地图覆盖物
+					$(".map-pop").fadeOut(300);
+
+					//
+					//					if(markers) {
+					//						for(var i = 0; i < markers.length; i++) {
+					//							markers[i].hide();
+					//						}
+					//					}
+					//					if(cluster) {
+					//						cluster.setMap(null);
+					//					}
+					//					if(pointMark) {
+					//						pointMark.hide();
+					//					}
+					//infoWindow.close();
+
+					markers = [];
+					lineMakers=[];
+					
+					//将数据按时间（日期+出现+离开）进行排序
+					var apData = JSON.parse(JSON.stringify(apList));
+					for(var i = apData.length-1; i >= 0; i--){
+						if(typeof(apData[i].lng) == "undefined" || typeof(apData[i].lat) == "undefined") {
+							apData.splice(i, 1);
+							continue;
+						}
+						apData[i].dateTime = apData[i].day + "-" + apData[i].show_time + "-" + apData[i].leave_time;
+					}
+					apData.sort(sortBy('dateTime', true, String));
+
+					
+					
+					var sameLineArr = [],sameLineNum=[],traceIdx=0;
+
+					for(var i = 1; i < apData.length; i++) {
+						//前后两点坐标不同时，画连线
+						if((apData[i].lng + ',' + apData[i].lat) != (apData[i - 1].lng + ',' + apData[i - 1].lat)) {
+
+							var x1 = apData[i - 1].lng,
+								y1 = apData[i - 1].lat,
+								x2 = apData[i].lng,
+								y2 = apData[i].lat;
+							//画线
+							var pltest = new AMap.Polyline({
+								path: [
+									[x1, y1],
+									[x2, y2]
+								], //设置线覆盖物路径
+								strokeColor: "#36f", //线颜色
+								strokeOpacity: 1, //线透明度
+								strokeWeight: 2, //线宽
+								strokeStyle: "solid", //线样式
+							});
+							pltest.setMap(myMap);
+							
+							//计算线条、箭头的角度（没找到高德设置线条箭头的api）
+							var l_jiaodu = Math.atan((y2 - y1) / (x2 - x1));
+							if(x2 < x1 && y2 >= y1) l_jiaodu = Math.PI + l_jiaodu;
+							if(x2 < x1 && y2 < y1) l_jiaodu = l_jiaodu - Math.PI;							
+							//画箭头（用一个div两条直角边，css3旋转）
+							var deg = 135 - l_jiaodu * 180 / Math.PI;
+							var marker = new AMap.Marker({ //添加自定义点标记
+								map: myMap,
+								position: [x2, y2],
+								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+								content: '<i class="mark-jt" style="transform:rotate(' + deg + 'deg);border-color:#36f;"></i>' //自定义点标记覆盖物内容
+							});
+
+							
+							traceIdx++;
+							var lineLabelCtt = '<i>'+traceIdx+'</i>';
+							
+							var xy1xy2=x1+"-"+y1+"-"+x2+"-"+y2,
+								xy2xy1=x2+"-"+y2+"-"+x1+"-"+y1;
+							if(sameLineArr.indexOf(xy1xy2)<0 && sameLineArr.indexOf(xy2xy1)<0){
+								sameLineArr.push(xy1xy2);
+								sameLineNum.push(lineLabelCtt);
+							}else{
+								if(sameLineArr.indexOf(xy1xy2)>=0){
+									sameLineNum[sameLineArr.indexOf(xy1xy2)]+=lineLabelCtt;
+								}else{
+									sameLineNum[sameLineArr.indexOf(xy2xy1)]+=lineLabelCtt;
+								}
+							}
+							
+							
+//							var lineLabel1 = new AMap.Marker({ //添加自定义点标记
+//								map: myMap,
+//								position: [x1, y1],
+//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+//								content: '<div class="mark-line ln-right">离开：'+apData[i].day+" "+apData[i].leave_time+'</div>' //自定义点标记覆盖物内容
+//							});
+//							var lineLabel2 = new AMap.Marker({ //添加自定义点标记
+//								map: myMap,
+//								position: [x2,y2],
+//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+//								content: '<div class="mark-line ln-left">出现：'+apData[i].day+" "+apData[i].show_time+'</div>' //自定义点标记覆盖物内容
+//							});
+							
+//							var lineLabel3 = new AMap.Marker({ //添加自定义点标记
+//								map: myMap,
+//								position: [(x2+x1)/2, (y1+y2)/2],
+//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+//								content: '<div style="width:1px; height:1px; overflow:hidden;border:1px solid #f00"></div>' //自定义点标记覆盖物内容
+//							});
+
+						}
+					}
+//					console.log(sameLineArr)
+//					console.log(sameLineNum)
+					for(var i=0;i<sameLineArr.length;i++){
+						var ll = sameLineArr[i].split("-");
+						var lng1 = parseFloat(ll[0])+parseFloat(ll[2]),
+							lat1 = parseFloat(ll[1])+parseFloat(ll[3]);
+						var lineLabel = new AMap.Marker({ //添加自定义点标记
+							map: myMap,
+							position: [lng1/2, lat1/2],
+							offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+							content: '<div class="mark-line">'+sameLineNum[i]+'</div>' //自定义点标记覆盖物内容
+						});
+					}
+
+					//画点
+					var samePArr = [],
+						conStrArr = [];
+
+					function setInfoWindowCtt(marker, i) {
+						marker.content = conStrArr[i];
+						marker.on('mouseover', markerClick);
+					}
+					for(var i = 0; i < apData.length; i++) {
+						var object = apData[i];
+
+						var thisLnglat = object.lng + ',' + object.lat;
+						var conStr = '<div class="marker-info-line"><label>AP：</label>' + object.ap_name;
+						//conStr += '<br><label>MAC：</label>' + object.ap_mac;
+						conStr += '<br><label>位置：</label>' + object.address+" - "+object.ap_addr;
+						conStr += '<br><label>时间：</label>' + object.day + ' ' + object.show_time + '-' + object.leave_time + "</div>";
+
+						if(samePArr.indexOf(thisLnglat) > -1) {
+							if(object.day != apData[i - 1].day) {
+								conStr = conStr.replace("marker-info-line", "marker-info-line not-same-day");
+							}
+							conStrArr[samePArr.indexOf(thisLnglat)] += conStr;
+						} else {
+							samePArr.push(thisLnglat)
+							conStrArr.push(conStr)
+							var marker = new AMap.Marker({ //添加自定义点标记
+								map: myMap,
+								position: [object.lng, object.lat],
+								offset: new AMap.Pixel(-8, -8), //相对于基点的偏移位置
+								content: '<div class="marker-ap"></div>' //自定义点标记覆盖物内容
+							});
+							markers.push(marker);
+						}
+						//						setInfoWindowCtt(marker,i);
+					}
+					
+					for(var i = 0; i < markers.length; i++) {
+						markers[i].content = '<div class="marker-info-box">' + conStrArr[i] + '</div>';
+						markers[i].on('mouseover', markerOver);
+					}
+					myMap.setFitView();
+				}
+
+				function markerOver(e) {
+					mouseOnFlag=false;
+					$(".map-pop .ctt").html(e.target.content);
+					$(".map-pop").fadeIn(300);
+				}
+				$(document).on("click", ".map-pop .close span", function() {
+					$(".map-pop").fadeOut(300);
+				})
+
+				function markerClick(e) {
+					console.log(e.target.content)
+					infoWindow.setContent(e.target.content);
+					infoWindow.open(myMap, e.target.getPosition());
+				}
+
+				function lineOver(e) {
+					infoWindow.setContent(e.target.content);
+					console.log(e.target.getOptions())
+					//					infoWindow.open(myMap, e.target.getPosition());
+				}
+				//点聚合
+				function addCluster() {
+					cluster = new AMap.MarkerClusterer(myMap, markers, {
+						maxZoom: 16
+					});
+				}
+
+				$("#dateStart").datetimepicker({
+					dateFormat: 'yy-mm-dd',
+					stepMinute: 60,
+					onClose: function(selectedDate) {
+						$("#dateEnd").datetimepicker("option", "minDate", selectedDate);
+					}
+				});
+				$("#dateEnd").datetimepicker({
+					dateFormat: 'yy-mm-dd',
+					stepMinute: 60,
+					onClose: function(selectedDate) {
+						$("#dateStart").datetimepicker("option", "maxDate", selectedDate);
+					}
+				});
+				$("#dateStart").datetimepicker("setDate", new Date(new Date().getTime()-1000*60*60*24))
+				$("#dateEnd").datetimepicker("setDate", new Date())
+				
+				//地图弹窗定时关闭				
+//				var mouseOnFlag=false;				
+//				$(document).on("mouseover",".map-pop",function(){
+//					mouseOnFlag=true;
+//				})
+//				$(document).on("mouseout",".map-pop",function(){
+//					mouseOnFlag=false;
+//					setTimeout(function(){
+//						if(!mouseOnFlag){$(".map-pop").fadeOut(300);}
+//					},2000)
+//				})
+			})
+
+			//
+			//									address:"广州市南沙区龙穴街道海港大厦"
+			//									ap_addr:"大厅-AP04"
+			//									ap_mac:"9C:50:EE:67:B7:A0"
+			//									ap_name:"HaiGangDaSha-DaTing-AP01"
+			//									day:"20170607"
+			//									lat:22.6281
+			//									leave_time:"16:00"
+			//									lng:113.679
+			//									name:"海港大厦"
+			//									rssi:"160"
+			//									show_time:"15:00"
+			//									stay:"1h"
+
+			/*var apList1 = [{
 						"lat": 22.6281,
 						"lng": 113.679,
 						"leave_time": "19:00",
@@ -412,248 +825,333 @@
 						"stay": "1h",
 						"rssi": "160",
 						"ap_name": "HaiGangDaSha-DaTing-AP01"
-					}];
-					for(var i = 0; i < apList.length; i++) {
-						apList[i].dateTime = apList[i].day + "-" + apList[i].show_time + "-" + apList[i].leave_time;
-					}
-					apList.sort(sortBy('dateTime', false, String));
-					console.log(apList);
-					aplistData = apList;
-					showMapData();
-					$(".loading-txt").hide();
-					return;
-					$.ajax({
-						url: ajaxDomain + ajaxUrls.clientTrace,
-						type: "post",
-						data: JSON.stringify(params),
-						contentType: "application/json",
-						success: function(data) {
-							if(data.Code.Code == 200) {
-								var apList = data["ap_list"];
-								if(apList.length < 1) {
-									//								$("#trendChart").html("暂无数据。");
-								} else {
-									//
-									//									address:"广州市南沙区龙穴街道海港大厦"
-									//									ap_addr:"大厅-AP04"
-									//									ap_mac:"9C:50:EE:67:B7:A0"
-									//									ap_name:"HaiGangDaSha-DaTing-AP01"
-									//									day:"20170607"
-									//									lat:22.6281
-									//									leave_time:"16:00"
-									//									lng:113.679
-									//									name:"海港大厦"
-									//									rssi:"160"
-									//									show_time:"15:00"
-									//									stay:"1h"
-									for(var i = 0; i < apList.length; i++) {
-										apList[i].dateTime = apList[i].day + "-" + apList[i].show_time;
+					},{
+				"ap_mac": "88:3F:D3:93:4E:A0",
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170601"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "华表柱",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:E0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "HuaBiaozhu"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫",
+				"ap_addr": "观光路-AP03",
+				"address": "广州市南沙区万顷沙镇天后宫",
+				"day": "20170601",
+				"ap_mac": "18:DE:D7:AA:5D:A0",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "GuanGuangLu3"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场后",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:45:20",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "GuangChanghou1",
+				"dateTime": "20170601-14:00"
+			}, {
+				"ap_mac": "9C:50:EE:67:AE:60",
+				"leave_time": "21:00",
+				"show_time": "20:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170614"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场前",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:46:20",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "Guangchangqian"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "华表柱",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:E0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "HuaBiaozhu",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "山门",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:4E:40",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "TianhuogongGuangchangshanmen",
+				"dateTime": "20170601-14:00"
+			}, {
+				"ap_mac": "9C:50:EE:67:AE:A0",
+				"leave_time": "22:00",
+				"show_time": "21:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170618"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "华表柱",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:E0",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "HuaBiaozhu",
+				"dateTime": "20170601-14:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场后",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:45:20",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "GuangChanghou1",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫",
+				"ap_addr": "观光路-AP03",
+				"address": "广州市南沙区万顷沙镇天后宫",
+				"day": "20170601",
+				"ap_mac": "18:DE:D7:AA:5D:A0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "GuanGuangLu3"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "正殿",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:C0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "ZhengDian",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场前",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:46:20",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "Guangchangqian"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫",
+				"ap_addr": "观光路-AP03",
+				"address": "广州市南沙区万顷沙镇天后宫",
+				"day": "20170601",
+				"ap_mac": "18:DE:D7:AA:5D:A0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "GuanGuangLu3",
+				"dateTime": "20170601-14:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "山门",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:4E:40",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "TianhuogongGuangchangshanmen",
+				"dateTime": "20170601-14:00"
+			}, {
+				"ap_mac": "9C:50:EE:67:AE:60",
+				"leave_time": "00:00",
+				"show_time": "23:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170531"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "华表柱",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:E0",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "HuaBiaozhu",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "山门",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:4E:40",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "TianhuogongGuangchangshanmen",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫",
+				"ap_addr": "文化中心-AP02",
+				"address": "广州市南沙区万顷沙镇天后宫",
+				"day": "20170601",
+				"ap_mac": "9C:50:EE:67:C2:60",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "wenhuazhongxin2"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场前",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:46:20",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "Guangchangqian",
+				"dateTime": "20170601-14:00"
+			}, {
+				"ap_mac": "9C:50:EE:67:B1:20",
+				"leave_time": "22:00",
+				"show_time": "21:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170617"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "正殿",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:53:C0",
+				"stay": "1h",
+				"rssi": "160",
+				"ap_name": "ZhengDian",
+				"dateTime": "20170601-14:00"
+			}, {
+				"ap_mac": "9C:50:EE:67:AE:60",
+				"leave_time": "18:00",
+				"show_time": "17:00",
+				"stay": "1h",
+				"rssi": "160",
+				"day": "20170602"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "14:00",
+				"show_time": "13:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场前",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:46:20",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "Guangchangqian",
+				"dateTime": "20170601-13:00"
+			}, {
+				"lat": 22.7062,
+				"lng": 113.552,
+				"leave_time": "15:00",
+				"show_time": "14:00",
+				"name": "天后宫广场",
+				"ap_addr": "广场后",
+				"address": "广州市南沙区万顷沙镇天后宫广场",
+				"day": "20170601",
+				"ap_mac": "88:3F:D3:93:45:20",
+				"stay": "1h",
+				"rssi": "180",
+				"ap_name": "GuangChanghou1"
+			}]
+			console.log(giwl.length)
+			for(var i = giwl.length-1; i >= 0; i--) {
+										if(typeof(giwl[i].lng) == "undefined" || typeof(giwl[i].lat) == "undefined") {
+											console.log(i)
+											giwl.splice(i, 1);
+											continue;
+										}
+										giwl[i].dateTime = giwl[i].day + "-" + giwl[i].show_time + "-" + giwl[i].leave_time;
 									}
-									apList.sort(sortBy('dateTime', true, parseInt));
-									aplistData = apList;
-									showMapData();
-									$(".loading-txt").hide();
-								}
-							}
-						}
-					})
-				}
-				$(document).on("click", ".btn-search", function() {
-					getClientTrace();
-				})
-
-				var myMap;
-				var pileLng = 0,
-					pileLat = 0;
-				var cluster, markers = null;
-				var pointMark = null,
-					infoWindow = null,
-					zoomN;
-
-				function initMap() {
-					var scale = new AMap.Scale(),
-						toolBar = new AMap.ToolBar();
-					myMap = new AMap.Map('citymap', {
-						resizeEnable: true,
-						zoom: 10,
-						center: [113.513364, 22.732559], //南沙区域正中心点	//[113.53141,22.808029],//南沙区政府点
-					});
-
-					myMap.addControl(scale);
-					myMap.addControl(toolBar);
-					infoWindow = new AMap.InfoWindow({
-						offset: new AMap.Pixel(0, -30)
-					});
-				}
-				initMap();
-
-				function showMapData() {
-
-					//
-					if(markers) {
-						for(var i = 0; i < markers.length; i++) {
-							markers[i].hide();
-						}
-					}
-					if(cluster) {
-						cluster.setMap(null);
-					}
-					if(pointMark) {
-						pointMark.hide();
-					}
-					infoWindow.close();
-
-					markers = [];
-
-					if(true) { //显示
-						var apData = aplistData;
-
-						for(var i = 1; i < apData.length; i++) {
-							if((apData[i].lng + ',' + apData[i].lat) != (apData[i - 1].lng + ',' + apData[i - 1].lat)) {
-
-								var y1=apData[i-1].lat,
-									y2=apData[i].lat,
-									x1=apData[i-1].lng,
-									x2=apData[i].lng,
-									y3=0,
-									x3=0,
-									y4=0,
-									x4=0,
-									jtJJ=Math.PI/6,
-									len=0.003;
-								
-								var l_jiaodu = Math.atan((y2-y1)/(x2-x1));
-								if(x2<x1&&y2>=y1)l_jiaodu=Math.PI+l_jiaodu;
-								if(x2<x1&&y2<y1)l_jiaodu=l_jiaodu-Math.PI;
-								var jt_L_jiaodu = Math.PI - jtJJ +l_jiaodu;
-								var jt_R_jiaodu = jt_L_jiaodu + jtJJ*2;
-								
-								y3 = (Math.sin(jt_L_jiaodu)*len)+y2;
-								x3 = (Math.cos(jt_L_jiaodu)*len)+x2;								
-								y4 = (Math.sin(jt_R_jiaodu)*len)+y2;
-								x4 = (Math.cos(jt_R_jiaodu)*len)+x2;								
-
-								var pltest = new AMap.Polyline({
-									path: [[x1, y1],[x2, y2]], //设置线覆盖物路径
-									strokeColor: "#36f", //线颜色
-									strokeOpacity: 1, //线透明度
-									strokeWeight: 2, //线宽
-									strokeStyle: "solid", //线样式
-								});
-								pltest.setMap(myMap);
-								
-								var polyline_jt_l = new AMap.Polyline({
-									path: [
-										[x2, y2],
-										[x3, y3],
-									], //设置线覆盖物路径
-									strokeColor: "#36f", //线颜色
-									strokeOpacity: 1, //线透明度
-									strokeWeight: 2, //线宽
-									strokeStyle: "solid", //线样式
-								});
-								polyline_jt_l.setMap(myMap);
-
-								var polyline_jt_r = new AMap.Polyline({
-									path: [
-										[x2, y2],
-										[x4, y4],
-									], //设置线覆盖物路径
-									strokeColor: "#36f", //线颜色
-									strokeOpacity: 1, //线透明度
-									strokeWeight: 2, //线宽
-									strokeStyle: "solid", //线样式
-								});
-								polyline_jt_r.setMap(myMap);
-							}
-						}
-
-
-						//画点
-						var samePArr = [],conStr=[];
-						for(var i = 0; i < apData.length; i++) {
-							var object = apData[i];
-							var marker = new AMap.Marker({ //添加自定义点标记
-								map: myMap,
-								position: [object.lng, object.lat],
-								offset: new AMap.Pixel(-16, -16), //相对于基点的偏移位置
-								content: '<div class="marker-ap">' + i + '</div>' //自定义点标记覆盖物内容
-							});
-							
-							if(object.lng + ',' + object.lat) {
-								samePoint++;
-								offset_x
-							} else {
-
-							}
-							markers.push(marker);
-							var conStr = 'AP：' + object.ap_name + '(' + object.ap_mac + ')<br>位置：' + object.address + '<br>时间：' + object.day + ' ' + object.show_time + '-' + object.leave_time;
-
-							marker.content = conStr;
-							marker.on('mouseover', markerClick);
-						}
-					} else {
-						var results = aplistData;
-						for(var i = 0; i < results.length; i++) {
-							var object = results[i];
-							var marker = new AMap.Marker({
-								//							icon: (i % 2 == 1) ? "../static/images/p2.png" : "../static/images/p3.png",
-								position: [object.lng, object.lat],
-								map: myMap,
-								offset: new AMap.Pixel(-25, -28)
-							});
-							markers.push(marker);
-
-							var conStr = '<p><b>' + object.ap_address + '</b></p><p>名称：' + object.mpoi_name;
-							conStr += '</p><p>地址：' + object.mpoi_address;
-							conStr += '</p><p>MAC地址：' + object.mac;
-							conStr += '</p><p>状态：' + (object.online == 1 ? '在线' : '离线');
-							conStr += '</p><p data-id="' + object.id + '"></p>';
-
-							marker.content = conStr;
-							marker.on('click', markerClick);
-							marker.on('mouseover', function(e) {
-								e.target.setAnimation("AMAP_ANIMATION_BOUNCE");
-								//e.target.setIcon("http://amappc.cn-hangzhou.oss-pub.aliyun-inc.com/lbs/static/img/marker.png")
-							});
-							marker.on('mouseout', function(e) {
-								e.target.setAnimation("AMAP_ANIMATION_NONE");
-								//e.target.setIcon("images/p2.png")
-							});
-						}
-
-						addCluster(); // 添加点聚合
-					}
-
-				}
-
-				function markerClick(e) {
-					infoWindow.setContent(e.target.content);
-					infoWindow.open(myMap, e.target.getPosition());
-				}
-				//点聚合
-				function addCluster() {
-					cluster = new AMap.MarkerClusterer(myMap, markers, {
-						maxZoom: 16
-					});
-				}
-
-				$("#dateStart").datetimepicker({
-					dateFormat: 'yy-mm-dd',
-					stepMinute: 60,
-					onClose: function(selectedDate) {
-						$("#dateEnd").datetimepicker("option", "minDate", selectedDate);
-					}
-				});
-				$("#dateEnd").datetimepicker({
-					dateFormat: 'yy-mm-dd',
-					stepMinute: 60,
-					onClose: function(selectedDate) {
-						$("#dateStart").datetimepicker("option", "maxDate", selectedDate);
-					}
-				});
-
-			})
+									giwl.sort(sortBy('dateTime', true, String));
+									console.log(giwl)*/
 		</script>
 	</body>
 

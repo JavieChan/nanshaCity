@@ -102,6 +102,7 @@
 				margin-right: 10px;
 				cursor: pointer;
 			}
+			
 			.added-keywords i:hover::after {
 				content: ' ×';
 				color: #c00;
@@ -167,71 +168,17 @@
 									<li class="item-list-title">
 										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
 									</li>
-									<li>
+									<!--<li>
 										<div class="item-hd"><i class="num-top">1</i><span>柯洁对战阿尔法狗</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-top">2</i><span>文在寅保镖辞职</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-top">3</i><span>女子高速光脚开车</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">4</i><span>百度联盟峰会</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">5</i><span>赵丽颖张碧晨同框</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">6</i><span>英国曼城发生爆炸</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">7</i><span>生化危机确认重启</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">8</i><span>刷卡买包烟欠3亿</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">9</i><span>蹭伤豪车丈夫离婚</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">10</i><span>北电老师回应性侵</span></div>
-									</li>
+									</li>-->
 								</ul>
 								<ul class="item-list">
 									<li class="item-list-title">
 										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
 									</li>
-									<li>
+									<!--<li>
 										<div class="item-hd"><i class="num-normal">11</i><span>6名日本间谍被抓</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">12</i><span>80后夫妻捐1亿</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">13</i><span>戒指戴太多险截肢</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">14</i><span>偷买手机退货遭拒</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">15</i><span>女子30年吃1吨土</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">16</i><span>广东数十马仔袭警</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">17</i><span>老师群里指责家长</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">18</i><span>开奥迪买菜被绑架</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">19</i><span>170头猪被烧死</span></div>
-									</li>
-									<li>
-										<div class="item-hd"><i class="num-normal">20</i><span>小学学生集体呕吐</span></div>
-									</li>
+									</li>-->
 								</ul>
 							</div>
 							<div id="sortChart" class="sort-echart-box">
@@ -375,9 +322,29 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
-				//				ajaxQ("http://top.baidu.com/clip?b=1&hd_h_info=1&line=20","get",null,function(data){
-				//					console.log(data);
-				//				})
+				ajaxQ(ajaxUrls.top20HotEn, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						var dList = data[" res"];
+						if(typeof(dList) == "undefined" ||dList.length < 1) {
+							$(".item-list:eq(0)").append("<li>暂无数据。</li>");
+						} else {
+							var str1="",str2="";
+							for(var i=0;i<dList.length;i++){
+								if(i<10){
+									str1+='<li><div class="item-hd"><i class="num-top">'+dList[i].num
+									str1+='</i><span'+ dList[i].nmae +'>'+dList[i].nmae+'</span></div></li>';
+								}else{
+									str2+='<li><div class="item-hd"><i class="num-top">'+dList[i].num
+									str2+='</i><span>'+dList[i].nmae+'</span></div></li>';
+								}
+								
+							}
+							
+							$(".item-list:eq(0)").append(str1);
+							$(".item-list:eq(1)").append(str2);
+						}
+					}
+				})
 				// 基于准备好的dom，初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
 				var searchChart = echarts.init(document.getElementById('searchChart'));
@@ -516,13 +483,14 @@
 					seriesData: []
 				}
 
-				var durationNum = 0,durArr=[7,30,90,180,360];
-				var setDurationStr = function(){
+				var durationNum = 0,
+					durArr = [7, 30, 90, 180, 360];
+				var setDurationStr = function() {
 					//时间区间
 					var d = new Date();
 					var durationStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
 					d.setDate(d.getDate() - durArr[durationNum]);
-					durationStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()+" 至 "+durationStr;
+					durationStr = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate() + " 至 " + durationStr;
 					$(".duration-box").html(durationStr);
 				}
 				setDurationStr();
@@ -530,7 +498,7 @@
 					if($(this).hasClass("label") || $(this).hasClass("on")) {
 						return;
 					}
-					durationNum = $(this).index() - 1;					
+					durationNum = $(this).index() - 1;
 					setDurationStr();
 					searchData.xAxisData = xAxisDataArr[durationNum];
 					if(addedKeyWords.length > 0) {
@@ -559,9 +527,9 @@
 					addedKeyWords.push(keytoadd);
 				})
 
-//				$(document).on("mouseover", ".added-keywords i", function() {
-//					$(this).addClass("over");
-//				})
+				//				$(document).on("mouseover", ".added-keywords i", function() {
+				//					$(this).addClass("over");
+				//				})
 				$(document).on("click", ".added-keywords i", function() {
 					var idx = $(this).index();
 					$(this).remove();
@@ -576,16 +544,15 @@
 						alert("请添加关键字");
 						return false;
 					}
-					
+
 					searchChart.showLoading();
 					getSearchChartOption();
 				})
-				
-				
+
 				function getSearchChartOption() {
-					var allSeriesData = [];					
+					var allSeriesData = [];
 					for(var i = 0; i < 3; i++) {
-						if(i+1>addedKeyWords.length){
+						if(i + 1 > addedKeyWords.length) {
 							//填坑：如果没有这个空数据，echart在重新加载数据渲染图形时，会遗留原有数据
 							var seriesData = {
 								name: '',
@@ -594,9 +561,9 @@
 								areaStyle: {
 									normal: {}
 								},
-								data: []//空
+								data: [] //空
 							}
-						}else{							
+						} else {
 							var seriesData = {
 								name: addedKeyWords[i],
 								type: 'line',
@@ -609,12 +576,12 @@
 							var nRandom = 2 * parseInt(Math.random() * 200)
 							for(var j = 0; j < searchData.xAxisData.length; j++) {
 								seriesData.data.push(nRandom + parseInt(Math.random() * 100));
-							}							
+							}
 						}
 						allSeriesData.push(seriesData);
 					}
 					//					curWordsNum=addedKeyWords.length;
-//					searchChart.setOption({});
+					//					searchChart.setOption({});
 
 					var searchChartOption = {
 						title: {
@@ -637,13 +604,11 @@
 							//								saveAsImage: {}
 							//							}
 						},
-						dataZoom: [
-					        {   // 这个dataZoom组件，默认控制x轴。
-					            type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-					            start: 0,      // 左边在 10% 的位置。
-					            end: 100         // 右边在 60% 的位置。
-					        }
-					    ],
+						dataZoom: [{ // 这个dataZoom组件，默认控制x轴。
+							type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
+							start: 0, // 左边在 10% 的位置。
+							end: 100 // 右边在 60% 的位置。
+						}],
 						grid: {
 							left: '3%',
 							right: '4%',
@@ -660,17 +625,17 @@
 						}],
 						series: allSeriesData
 					};
-					console.log(searchChartOption.series)
+					//console.log(searchChartOption.series)
 
-//					searchChart.setOption(initSearchChartOption);
-//					setTimeout(function(){
-						searchChart.hideLoading();
-						searchChart.setOption(searchChartOption);
-//					},200)
-					
+					//					searchChart.setOption(initSearchChartOption);
+					//					setTimeout(function(){
+					searchChart.hideLoading();
+					searchChart.setOption(searchChartOption);
+					//					},200)
+
 				}
 				getSearchChartOption();
-				$(".label").click(function(){
+				$(".label").click(function() {
 					console.log("sad")
 					searchChart.setOption(initSearchChartOption);
 				})
