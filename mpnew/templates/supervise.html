@@ -17,68 +17,41 @@
 				margin: 0 auto;
 			}
 			
-			.toolnav h3{
-				width:400px;
+			.toolnav h3 {
+				width: 400px;
 				border-left: 3px solid #39f;
 				text-indent: 0.5em;
 			}
-			.sort-list-box,
-			.sort-echart-box {
-				float: left;
-				width: 400px;
-			}
 			
-			.sort-echart-box {
-				margin-left: 15px;
+			.sort-list-box{
+				
 			}
+
 			
-			#hoursChart,
-			#sortChart {
+			#trendChart {
 				min-height: 300px;
 				min-width: 400px;
 			}
 			
-			.item-list {
-				float: left;
-				font-size: 14px;
-			}
-			
-			.item-list li:nth-child(2n+1) {
-				background-color: #f2f2f2;
-			}
-			
-			.item-list li.item-list-title,
-			.item-list-title .item-hd:hover {
+
+			.client-table tr.th,.client-table tr.th:hover {
 				background-color: #D2F0FF;
-				cursor: default;
 			}
 			
-			.item-hd {
+			.client-table td {
+				border: 1px solid #ccc;
+				padding: 5px 10px;
 				padding: 5px 10px;
 			}
 			
-			/*.item-hd:hover {
-				background: #ffc;
-				cursor: pointer;
-			}*/
-			
-			.item-hd i {
-				display: inline-block;
-				width: 4em;
-				text-indent: 0.6em;
+			.client-table tr:nth-child(2n) {
+				background-color: #f2f2f2;
+			}
+			.client-table tr:hover {
+				background: #ffd;
 			}
 			
-			.item-hd span.key {
-				display: inline-block;
-				width: 12em;
-				text-indent: 0.6em;
-			}
-			.item-hd span.key a{
-				color: #333;
-			}
-			.item-hd span.key a:hover{
-				text-decoration: underline;
-			}
+			
 			
 			.duration {
 				font-size: 12px;
@@ -102,12 +75,48 @@
 				color: #fff;
 			}
 			
-			.added-keywords i {
-				display: inline-block;
-				padding: 1px 3px;
-				border: 1px solid #ccc;
-				margin-right: 10px;
+			.duration span.label {
+				border: 1px solid transparent;
+				cursor: text;
 			}
+			
+			.trend-form>div {
+				margin-top: 15px;
+			}
+			
+			.trend-form>div>label {
+				margin-right: 6px;
+			}
+			
+			.page-box{
+				text-align: right;
+				font-size: 13px;
+				color: #666;
+				display: none;
+			}
+			.page-pre,.page-next{
+				color: #333;
+			}
+			.page-pre.dis,.page-next.dis{
+				color: #999;
+				cursor: not-allowed;
+			}
+			.page-num{
+				width: 40px;
+			}
+			.button-jump{
+				width: 24px;
+				height: 24px;
+				cursor: pointer;
+			}
+			
+			.btn-excel{
+				width: 120px;
+			}
+			.btn-search{
+				width: 40px;
+			}
+			
 		</style>
 	</head>
 
@@ -137,13 +146,13 @@
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
 					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
 					<h4 class=""><a href="terminal.html">终端分析</a></h4>
-					<h4 class="on"><a href="website.html">网站分析</a></h4>
+					<h4 class=""><a href="website.html">网站分析</a></h4>
 					<h4 class=""><a href="userhx.html">人群画像</a></h4>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
 					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
 					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
 					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
-					<h4 class=""><a href="supervise.html">AP感知预警</a></h4>
+					<h4 class="on"><a href="supervise.html">AP感知预警</a></h4>
 				</div>
 
 				<!--右侧功能栏-->
@@ -152,33 +161,13 @@
 						<div class="bread">
 							<h2>
 								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">数据分析平台</span>
-								&gt; <span style="color:#0faee5">网站分析</span>
+								&gt; <span style="color:#333">城市感知网</span>
+								&gt; <span style="color:#0faee5">AP感知预警</span>
 							</h2>
 						</div>
 					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>网站排行榜</h3>
-							<h3>网站分类排行</h3>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span class="key">网站</span><span>日平均访问量</span></div>
-									</li>
-									<!--<li>
-										<div class="item-hd"> <i class="num-normal">1</i> <span class="key"><a href="http://www.baidu.com" target="_blank">百度</a></span> <span class="tmn-num">-</span></div>
-									</li>-->
-								</ul>
-							</div>
-							<div id="sortChart" class="sort-echart-box">
-								<!--饼图-->
-							</div>
-						</div>
-					</div>
+
+					
 				</div>
 			</div>
 		</div>
@@ -288,111 +277,9 @@
 		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
+		<script type="text/javascript" src="../static/js/lib/jqueryui.min.js"></script>
+		<script type="text/javascript" src="../static/js/lib/jquery-ui-timepicker-addon.js"></script>
 		<script>
-			$(function() {
-				ajaxQ(ajaxUrls.top20Websites, "get", null, function(data) {
-					if(data.Code.Code == 200) {
-						var dList = data[" res"];
-						if(typeof(dList) == "undefined" ||dList.length < 1) {
-							$(".item-list").append("<li>暂无数据。</li>");
-						} else {
-							var str="";
-							for(var i=0;i<dList.length;i++){								
-								str+='<li><div class="item-hd"> <i class="num-normal">'+dList[i].index;
-								str+='</i> <span class="key">'+dList[i].name;
-								str+='</span> <span class="tmn-num">'+dList[i].num;
-								str+='</span></div></li>';
-							}
-							
-							$(".item-list").append(str);
-						}
-					}
-				})
-				// 基于准备好的dom，初始化echarts实例
-				var sortChart = echarts.init(document.getElementById('sortChart'));
-				
-				var numI = 4000 + parseInt(Math.random() * 800);
-				$(".tmn-num").each(function(){
-					numI = numI - parseInt(Math.random() * 200);
-					$(this).html(numI)
-				})
-
-
-				var keywordData = {
-					subtext: "",
-					legendData: ["购物","社交","资讯","门户","影音","游戏"],
-					seriesData: [{
-							value: 200 + parseInt(Math.random() * 1500),
-							name: '购物'
-						},
-						{
-							value: 200 + parseInt(Math.random() * 1200),
-							name: '社交'
-						},
-						{
-							value: 200 + parseInt(Math.random() * 800),
-							name: '资讯'
-						},
-						{
-							value: 200 + parseInt(Math.random() * 800),
-							name: '门户'
-						},
-						{
-							value: 200 + parseInt(Math.random() * 1200),
-							name: '影音'
-						},
-						{
-							value: 200 + parseInt(Math.random() * 800),
-							name: '游戏'
-						}
-					]
-				}
-				var townTmnNumsAll = [1548, 335, 310, 234, 135];
-				var townTmnNums = [196, 42, 38, 29, 18];
-
-				function getSortChartOption() {
-
-					// 指定图表的配置项和数据
-					var sortChartOption = {
-						title: {
-							text: '网站分类排行',
-							subtext: keywordData.subtext,
-							x: 'center'
-						},
-						tooltip: {
-							trigger: 'item',
-							formatter: "{a} <br/>{b} : {c} ({d}%)"
-						},
-						legend: {
-							orient: 'vertical',
-							left: 'left',
-							data: keywordData.legendData
-						},
-						series: [{
-							name: '搜索来源',
-							type: 'pie',
-							radius: '55%',
-							center: ['50%', '60%'],
-							data: keywordData.seriesData,
-							itemStyle: {
-								emphasis: {
-									shadowBlur: 10,
-									shadowOffsetX: 0,
-									shadowColor: 'rgba(0, 0, 0, 0.5)'
-								}
-							}
-						}]
-					};
-
-					// 使用刚指定的配置项和数据显示图表。
-					sortChart.setOption(sortChartOption);
-				}
-				getSortChartOption();
-
-
-
-
-			})
 		</script>
 	</body>
 

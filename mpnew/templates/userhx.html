@@ -55,11 +55,12 @@
 			.circles>div:nth-child(1){	left:5px; top: 75px; width: 93px; height: 93px; background: #39C;}
 			.circles>div:nth-child(2){	left:75px; top: 160px;width: 89px; height: 89px; background: #969;}
 			.circles>div:nth-child(3){	left:98px; top: 25px;width: 87px; height: 87px; background: #2BC2EB;}
-			.circles>div:nth-child(4){	left:165px; top: 105px;width: 79px; height: 79px; background: #EFDAF8;}
+			.circles>div:nth-child(4){	left:153px; top: 105px;width: 79px; height: 79px; background: #dFcAe8;}
 			.circles>div:nth-child(5){	left:195px; top: 185px;width: 78px; height: 78px; background: #fc9;}
 			.circles>div:nth-child(6){	left:215px; top: 40px; width: 73px; height: 73px; background: #06c;}
-			.circles>div:nth-child(7){	left:275px; top: 135px; width: 71px; height: 71px; background: #2BC2EB;}
+			.circles>div:nth-child(7){	left:248px; top: 123px; width: 71px; height: 71px; background: #2BC2EB;}
 			.circles>div:nth-child(8){	left:305px; top: 60px; width: 67px; height: 67px; background: #f99;}
+			.circles>div:nth-child(9){	left:290px; top: 190px; width: 66px; height: 66px; background: #39C;}
 	
 			
 			#hoursChart,
@@ -129,9 +130,9 @@
 					<h4 class="on"><a href="userhx.html">人群画像</a></h4>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
 					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<!--<h4 class=""><a href="#">区域热力趋势</a></h4>
-					<h4 class=""><a href="#">城市寻迹</a></h4>
-					<h4 class=""><a href="#">AP感知预警</a></h4>-->
+					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
+					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
+					<h4 class=""><a href="supervise.html">AP感知预警</a></h4>
 				</div>
 
 				<!--右侧功能栏-->
@@ -154,14 +155,14 @@
 						<div class="sort-panel">
 							<div class="sort-list-box">
 								<div class="circles">
-									<div><span>六镇<br>2712</span></div>
+									<!--<div><span>六镇<br>2712</span></div>
 									<div><span>四镇<br>2212</span></div>
 									<div><span>一镇<br>2312</span></div>
 									<div><span>二镇<br>1541</span></div>
 									<div><span>五镇<br>1812</span></div>
 									<div><span>一街<br>1712</span></div>
 									<div><span>三镇<br>1712</span></div>
-									<div><span>二街<br>1333</span></div>
+									<div><span>二街<br>1333</span></div>-->
 								</div>								
 							</div>
 							<div id="sortChart" class="sort-echart-box">
@@ -173,7 +174,6 @@
 						<div class="toolnav">
 							<h3>用户上网时段</h3>
 						</div>
-
 						<div id="hoursChart" class="search-echart-box">
 							<!--曲线图-->
 						</div>
@@ -289,40 +289,67 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
-				
-				// 基于准备好的dom，初始化echarts实例
-				var sortChart = echarts.init(document.getElementById('sortChart'));
-				var hoursChart = echarts.init(document.getElementById('hoursChart'));
-
-				var townArr = ["全部", "一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"];
-
-				var keywordData = {
-					subtext: "全部",
-					legendData: ['华为', 'Apple', '步步高', 'Vivo', '小米'],
-					seriesData: [{
-							value: 1548,
-							name: '华为'
-						},
-						{
-							value: 335,
-							name: 'Apple'
-						},
-						{
-							value: 310,
-							name: '步步高'
-						},
-						{
-							value: 234,
-							name: 'Vivo'
-						},
-						{
-							value: 135,
-							name: '小米'
+//用户区域分布
+				ajaxQ(ajaxUrls.userDistrict, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						var distrcitData = data["distrcit"];
+						distrcitData.sort(sortBy('tconns', true, parseInt));
+						console.log(distrcitData);
+						if(distrcitData.length < 1) {
+							$(".circles").html("暂无数据。")
+						} else {
+							//拼数据
+							//<div><span>四镇<br>2212</span></div>
+							var str="";
+							for(var i = 0; i < distrcitData.length; i++) {
+								str += '<div><span>'+distrcitData[i].name+'<br>'+distrcitData[i].tconns+'</span></div>';
+							}
 						}
-					]
+						$(".circles").html(str);
+					}
+				})
+								
+//设备品牌喜好（同终端分析）				
+				var ignoreArr = ["None", "Generic_Android", "Generic"]; //要屏蔽的手机型号
+				var phoneTypeDataForShow = {
+					//subtext: " ",//镇区名
+					legendData: [], //'华为', 'Apple', '步步高', 'Vivo', '小米'
+					seriesData: [] //[{value: 1548,name: '华为'}]
 				}
-				var townTmnNumsAll = [1548, 335, 310, 234, 135];
-				var townTmnNums = [196, 42, 38, 29, 18];
+
+				//初始化echarts实例
+				var sortChart = echarts.init(document.getElementById('sortChart'));
+
+				ajaxQ(ajaxUrls.phoneType, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						var phoneTypeData = data.phone_type;
+						var orderIndex = 1; //序号
+						if(phoneTypeData.length < 1) {
+							$("#sortChart").html("暂无数据。")
+						} else {
+							//拼饼图数据
+							var otherType = "其他",
+								otherNum = 0;
+							for(var i = 0; i < phoneTypeData.length; i++) {
+								if(ignoreArr.indexOf(phoneTypeData[i].phone_type) > -1 || i > 9) {
+									otherNum += phoneTypeData[i].num;
+								} else {
+									phoneTypeDataForShow.legendData.push(phoneTypeData[i].phone_type);
+									phoneTypeDataForShow.seriesData.push({
+										value: phoneTypeData[i].num,
+										name: phoneTypeData[i].phone_type
+									})
+								}
+							}
+							phoneTypeDataForShow.legendData.push(otherType);
+							phoneTypeDataForShow.seriesData.push({
+								value: otherNum,
+								name: otherType
+							})
+						}						
+						getSortChartOption();
+					}
+				})
 
 				function getSortChartOption() {
 
@@ -330,7 +357,7 @@
 					var sortChartOption = {
 						title: {
 							text: '移动终端品牌统计',
-							subtext: keywordData.subtext,
+							subtext: phoneTypeDataForShow.subtext,
 							x: 'center'
 						},
 						tooltip: {
@@ -340,14 +367,14 @@
 						legend: {
 							orient: 'vertical',
 							left: 'left',
-							data: keywordData.legendData
+							data: phoneTypeDataForShow.legendData
 						},
 						series: [{
 							name: '搜索来源',
 							type: 'pie',
 							radius: '55%',
 							center: ['50%', '60%'],
-							data: keywordData.seriesData,
+							data: phoneTypeDataForShow.seriesData,
 							itemStyle: {
 								emphasis: {
 									shadowBlur: 10,
@@ -358,13 +385,34 @@
 						}]
 					};
 
-					// 使用刚指定的配置项和数据显示图表。
+					// 使用配置项和数据显示图表
 					sortChart.setOption(sortChartOption);
 				}
-				getSortChartOption();
-
-
-
+				
+				
+//用户上网时段				
+				var onliNmOfEryHourDataForShow = {
+					xAxisData: [], //'华为', 'Apple', '步步高', 'Vivo', '小米'
+					seriesData: [] //[{value: 1548,name: '华为'}]
+				}
+				
+				ajaxQ(ajaxUrls.onliNmOfEryHour, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						var onliNmOfEryHourData = data[" res"];
+						if(onliNmOfEryHourData.length < 1) {
+							$("#hoursChart").html("暂无数据。")
+						} else {
+							//拼数据
+							for(var i = 0; i < onliNmOfEryHourData.length; i++) {
+								onliNmOfEryHourDataForShow.xAxisData.push((i>9?(i+""):("0"+i))+":00");
+								onliNmOfEryHourDataForShow.seriesData.push(onliNmOfEryHourData[i][i>9?(i+""):("0"+i)])
+							}
+						}
+						getHoursChartOption();
+					}
+				})
+				
+				var hoursChart = echarts.init(document.getElementById('hoursChart'));
 				function getHoursChartOption() {
 
 					var hoursChartOption = {
@@ -387,7 +435,7 @@
 					xAxis: {
 						type: 'category',
 						boundaryGap: false,
-						data: ['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
+						data: onliNmOfEryHourDataForShow.xAxisData//['00:00', '01:15', '02:30', '03:45', '05:00', '06:15', '07:30', '08:45', '10:00', '11:15', '12:30', '13:45', '15:00', '16:15', '17:30', '18:45', '20:00', '21:15', '22:30', '23:45']
 					},
 					yAxis: {
 						type: 'value',
@@ -402,22 +450,22 @@
 						show: false,
 						dimension: 0,
 						pieces: [{
-							lte: 6,
+							lte: 7,
 							color: 'green'
 						}, {
-							gt: 6,
-							lte: 8,
+							gt: 7,
+							lte: 10,
 							color: 'red'
 						}, {
-							gt: 8,
-							lte: 14,
+							gt: 10,
+							lte: 15,
 							color: 'green'
 						}, {
-							gt: 14,
-							lte: 17,
+							gt: 15,
+							lte: 18,
 							color: 'red'
 						}, {
-							gt: 17,
+							gt: 18,
 							color: 'green'
 						}]
 					},
@@ -425,20 +473,20 @@
 						name: '上网人数',
 						type: 'line',
 						smooth: true,
-						data: [300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
+						data: onliNmOfEryHourDataForShow.seriesData,//[300, 280, 250, 260, 270, 300, 550, 500, 400, 390, 380, 390, 400, 500, 600, 750, 800, 700, 600, 400],
 						markArea: {
 							data: [
 								[{
 									name: '早高峰',
-									xAxis: '07:30'
+									xAxis: '07:00'
 								}, {
 									xAxis: '10:00'
 								}],
 								[{
 									name: '晚高峰',
-									xAxis: '17:30'
+									xAxis: '15:00'
 								}, {
-									xAxis: '21:15'
+									xAxis: '18:00'
 								}]
 							]
 						}
@@ -447,7 +495,7 @@
 				hoursChart.setOption(hoursChartOption);
 
 			}
-			getHoursChartOption();
+//			getHoursChartOption();
 
 			
 
