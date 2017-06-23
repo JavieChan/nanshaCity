@@ -1,0 +1,81 @@
+## projectchart.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" args="on={'user': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='认证人数统计',compress=True,remain=[('上网账号', '/projectuseraccount.html?location={}'.format(location))]"/>
+            </div>
+        </div>
+        <div class="tabbox">
+            <div class="toolnav">
+                <h3>认证人数统计</h3>
+            </div>
+            <div class="areabox">
+                <div id="numchart" style="width:100%;height:400px"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/highcharts/highcharts.js"></script>
+    <script type="text/javascript" src="/static/js/lib/highcharts/highcharts-3d.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $.get('/user/portal/stats?days=30', function(data){
+                var stats=[];
+                $.each(data.stats, function(i, n){
+                    var d = n[0].split('-');
+                    stats.push([Date.UTC(parseInt(d[0]), parseInt(d[1]-1), parseInt(d[2])), n[1]]);
+                });
+                $('#numchart').highcharts({
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: '',
+                        align: 'left'
+                    },
+                    credits:{enabled: false},
+                    legend: {enabled: false},
+                    tooltip: {
+                        headerFormat: '<h3>{point.key}</h3><br>',
+                        dateTimeLabelFormats: {
+                            day: '%Y-%m-%d'
+                        },
+                        pointFormat: '<p>认证人数：{point.y}人</p>'
+                    },
+                    xAxis: {
+                        title: {text: '日期'},
+                        type: 'datetime',
+                        minPadding:0,
+                        maxPadding:0,
+                        allowDecimals: false,
+                        dateTimeLabelFormats: {
+                            day: '%m-%d'
+                        }
+                    },
+                    yAxis: {
+                       title: {text: '人数（人）'},
+                        labels: {
+                            format: '{value}'
+                        },
+                        gridLineWidth: 0,
+                        tickWidth: 0,
+                        lineWidth: 1,
+                        lineColor: '#fff'
+                    },
+                    series: [{
+                        name: '认证人数',
+                        data: stats
+                    }]
+                });
+            });
+        });
+    </script>
+</%block>

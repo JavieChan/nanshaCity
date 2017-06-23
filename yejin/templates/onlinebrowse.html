@@ -1,0 +1,121 @@
+## onlinebrowse.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <!--导航-->
+    <%include file="nav.html" args="on={'onlinebrowse': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='在线浏览'"/>
+                <div class="widget">最后更新时间：${datetime.now().strftime('%Y/%m/%d')}</div>
+            </div>
+        </div>
+        <div class="tabbox ns_table">
+            <div class="fpWrapper">
+                <div class="fpLeft">
+                    <div class="toolnav">
+                        <h4>网站排名</h4>
+                        <div class="toolbox">
+                            <a href="javascript:;" class="btnGraySmall" onclick="noSql()">详情</a>
+                        </div>
+                    </div>
+                    <div class="areabox">
+                        <table>
+                            <tr><th>排名</th><th>名称</th><th>URL</th></tr>
+                            <tr><td>1</td><td>腾讯</td><td>www.qq.com</td></tr>
+                            <tr><td>2</td><td>网易</td><td>www.163.com</td></tr>
+                            <tr><td>3</td><td>百度</td><td>www.baidu.com</td></tr>
+                            <tr><td>4</td><td>太平洋电脑网</td><td>www.pconline.com.cn/</td></tr>
+                            <tr><td>5</td><td>天涯论坛</td><td>bbs.tianya.cn/</td></tr>
+                        </table>
+                    </div>
+                    <div class="toolnav" style="margin-top: 20px;">
+                        <h4>非法信息拦截</h4>
+                        <div class="toolbox">
+                            <a href="javascript:;" class="btnGraySmall" onclick="noSql()">详情</a>
+                        </div>
+                    </div>
+                    <div class="areabox">
+                        <table>
+                            <tr><th></th><th>手机号</th><th>类别</th><th>拦截时间</th></tr>
+                            <tr><td>1</td><td>13560477211</td><td>非法及不良</td><td>2016/10/27 10:30:46</td></tr>
+                            <tr><td>2</td><td>13621172512</td><td>反动言论</td><td>2016/09/24 18:50:41</td></tr>
+                            <tr><td>3</td><td>13632247431</td><td>成人内容</td><td>2016/06/27 9:20:26</td></tr>
+                            <tr><td>4</td><td>13663315741</td><td>非法及不良</td><td>2016/04/07 15:30:22</td></tr>
+                            <tr><td>5</td><td>13028270411</td><td>非法及不良</td><td>2016/01/06 14:30:06</td></tr>
+                        </table>
+                    </div>
+                </div><div class="fpRight">
+                    <div class="toolnav">
+                        <h4>在线用户</h4>
+                        <div class="toolbox">
+                            <a href="/projectuseronline.html?location=${location}" class="btnGraySmall">详情</a>
+                        </div>
+                    </div>
+                    <div class="areabox" id="browerOnlineUser">
+                        <table>
+                            <tr><th>手机号</th><th>姓名</th></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="jscode">
+<style>
+    .fpWrapper {
+      width: 880px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+    .fpWrapper .toolnav,
+    .fpWrapper .areabox {
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .fpWrapper > div {
+      display: inline-block;
+      vertical-align: top;
+      box-sizing: border-box;
+    }
+    .fpWrapper .fpLeft {
+      width: 60%;
+      margin-right: 2%;
+    }
+    .fpWrapper .fpRight {
+      width: 38%;
+    }
+</style>
+<script>
+    function noSql(){
+        alert('没有检测到数据库！');
+    }
+    function getBrowseOnlineUser(){
+        var param={
+            page_size: 15,
+            page: 1,
+            location: '${location}',
+            keyword: '',
+            sort: JSON.stringify({})
+        };
+        console.log(param);
+        userOnlineAjax("get", '', param, function(data){
+            if(data.code==200){
+                for(var i=0, h=''; i<data.online_users.length; i++){
+                    var $user = data.online_users[i];
+                    h += '<tr><td>'+((!$user.mobile)?'':$user.mobile)+'</td><td>'+((!$user.name)?'':$user.name)+'</td></tr>';
+                }
+                $('#browerOnlineUser table tr:gt(0)').remove();
+                $('#browerOnlineUser table').append(h);
+            }
+        })
+    }
+    $(function(){
+        getBrowseOnlineUser();
+    });
+</script>
+</%block>

@@ -1,0 +1,64 @@
+## apgroups.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" id="location" value="${location}" />
+    <input type="hidden" id="apgroupId" value="${ap_group_id}" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'apgroups': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='AP组管理'"/>
+            </div>
+        </div>
+        <div class="tabbox ns_table" id="apeditgroup">
+            <div class="areabox">
+                <ul class="vertical">
+                    <li>
+                        <label>AP组名称：</label>
+                        <span class="veright">
+                        <div class="verify"><input type="text" name="name" class="matchVerify shouldVerify" value="${name}" /></div>
+                        </span>
+                    </li>
+                    <li>
+                        <label>选择AP：</label>
+                        <span class="veright">
+                            <div class="aptable">
+                                <table>
+                                    <tr>
+                                        <th><i class="allchk_b unchk_b"></i></th>
+                                        <th>MAC地址</th>
+                                        <th>所属</th>
+                                        <th>位置</th>
+                                    </tr>
+                                    % for ap in selected_aps:
+                                    <tr>
+                                        <td><i class="unchk_b chk_b"></i></td>
+                                        <td>${ap.get('mac')}</td>
+                                        <td>${ap.get('resource_name', '')}</td>
+                                        <td>${ap.get('address', '')}</td>
+                                    </tr>
+                                    % endfor
+                                    % for ap in other_aps:
+                                    <tr>
+                                        <td><i class="unchk_b"></i></td>
+                                        <td>${ap.get('mac')}</td>
+                                        <td>${ap.get('resource_name', '')}</td>
+                                        <td>${ap.get('address', '')}</td>
+                                    </tr>
+                                    % endfor
+                                </table>
+                            </div>
+                        </span>
+                    </li>
+                </ul>
+                <p class="btnSub">
+                    <button type="button" class="btnBlue edit">确定</button>
+                    <button type="button" class="btnGray reback">返回</button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

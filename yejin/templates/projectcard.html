@@ -1,0 +1,219 @@
+## projectcard.html
+<%inherit file="base.html" />
+
+<div class="wrapper">
+    <input type="hidden" value="${resource._location}" id="location" />
+    <input type="hidden" value="" id="location" />
+    <!--导航-->
+    <%include file="nav.html" args="on={'project': 'on'}"/>
+    <!--右侧功能栏-->
+    <div class="projects">
+        <div class="tabbox">
+            <div class="bread">
+                <%include file="bread_nav.html" args="location=resource._location,ins=ins"/>
+                <div class="widget">
+                    <a href="/projectinfo.html?location=${resource._location}" class="btnBlueSmall simbtn">查看项目信息</a>
+                </div>
+            </div>
+        </div>
+        <div class="tabbox ns_form">
+            <div class="toolnav">
+                <h3>基本信息</h3>
+            </div>
+            <div class="areabox">
+                <ul class="horizon">
+                    <% ins.session.merge(resource) %>
+                    <li>责任人：<span>${resource.owner}</span></li>
+                    <li>地址：<span>${resource.address}</span></li>
+                    <li>电话：<span>${resource.mobile}</span></li>
+                    <li>属性：<span>${resource.type.label}</span></li>
+                    <li>ID：<span>${resource._location.split(',')[-1]}</span></li>
+                    <li>开通日期：<span>${resource.ctime.strftime('%Y-%m-%d')}</span></li>
+                </ul>
+                <ul class="horizon">
+                    <li>上网账号数：<span>${total_user}</span></li>
+                    <li>在线人数：<span>${conns_count}</span></li>
+                    <li>管理员人数：<span>${total_manager}</span></li>
+                    <li>AP总数：<span>${total_count}</span></li>
+                    <li>设备故障：<span>${offlines_count}</span></li>
+                    <li>项目数：<span>${len(profiles)}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tabbox ns_subtab">
+            <div class="toolnav">
+                <h3>子项目列表</h3>
+                <div class="toolbox">
+                    % if ins.is_allowed('create', 'resource'):
+                    <a type="button" class="btnGraySmall" href="/projectresourceedit.html?location=${location}">新增</a>
+                    <button type="button" class="btnGraySmall forbinAC">禁用</button>
+                    % endif
+                    <div class="search"><input type="text" placeholder="输入搜索内容" /><button type="button"><i class="searchIcoGray"></i></button></div>
+                </div>
+            </div>
+            % if profiles:
+              <div class="areabox">
+                  % for r, p in profiles:
+                  % if p.get('offlines', 0) > 0:
+                  <a href="/projectcard.html?location=${r._location}" class="magnet error">
+                  % else:
+                  <a href="/projectcard.html?location=${r._location}" class="magnet">
+                  % endif
+                  <div class="name">
+                    % if len(r.name) > 10:
+                    ${''.join(list(r.name)[:10] + ['...'])}
+                    % else:
+                    ${r.name}
+                    % endif
+                  </div><div class="ap">AP：${p.get('total', 0)}</div><input type="hidden" value="${r._location}" /></a>
+                  % endfor
+              </div>
+              % if len(profiles) > 4:
+              <div class="mw880" style="overflow: hidden;">
+                  <span class="more">更多<i class="aDwn"></i></span>
+              </div>
+              % endif
+            % endif
+        </div>
+        <div class="tabbox ns_device">
+            <div class="areabox" style="overflow: inherit;">
+                <div class="deviceBar">
+                    <% flag = 0 %>
+                    % for map in sens_maps:
+                    <div class="deviceNav">
+                        % if loop.index == 0:
+                        <div class="selIco deviceSel on">${map['name']}<i></i></div>
+                        % else:
+                        <div class="selIco deviceSel">${map['name']}<i></i></div>
+                        % endif
+                        <div class="deviceOp">
+                            <div><button type="button" class="btnGreenAutoMin add" data-groupId="${str(map['_id'])}">上传图片</button></div>
+                            % for p in map['plans']:
+                              % if flag == 0:
+                              <span class="on" data-id="${p['imgurl']}">${p['name']}</span>
+                              <% flag = 1%>
+                              % else:
+                              <span data-id="${p['imgurl']}">${p['name']}</span>
+                              % endif
+                            % endfor
+                        </div>
+                    </div>
+                    % endfor
+                    <button type="button" class="btnGraySmall" id="addnav" title="添加组名"><i class="addGrayIco"></i></button>
+                </div>
+                % if ins.is_allowed('create', 'plan'):
+                <div class="ns_xy">
+                    <div class="axy">
+                        <dl>
+                            <dd class="mm">MAC地址：<span><input type="text" name="mac" class="matchVerify shouldVerify checkMac" /></span></dd>
+                            <dd style="float: right;"><button type="button" class="btnGraySmall quit">取消</button><button type="button" class="btnBlueSmall add">确定</button><button type="button" class="btnBlueSmall save" style="display: none;">保存</button></dd>
+                        </dl>
+                        <p>提示：填写AP信息前，请先点击施工图片上的AP指示点捕捉位置信息。（x：<em id="ix"></em> , y：<em id="iy"></em>）</p>
+                    </div>
+                    <div class="axc">
+                        <p>说明：<i class="dodot doBlue"></i>感知设备 <i class="dodot doGreen"></i>非感知设备 <i class="dodot doRed"></i>故障设备</p>
+                        <div>
+                            <button type="button" class="btnBlueSmall delete">删除平面图</button>
+                            <!--<button type="button" class="btnBlueSmall edit">编辑平面图</button>-->
+                            <button type="button" class="btnBlueSmall addap">新增AP</button>
+                        </div>
+                    </div>
+                </div>
+                % endif
+                <%
+                import time
+                s1 = time.time()
+                %>
+                <div class="ns_deCtx" style="overflow: inherit;">
+                    <% from web.common.g import sf %>
+                    <%
+                    def get_imgurl(sens_maps):
+                        try:
+                            return sens_maps[0]['plans'][0]['imgurl']
+                        except:
+                            return None
+                    %>
+                    % if ins.is_allowed('view', 'plan'):
+                    <div class="ns_dedo">
+                        <% _imgurl = get_imgurl(sens_maps) %>
+                        % if _imgurl:
+                        <img src="${_imgurl}" class="deviceImg" />
+                            <%
+                            sens_aps = ins.mdb.list.distinct('mac', {'sens': 1})
+                            %>
+                            % for pnt in ins.mdb.sens_map_ap.find({'imgurl': _imgurl}):
+                                % if not sf['device.ap'].is_online(pnt['mac'].upper()):
+                                <i class="dodot doRed" data-left="${pnt['left']}" data-top="${pnt['top']}" style="left: ${pnt['left']}px; top:${pnt['top']}px;"><em class="doem" data-mac="${pnt['mac']}" data-x="${pnt['pos_x']}" data-y="${pnt['pos_y']}" data-id="${str(pnt['_id'])}"></em></i>
+                                % elif sf['device.ap'].is_sens(pnt['mac']):
+                                <i class="dodot doBlue" data-left="${pnt['left']}" data-top="${pnt['top']}" style="left: ${pnt['left']}px; top:${pnt['top']}px;"><em class="doem" data-mac="${pnt['mac']}" data-x="${pnt['pos_x']}" data-y="${pnt['pos_y']}" data-id="${str(pnt['_id'])}"></em></i>
+                                % else:
+                                <i class="dodot doGreen" data-left="${pnt['left']}" data-top="${pnt['top']}" style="left: ${pnt['left']}px; top:${pnt['top']}px;"><em class="doem" data-mac="${pnt['mac']}" data-x="${pnt['pos_x']}" data-y="${pnt['pos_y']}" data-id="${str(pnt['_id'])}"></em></i>
+                                % endif
+                            % endfor
+                        <div class="ns_deinfo">
+                            <i class="arrow"></i>
+                            <h5>AP位置<span></span></h5>
+                            <ul class="bhead">
+                                <li><span class="name">姓名</span><span class="mobile">手机</span></li>
+                            </ul>
+                            <ul class="bbody"></ul>
+                            <div data-page="" class="ns_page">
+                                <button class="btnWhiteSmall devicelinkPrev">上一页</button>
+                                <button class="btnWhiteSmall devicelinkNext">下一页</button>
+                            </div>
+                        </div>
+                        % endif
+                    </div>
+                    % endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%block name="aside">
+<div class="modal fade" id="modalDeviceName">
+    <div class="modal_device_name modal_body">
+        <h3>新增组</h3>
+        <ul class="vertical">
+            <li>
+                <label><i>*</i>名称：</label>
+                <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="name" /></div></span>
+            </li>
+        </ul>
+        <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+        <i class="msg"></i>
+        <span class="closed">X</span>
+    </div>
+</div>
+<div class="modal fade" id="modalDeviceImg">
+    <div class="modal_device_img modal_body">
+        <h3>新增施工平面图</h3>
+        <ul class="vertical">
+            <li>
+                <label><i>*</i>平面图名称：</label>
+                <span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="name" /></div></span>
+            </li>
+            <li>
+                <label><i>*</i>施工平面图：</label>
+                <span class="veright">
+                    <div class="file">
+                        <input type="hidden" class="matchVerify shouldVerify checkFile" value="" />
+                        <input type="file" class="uploadImg sgtImg" id="sgtImg" name="uploadImg" />
+                        <button type="button" class="btnGreen">上传施工图</button>
+                        <div class="loading"></div>
+                        <em></em>
+                    </div>
+                </span>
+            </li>
+        </ul>
+        <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+        <i class="msg"></i>
+        <span class="closed">X</span>
+    </div>
+</div>
+</%block>
+
+<%block name="jscode">
+    <script type="text/javascript" src="/static/js/lib/ajaxfileupload.js"></script>
+</%block>
