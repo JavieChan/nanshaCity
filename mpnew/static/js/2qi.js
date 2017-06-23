@@ -1,5 +1,5 @@
 //ajax
-var ajaxDomain = "http://172.16.44.2:8007/";//172.16.36.15:8007/"; //"http://172.16.44.2:8007/";
+var ajaxDomain = "http://172.16.36.15:8007/"; //"http://172.16.44.2:8007/";
 var ajaxUrls = {
 	totalnum: "sense/totalnum", //感知设备总数、连接设备总数
 	search: "sense/search", //搜索
