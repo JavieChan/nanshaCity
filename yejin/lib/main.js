@@ -2195,7 +2195,7 @@
                 for(var i=0;i<data.paypolicys.length;i++){
                     optionStr+="<option value='>"+data.paypolicys[i].id+"'>"+data.paypolicys[i].label+"("+data.paypolicys[i].price+"元)</option>";
                 }
-                $('#modalRecharge .comboList').html(optionStr);
+                $('#modalRecharge #comboList').html(optionStr);
             }else{
                 console.log(data);
             }
@@ -2207,7 +2207,7 @@
 
     $(document).on('click', '#modalRecharge .add', function(e){
         var thisUserId=$(this).data("userid"),
-            myPay_policy_id=$('#modalRecharge .comboList').val();
+            myPay_policy_id=$('#modalRecharge #comboList').val();
         if(myPay_policy_id=="" ||myPay_policy_id==null){
             alert("请选择套餐");
         }
