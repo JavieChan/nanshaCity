@@ -420,12 +420,12 @@
         $(this).addClass('on').siblings().removeClass('on');
         if(idx>0){//学期套餐
             $('.vtime label').html("<i>*</i>日期：");
-            $('.vtime input.checkInt').removeClass("matchVerify shouldVerify").hide();
-            $('.vtime input.datepicker').addClass("matchVerify shouldVerify").show();
+            $('.vtime input').removeClass('checkInt').addClass('datepicker');
+            $('.vtime input').attr('placeholder', '选择学期结束日期').val('');
         }else{//月套餐
             $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
-            $('.vtime input.datepicker').removeClass("matchVerify shouldVerify").hide();
-            $('.vtime input.checkInt').addClass("matchVerify shouldVerify").show();
+            $('.vtime input').removeClass('datepicker').addClass('checkInt');
+            $('.vtime input').attr('placeholder', '输入天数').val('');
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
@@ -438,7 +438,7 @@
             time=$('input[name=time]').val(),
             // ends=$('input[name=ends]').val()==""?2:$('input[name=ends]').val(),
             expired=$('input[name=expired]').val(),
-            package_expired=$('input[name=package_expired]').val(),
+            // package_expired=$('input[name=package_expired]').val(),
             label=$('input[name=label]').val();
 
         if(checkInput($('#modalPackageType .verify'))==0){
@@ -455,9 +455,9 @@
                 // param.time = time*24;
                 param.mask = 2;
                 param.expired = expired;
-                param.package_expired = package_expired;
+                param.package_expired = time;
             }else{//月套餐
-                param.time = time*24;
+                param.time = time;
                 param.mask = 1;
             }
             billAjax("post", param, function(data){
