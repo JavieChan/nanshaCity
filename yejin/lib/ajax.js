@@ -214,7 +214,7 @@ function userPnAjax(type, id, param, callback, errFunc){
 function chargeOfflineAjax(param, callback, errFunc){
     $.ajax({
         method: 'post',
-        url: proUrl+'user/pn/charge-offline',
+        url: proUrl+'pn/charge-offline',
         data: param,
         dataType: "json"
     }).done(function(data){
