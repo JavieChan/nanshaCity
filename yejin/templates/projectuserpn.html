@@ -56,7 +56,7 @@
             <h3>新增用户</h3>
             <ul class="vertical">
                 % for h in pn_headers:
-                % if h['is_profile']:
+                % if h['is_profile'] or h['column'] == 'id_number':
                 <li><label>${h['title']}：</label><span class="veright">
                     % if h['column'] == 'ends':
                     <div class="amount">

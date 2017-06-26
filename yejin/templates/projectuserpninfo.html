@@ -2,174 +2,80 @@
 
 <div class="wrapper">
     <input type="hidden" id="location" value="${location}" />
-    ##<input type="hidden" id="userHid" value="${account.user}" />
-    ##<input type="hidden" id="mobileHid" value="${account.mobile}" />
+    <input type="hidden" id="userHid" value="${account.user}" />
+    <input type="hidden" id="mobileHid" value="${account.mobile}" />
+
     <!--导航-->
     <%include file="nav.html" args="on={'user': 'on'}" />
     <!--右侧功能栏-->
     <div class="projects">
         <div class="tabbox">
             <div class="bread">
-                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='用户详情',compress=True,remain=[('专网用户', '/projectuserpn.html?location={}'.format(location))]"/>
+                <%include file="bread_nav.html" args="location=location,ins=ins,suffix='账号详情',compress=True,remain=[('专网用户', '/projectuserpn.html?location={}'.format(location))]"/>
+		        % if account:
                 <div class="widget">
-                    ##<a href="/projecturl.html?location=${location}&user=&mobile=${account.mobile}" class="btnGraySmall">URL纪录</a>
+                    <a href="/projecturl.html?location=${location}&user=${account.user}&mobile=${account.mobile}" class="btnGraySmall">URL纪录</a>
                     % if ins.is_allowed('update', 'user'):
-                    % if location.endswith('15914'):
-                      % if account.mask & (1 << 25) == 0:
-                      <button type="button" class="btnBlueSmall" id="userCheck">审核通过</button>
-                      % endif
-                      <button type="button" class="btnBlueSmall" id="userReback" data-mobile="${account.mobile}">驳回</button>
-                    % endif
-                    ##<input type="hidden" class="id" value="${account.id}" />
-                    ##<input type="hidden" class="mask" value="${account.mask}" />
+                    <input type="hidden" class="id" value="${account.user}" />
                     <button type="button" class="btnGraySmall" id="userinfoEdit">编辑</button>
                     <button type="button" class="btnBlueSmall userinfoSave" id="userinfoPnSave" style="display: none;">保存</button>
                     <button type="button" class="btnGraySmall" id="userinfoQuit" style="display: none;">取消</button>
                     % endif
                     <button type="button" class="btnGraySmall userinfoReback">返回</button>
                 </div>
+                % else:
+                <div class="widget">
+                    <a href="/projecturl.html?location=${location}&user=&mobile=&ip=${ip}" class="btnGraySmall">URL纪录</a>
+                    <button type="button" class="btnGraySmall userinfoReback">返回</button>
+                </div>
+                % endif
             </div>
         </div>
+	% if account:
         <div class="tabbox ns_infouser" id="userinfo">
             <div class="areabox">
                 <ul class="vertical">
-                    % for h in headers:
-                      % if h['is_profile'] == 1:
-                      <li>
-                          <label>${h['title']}：</label>
-                          <span class="veright sue" data-value="${getattr(account, h['column'])}" data-type="${h['type']}" name="${h['column']}">
-                          % if h['type'] == 'img':
-                            % for url in img_url.split(','):
-                            <img src="${url}" class="imginfo" />
-                            % endfor
-                            <div class="file" style="display: none;">
-                                <input type="hidden" />
-                                <input type="file" class="uploadImg proImg" id="${h['column']}" imgElementId="img${h['column']}" name="uploadImg" />
-                                <button type="button" class="btnGreen">选择图片</button>
-                                <div class="loading"></div>
-                            </div>
-                            <div class="showImg" style="display: none;">
-                                <img src="" id="img${h['column']}" />
-                                <i class="deluploadImg"></i>
-                            </div>
-                          % else:
-                          ${getattr(account, h['column'])}
-                          % endif
-                          </span>
-                      </li>
-                      % endif
-                    % endfor
                     <li>
-                        <label>关联账号：</label>
-                        <span class="veright">
-                            % for r in relates:
-                            <div class="account">账号${loop.index + 1}：${r.user}</div>
-                            % endfor
-                        </span>
+                        <label>姓名：</label>
+                        <span class="veright sue" data-value="${account.name}" name="name" data-type="text">${account.name}</span>
                     </li>
                     <li>
-                        <label>专网权限：</label>
-                        <span class="veright">
-                            % for p in pns:
-                            <div class="premission">${p.name}</div>
-                            % endfor
-                        </span>
+                        <label>手机号：</label>
+                        <span class="veright sue" data-value="${account.mobile}" name="mobile" data-type="string">${account.mobile}</span>
+                    </li>
+
+                    <li>
+                        <label>身份证号：</label>
+                        <span class="veright sue" data-value="${account.id_number}" name="id_number" data-type="string">${account.id_number}</span>
                     </li>
                     <li>
-                        <label>专网信息：</label>
-                        <span class="veright">
-                            <ul class="vertical">
-                                % for h in headers:
-                                  % if h['is_profile'] == 0:
-                                  <li>
-                                      <label>${h['title']}：</label>
-                                      <span class="veright sue" data-value="${getattr(account, h['column'])}" data-type="${h['type']}" name="${h['column']}">
-                                      % if h['type'] == 'img':
-                                      <input type="file" id="${h['column']}" />
-                                        <div class="imgShow" data-value="${getattr(account, h['column'])}">
-                                            % for url in getattr(account, h['column']).split(','):
-                                            <div><img src="${url}" /><i></i></div>
-                                            % endfor
-                                        </div>
-                                        <script type="text/javascript">$(function() {mutiUpload('${h['column']}', ${h.get('img_limit', 1)});});</script>
-                                      % else:
-                                      ${getattr(account, h['column'])}
-                                      % endif
-                                      </span>
-                                  </li>
-                                  % endif
-                                % endfor
-                            </ul>
-                        </span>
+                        <label>学号：</label>
+                        <span class="veright sue" data-value="${account.student_id}" name="student_id" data-type="string">${account.student_id}</span>
+                    </li>
+                    <li>
+                        <label>专业：</label>
+                        <span class="veright sue" data-value="${account.major}" name="major" data-type="string">${account.major}</span>
+                    </li>
+                    <li>
+                        <label>年级：</label>
+                        <span class="veright sue" data-value="${account.grade}" name="grade" data-type="string">${account.grade}</span>
+                    </li>
+                    <li>
+                        <label>密码：</label>
+                        <span class="veright sue pwdtip" data-tip="${account.password}" data-value="${account.password}" data-type="password" name="password">***</span>
+                    </li>
+                    <li>
+                        <label>备注：</label>
+                        <span class="veright sue" data-value="${account.note}" name="note" data-type="string">${account.note}</span>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="tabbox ns_table">
-            <div class="toolnav">
-                <h3>用户漫游记录</h3>
-                <div class="toolbox">
-                    <button type="button" class="btnGraySmall" id="dateSearch">查询</button>
-                    <a href="javascript:;" class="btnGraySmall" id="connectRecordExport">导出</a>
-                    <div class="timebar">时间段查询：<div><input type="text" value="${start}" id="dateStart" />至<input type="text" value="${end}" id="dateEnd" /></div></div>
-                </div>
-            </div>
-            <div id="onlineRecordMemTable"></div>
-            <script src="/static/js/component/onlinerecord.js"></script>
-        </div>
+	% endif
     </div>
 </div>
 
-<%block name="aside">
-    <%include file="imgModal.html" />
-    <div class="modal fade" id="modalReback">
-        <div class="modal_reback modal_body">
-            <h3>审核退回</h3>
-            <ul class="vertical">
-                <li><label><i>*</i>退回原因：</label><span class="veright"><div class="verify"><input type="text" name="reason" class="matchVerify shouldVerify" /></div></span></li>
-            </ul>
-            <div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
-            <i class="msg"></i>
-            <span class="closed">X</span>
-        </div>
-    </div>
-</%block>
-
 <%block name="jscode">
-    <!--<script type="text/javascript" src="/static/js/lib/ajaxfileupload.js"></script>-->
     <script type="text/javascript" src="/static/js/lib/jqueryui.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery-ui-timepicker-addon.js"></script>
-    <link rel="stylesheet" href="/static/js/lib/uploadify/uploadify.css" />
-    <script type="text/javascript" src="/static/js/lib/uploadify/jquery.uploadify.min.js"></script>
-    <style type="text/css">
-        .uploadify{
-            display: none;
-        }
-        .uploadify-button {
-            background-color: #68d68f;
-            border: none;
-            padding: 0;
-            text-shadow: none;
-            font-family: "microsoft yahei", "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
-
-            margin-bottom: 1em;
-            border-radius: 5px;
-            background-image: none;
-            font-size: 14px;
-        }
-        .uploadify:hover .uploadify-button {
-            background-color: green;
-            background-image: none;
-        }
-        #some_file_queue {
-            background-color: #eee;
-            border-radius: 3px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.25);
-            height: 103px;
-            margin-bottom: 10px;
-            overflow: auto;
-            padding: 5px 10px;
-            width: 300px;
-        }
-    </style>
 </%block>
