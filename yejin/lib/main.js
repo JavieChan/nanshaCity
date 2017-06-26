@@ -2193,7 +2193,7 @@
                 var optionStr = "";
                 if(typeof(data.paypolicys)=="undefined" || data.paypolicys.length==0){return;}
                 for(var i=0;i<data.paypolicys.length;i++){
-                    optionStr+="<option value='>"+data.paypolicys[i].id+"'>"+data.paypolicys[i].label+"("+data.paypolicys[i].price+"元)</option>";
+                    optionStr+="<option value='"+data.paypolicys[i].id+"'>"+data.paypolicys[i].label+"("+data.paypolicys[i].price+"元)</option>";
                 }
                 $('#modalRecharge #comboList').html(optionStr);
             }else{
