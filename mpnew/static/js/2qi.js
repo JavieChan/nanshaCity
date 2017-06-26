@@ -7,6 +7,21 @@ var ajaxUrls = {
 	disGroupList: "sense/disGroupList", //六镇二街，名称代码列表
 	getGroupAP: "sense/getGroupAP ", //区域（AP组）AP列表
 	disGroupSta: "sense/disGroupSta", //AP 组（区域）统计数值
+	phoneType: "sense/PhoneType", //移动终端品牌统计
+	disOnliTime: "sense/DisOnliTime", //区域终端联网时间
+	userDistrict:"sense/UserDistrict",//用户区域分布
+	onliNmOfEryHour:"sense/OnliNmOfEryHour",//用户上网时段
+	
+	
+	disGroupList:"sense/disGroupList",//区域或AP组list，返回六镇二街，名称代码列表
+	getGroupAP:"sense/getGroupAP",//根据区域或者AP组代码返回,AP 列表
+	disGroupSta:"sense/disGroupSta",//AP 组（区域）统计数值
+	clientlist:"sense/Clientlist",//感知设备列表
+	
+	top20HotEn:"sense/Top20HotEn",//关键词排行头top20，
+	top20Websites:"sense/Top20Websites",//点击量 top20 网站排行	
+	
+	clientTrace:"sense/ClientTrace",
 }
 
 var ajaxQ = function(url, type, param, callback, errFunc) {
@@ -14,6 +29,7 @@ var ajaxQ = function(url, type, param, callback, errFunc) {
 		url: ajaxDomain + url,
 		type: type,
 		data: param,
+//		contentType:"application/json",
 		success: function(data) {
 			callback(data);
 		},
@@ -35,3 +51,18 @@ window.msgBox = function(texts, tos) {
 		$('.msgbox').removeClass("msgUp").addClass("msgDown");
 	}, tos); //停留时间
 }
+
+var sortBy = function (filed, rev, primer) {
+    rev = (rev) ? -1 : 1;
+    return function (a, b) {
+        a = a[filed];
+        b = b[filed];
+        if (typeof (primer) != 'undefined') {
+            a = primer(a);
+            b = primer(b);
+        }
+        if (a < b) { return rev * -1; }
+        if (a > b) { return rev * 1; }
+        return 1;
+    }
+};

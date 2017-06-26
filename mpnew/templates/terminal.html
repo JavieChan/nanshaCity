@@ -17,11 +17,12 @@
 				margin: 0 auto;
 			}
 			
-			.toolnav h3{
-				width:400px;
+			.toolnav h3 {
+				width: 400px;
 				border-left: 3px solid #39f;
 				text-indent: 0.5em;
 			}
+			
 			.sort-list-box,
 			.sort-echart-box {
 				float: left;
@@ -134,9 +135,9 @@
 					<h4 class=""><a href="userhx.html">人群画像</a></h4>
 					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
 					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<!--<h4 class=""><a href="#">区域热力趋势</a></h4>
-					<h4 class=""><a href="#">城市寻迹</a></h4>
-					<h4 class=""><a href="#">AP感知预警</a></h4>-->
+					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
+					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
+					<h4 class=""><a href="supervise.html">AP感知预警</a></h4>
 				</div>
 
 				<!--右侧功能栏-->
@@ -157,7 +158,7 @@
 						<!--<div class="content-title"></div>-->
 						<div class="sort-panel">
 							<div class="sort-list-box">
-								<div style="margin-bottom: 10px;">
+								<!--<div style="margin-bottom: 10px;">
 									<span>统计区域</span>
 									<select class="towns" name="" style="width: 100px;">
 										<option value="">全部</option>
@@ -171,12 +172,12 @@
 										<option value="">二街</option>
 									</select>
 									<button class="btnBlueSmall chaxun">查询</button>
-								</div>
+								</div>-->
 								<ul class="item-list">
 									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span class="key">关键词</span><span>终端数量</span></div>
+										<div class="item-hd"><i class="">排名</i><span class="key">品牌</span><span>终端数量</span></div>
 									</li>
-									<li>
+									<!--<li>
 										<div class="item-hd"><i class="num-top">1</i><span class="key">华为</span><span class="tmn-num">1548</span></div>
 									</li>
 									<li>
@@ -190,7 +191,7 @@
 									</li>
 									<li>
 										<div class="item-hd"><i class="num-normal">5</i><span class="key">小米</span><span class="tmn-num">135</span></div>
-									</li>
+									</li>-->
 								</ul>
 							</div>
 							<div id="sortChart" class="sort-echart-box">
@@ -318,47 +319,72 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
-				// 基于准备好的dom，初始化echarts实例
+				var ignoreArr = ["None", "Generic_Android", "Generic"]; //要屏蔽的手机型号
+				var phoneTypeData = [];
+
+				var phoneTypeDataForShow = {
+					//subtext: " ",//镇区名
+					legendData: [], //'华为', 'Apple', '步步高', 'Vivo', '小米'
+					seriesData: [] //[{value: 1548,name: '华为'}]
+				}				
+
+				//var townArr = ["全部", "一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"];
+				//var townTmnNumsAll = [1548, 335, 310, 234, 135];
+				//var townTmnNums = [196, 42, 38, 29, 18];
+
+				//初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
-				var hoursChart = echarts.init(document.getElementById('hoursChart'));
 
-				var townArr = ["全部", "一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"];
-
-				var keywordData = {
-					subtext: "全部",
-					legendData: ['华为', 'Apple', '步步高', 'Vivo', '小米'],
-					seriesData: [{
-							value: 1548,
-							name: '华为'
-						},
-						{
-							value: 335,
-							name: 'Apple'
-						},
-						{
-							value: 310,
-							name: '步步高'
-						},
-						{
-							value: 234,
-							name: 'Vivo'
-						},
-						{
-							value: 135,
-							name: '小米'
+				ajaxQ(ajaxUrls.phoneType, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						phoneTypeData = data.phone_type;
+						var str = "";
+						var orderIndex = 1; //序号
+						if(phoneTypeData.length < 1) {
+							str = "<li>暂无数据。</li>";
+						} else {
+							//拼列表数据
+							for(var i = 0;
+								(i < phoneTypeData.length && orderIndex <= 10); i++) {
+								if(ignoreArr.indexOf(phoneTypeData[i].phone_type) > -1) {
+									continue;
+								}
+								str += '<li><div class="item-hd"><i class="num-top">' + orderIndex + '</i><span class="key">' + phoneTypeData[i].phone_type + '</span><span class="tmn-num">' + phoneTypeData[i].num + '</span></div></li>';
+								orderIndex++;
+							}
+							//拼饼图数据
+							var otherType = "其他",
+								otherNum = 0;
+							for(var i = 0; i < phoneTypeData.length; i++) {
+								if(ignoreArr.indexOf(phoneTypeData[i].phone_type) > -1 || i > 9) {
+									otherNum += phoneTypeData[i].num;
+								} else {
+									phoneTypeDataForShow.legendData.push(phoneTypeData[i].phone_type);
+									phoneTypeDataForShow.seriesData.push({
+										value: phoneTypeData[i].num,
+										name: phoneTypeData[i].phone_type
+									})
+								}
+							}
+							phoneTypeDataForShow.legendData.push(otherType);
+							phoneTypeDataForShow.seriesData.push({
+								value: otherNum,
+								name: otherType
+							})
 						}
-					]
-				}
-				var townTmnNumsAll = [1548, 335, 310, 234, 135];
-				var townTmnNums = [196, 42, 38, 29, 18];
 
+						$(".item-list").append(str);
+						getSortChartOption();
+					}
+				})
+				
 				function getSortChartOption() {
 
 					// 指定图表的配置项和数据
 					var sortChartOption = {
 						title: {
 							text: '移动终端品牌统计',
-							subtext: keywordData.subtext,
+							subtext: phoneTypeDataForShow.subtext,
 							x: 'center'
 						},
 						tooltip: {
@@ -368,14 +394,14 @@
 						legend: {
 							orient: 'vertical',
 							left: 'left',
-							data: keywordData.legendData
+							data: phoneTypeDataForShow.legendData
 						},
 						series: [{
 							name: '搜索来源',
 							type: 'pie',
 							radius: '55%',
 							center: ['50%', '60%'],
-							data: keywordData.seriesData,
+							data: phoneTypeDataForShow.seriesData,
 							itemStyle: {
 								emphasis: {
 									shadowBlur: 10,
@@ -389,22 +415,33 @@
 					// 使用刚指定的配置项和数据显示图表。
 					sortChart.setOption(sortChartOption);
 				}
-				getSortChartOption();
-
-				$(document).on("click", ".chaxun", function() {
-					//					console.log($(".towns")[0].children)
-					var idx = $(".towns")[0].selectedIndex;
-					keywordData.subtext = townArr[idx];
-					for(var i = 0; i < keywordData.seriesData.length; i++) {
-						var v = townTmnNums[i] + parseInt(Math.random() * 20);
-						if(idx == 0) {
-							v = townTmnNumsAll[i]
+				
+				//区域终端联网时间
+				
+				//初始化echarts实例
+				var hoursChart = echarts.init(document.getElementById('hoursChart'));
+				
+				var disOnliTimeDataForShow = {
+					xAxisData: [], //["一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"]
+					seriesData: [] //[180, 152, 200, 334, 390, 330, 220, 270]
+				}
+				
+				ajaxQ(ajaxUrls.disOnliTime, "get", null, function(data) {
+					if(data.Code.Code == 200) {
+						var disOnliTimeData = data[" res"];
+						if(disOnliTimeData.length < 1) {
+							$("#hoursChart").html("暂无数据。")
+						} else {
+							//拼柱形图数据
+							for(var i = 0; i < disOnliTimeData.length; i++) {
+								disOnliTimeDataForShow.xAxisData.push(disOnliTimeData[i].name);
+								disOnliTimeDataForShow.seriesData.push(disOnliTimeData[i].session_time)
+							}
 						}
-						keywordData.seriesData[i].value = v;
-						$(".tmn-num:eq(" + i + ")").html(v);
+						getHoursChartOption();
 					}
-					getSortChartOption();
 				})
+
 
 				function getHoursChartOption() {
 					var hoursChartOption = {
@@ -427,7 +464,7 @@
 						},
 						xAxis: [{
 							type: 'category',
-							data: ["一镇", "二镇", "三镇", "四镇", "五镇", "六镇", "一街", "二街"],
+							data: disOnliTimeDataForShow.xAxisData,
 							axisTick: {
 								alignWithLabel: true
 							}
@@ -439,12 +476,12 @@
 							name: '区域终端联网时间',
 							type: 'bar',
 							barWidth: '60%',
-							data: [180, 152, 200, 334, 390, 330, 220, 270]
+							data: disOnliTimeDataForShow.seriesData
 						}]
 					};
 					hoursChart.setOption(hoursChartOption);
 				}
-				getHoursChartOption();
+//				getHoursChartOption();
 
 			})
 		</script>
