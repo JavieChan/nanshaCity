@@ -228,7 +228,7 @@ function chargeOfflineAjax(param, callback, errFunc){
 function policyListAjax(param, callback, errFunc){
     $.ajax({
         method: 'get',
-        url: proUrl+'user/pn/pay-policy-list',
+        url: proUrl+'pn/pay-policy-list',
         data: param,
         dataType: "json"
     }).done(function(data){

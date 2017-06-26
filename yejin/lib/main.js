@@ -2187,6 +2187,7 @@
     // 专网用户
     // 充值
     $(document).on('click', '#userlistPn .recharge', function(e){
+        console.log('recharge begin');
         var thisUserId = $(this).siblings('input.id').val();
         policyListAjax({location: location}, function(data){
             if(data.code==200){
