@@ -2186,7 +2186,7 @@
     });
     // 专网用户
     // 充值
-    $(document).on('click', '.recharge', function(){
+    $(document).on('click', '#userlistPn .recharge', function(e){
         var thisUserId = $(this).siblings('input.id').val();
         policyListAjax({location: location}, function(data){
             if(data.code==200){
