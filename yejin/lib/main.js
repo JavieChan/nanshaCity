@@ -420,11 +420,14 @@
         $(this).addClass('on').siblings().removeClass('on');
         if(idx>0){//学期套餐
             $('.vtime label').html("<i>*</i>日期：");
-            $('.vtime input').removeClass('checkInt').addClass('datepicker');
+            $('.vtime input').removeClass('checkInt').addClass('datepickerbill');
+            $(".datepickerbill").datepicker({
+                dateFormat: 'yy-mm-dd'
+            });
             $('.vtime input').attr('placeholder', '选择学期结束日期').val('');
         }else{//月套餐
             $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
-            $('.vtime input').removeClass('datepicker').addClass('checkInt');
+            $('.vtime input').removeClass('datepickerbill').addClass('checkInt');
             $('.vtime input').attr('placeholder', '输入天数').val('');
         }
         $('.vtime .errormsg').remove();
