@@ -2202,6 +2202,7 @@
         });
         $('#modalRecharge').modal('open');
         $('#modalRecharge .add').attr('data-userid',thisUserId);
+        $(this).addClass("recharging");
     });
     $(document).on('click', '#modalRecharge, #modalRecharge .closed', function(){$('#modalRecharge').modal('closed');});
 
@@ -2221,6 +2222,9 @@
             chargeOfflineAjax(param, function(data){
                 if(data.code==200){
                     // window.location.reload();
+                    if(typeof(data.expired)=="undefined"){return;}
+                    $(".recharging").parent().parent().find("td:eq(5)").html(data.expired);
+                    $(".recharging").removeClass("recharging");
                     $('#modalRecharge').modal('closed');
                     alert("充值成功。");
                 }else{
