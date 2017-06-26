@@ -210,6 +210,34 @@ function userPnAjax(type, id, param, callback, errFunc){
         if(typeof(errFunc)=="function") errFunc(error);
     });
 }
+// 专网充值-套餐列表
+function chargeOfflineAjax(param, callback, errFunc){
+    $.ajax({
+        method: 'post',
+        url: proUrl+'user/pn/charge-offline',
+        data: param,
+        dataType: "json"
+    }).done(function(data){
+        callback(data);
+    }).fail(function(error){
+        console.log(error);
+        if(typeof(errFunc)=="function") errFunc(error);
+    });
+}
+// 专网充值
+function policyListAjax(param, callback, errFunc){
+    $.ajax({
+        method: 'get',
+        url: proUrl+'user/pn/pay-policy-list',
+        data: param,
+        dataType: "json"
+    }).done(function(data){
+        callback(data);
+    }).fail(function(error){
+        console.log(error);
+        if(typeof(errFunc)=="function") errFunc(error);
+    });
+}
 
 // 内网用户列表
 function userInnerAjax(type, id, param, callback, errFunc){

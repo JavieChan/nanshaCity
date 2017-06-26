@@ -420,12 +420,12 @@
         $(this).addClass('on').siblings().removeClass('on');
         if(idx>0){//学期套餐
             $('.vtime label').html("<i>*</i>日期：");
-            $('.vtime input.checkInt').hide();
-            $('.vtime input.datepicker').show();
+            $('.vtime input.checkInt').removeClass("matchVerify shouldVerify").hide();
+            $('.vtime input.datepicker').addClass("matchVerify shouldVerify").show();
         }else{//月套餐
             $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
-            $('.vtime input.datepicker').hide();
-            $('.vtime input.checkInt').show();
+            $('.vtime input.datepicker').removeClass("matchVerify shouldVerify").hide();
+            $('.vtime input.checkInt').addClass("matchVerify shouldVerify").show();
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
@@ -435,26 +435,29 @@
         var userTypeId=$('.userType .bill_tab span.on').attr('data-user-type-id'), idx=$('#modalPackageType .adsnav li.on').index(), guest=$('.userType span.on').index();
 
         var price=$('input[name=price]').val(),
-            time=$('input[name=time]:visible').val(),
-            ends=$('input[name=ends]').val()==""?2:$('input[name=ends]').val(),
+            time=$('input[name=time]').val(),
+            // ends=$('input[name=ends]').val()==""?2:$('input[name=ends]').val(),
             expired=$('input[name=expired]').val(),
+            package_expired=$('input[name=package_expired]').val(),
             label=$('input[name=label]').val();
 
         if(checkInput($('#modalPackageType .verify'))==0){
             var param={
                 location: $('#location').val(),
                 price: price,
-                ends: ends,
-                expired: expired,
+                // ends: ends,
+                // expired: expired,
                 label: label,
                 web_type_id: userTypeId
             };
             if(guest==0){param.isguest=1;}
-            if(idx>0){
-                param.time = time*24;
+            if(idx>0){//学期套餐
+                // param.time = time*24;
                 param.mask = 2;
-            }else{
-                param.time = time;
+                param.expired = expired;
+                param.package_expired = package_expired;
+            }else{//月套餐
+                param.time = time*24;
                 param.mask = 1;
             }
             billAjax("post", param, function(data){
@@ -2180,8 +2183,49 @@
     });
     // 专网用户
     // 充值
-    $(document).on('click', '.recharge', function(){$('#modalRecharge').modal('open');});
+    $(document).on('click', '.recharge', function(){
+        var thisUserId = $(this).siblings('input.id').val();
+        policyListAjax({location: location}, function(data){
+            if(data.code==200){
+                var optionStr = "";
+                if(typeof(data.paypolicys)=="undefined" || data.paypolicys.length==0){return;}
+                for(var i=0;i<data.paypolicys.length;i++){
+                    optionStr+="<option value='>"+data.paypolicys[i].id+"'>"+data.paypolicys[i].label+"("+data.paypolicys[i].price+"元)</option>";
+                }
+                $('#modalRecharge .comboList').html(optionStr);
+            }else{
+                console.log(data);
+            }
+        });
+        $('#modalRecharge').modal('open');
+        $('#modalRecharge .add').attr('data-userid',thisUserId);
+    });
     $(document).on('click', '#modalRecharge, #modalRecharge .closed', function(){$('#modalRecharge').modal('closed');});
+
+    $(document).on('click', '#modalRecharge .add', function(e){
+        var thisUserId=$(this).data("userid"),
+            myPay_policy_id=$('#modalRecharge .comboList').val();
+        if(myPay_policy_id=="" ||myPay_policy_id==null){
+            alert("请选择套餐");
+        }
+
+        if(confirm("确定要充值该套餐吗？")){
+            var param={
+                userid: thisUserId,
+                pay_policy_id: myPay_policy_id
+                // location: location,
+            };
+            chargeOfflineAjax(param, function(data){
+                if(data.code==200){
+                    // window.location.reload();
+                    $('#modalRecharge').modal('closed');
+                    alert("充值成功。");
+                }else{
+                    $('#modalRecharge .msg').text(data.reason);
+                }
+            });
+        }
+    });
     // 新增用户
     $(document).on('click', '#userlistPn .add', function(){$('#modalRoomPn').modal('open');});
     $(document).on('click', '#modalRoomPn, #modalRoomPn .closed', function(){$('#modalRoomPn').modal('closed');});
