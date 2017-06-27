@@ -458,6 +458,10 @@
                 // param.time = time*24;
                 param.mask = 2;
                 param.package_expired = time;
+                if(param.package_expired>param.expired){
+                    alert("套餐有效期不能早于学期结束日期。");
+                    return;
+                }
             }else{//月套餐
                 param.time = time;
                 param.mask = 1;
