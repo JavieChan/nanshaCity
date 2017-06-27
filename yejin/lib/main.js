@@ -449,7 +449,7 @@
                 location: $('#location').val(),
                 price: price,
                 // ends: ends,
-                // expired: expired,
+                expired: expired,
                 label: label,
                 web_type_id: userTypeId
             };
@@ -457,7 +457,6 @@
             if(idx>0){//学期套餐
                 // param.time = time*24;
                 param.mask = 2;
-                param.expired = expired;
                 param.package_expired = time;
             }else{//月套餐
                 param.time = time;
