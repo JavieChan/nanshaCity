@@ -116,8 +116,9 @@
 				color: #333;
 				display: none;
 			}
-			.mark-line{
-				background: rgba(255,255,255,0.7);
+			
+			.mark-line {
+				background: rgba(255, 255, 255, 0.7);
 				color: #36f;
 				padding: 3px 10px;
 				border-radius: 3px;
@@ -125,17 +126,98 @@
 				font-weight: bold;
 				box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
 			}
-			.mark-line i:after{
+			
+			.mark-line i:after {
 				content: ",";
 			}
-			.mark-line i:last-child:after{
+			
+			.mark-line i:last-child:after {
 				content: "";
 			}
-			.mark-line.ln-left{
+			
+			.mark-line.ln-left {
 				transform: translateX(-105%);
 			}
-			.mark-line.ln-right{
+			
+			.mark-line.ln-right {
 				transform: translateX(5%);
+			}
+			
+			.sort-panel {
+				overflow: hidden;
+				width: 880px;
+				margin: 0 auto;
+			}
+			
+			.toolnav h3 {
+				width: 400px;
+				border-left: 3px solid #39f;
+				text-indent: 0.5em;
+			}
+			
+			.client-table tr.th,
+			.client-table tr.th:hover {
+				background-color: #D2F0FF;
+			}
+			
+			.client-table td {
+				border: 1px solid #ccc;
+				padding: 5px 10px;
+				padding: 5px 10px;
+			}
+			
+			.client-table tr:nth-child(2n) {
+				background-color: #f2f2f2;
+			}
+			
+			.client-table tr:hover {
+				background: #ffd;
+			}
+			
+			.page-box {
+				text-align: right;
+				font-size: 13px;
+				color: #666;
+				display: none;
+			}
+			
+			.page-pre,
+			.page-next {
+				color: #333;
+			}
+			
+			.page-pre.dis,
+			.page-next.dis {
+				color: #999;
+				cursor: not-allowed;
+			}
+			
+			.page-num {
+				width: 40px;
+			}
+			
+			.button-jump {
+				width: 24px;
+				height: 24px;
+				cursor: pointer;
+			}
+			
+			.toolnav .toolbox a.link-excel {
+				display: none;
+				margin-right: 5px;
+				text-decoration: none;
+			}
+			
+			.toolnav .toolbox a.link-excel:hover {
+				text-decoration: underline;
+			}
+			
+			.btn-excel {
+				width: 120px;
+			}
+			
+			.btn-excel.dis {
+				background: #aaa;
 			}
 		</style>
 	</head>
@@ -205,6 +287,44 @@
 						<div class="map-pop">
 							<div class="close"><span>×</span></div>
 							<div class="ctt">×</div>
+						</div>
+					</div>
+
+					<div class="tabbox " id="">
+						<div class="toolnav">
+							<span>【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
+							<div class="toolbox batch">
+								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
+								<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
+							</div>
+						</div>
+						<div class="sort-panel">
+							<div class="sort-list-box">
+								<table class="client-table">
+									<tr class="th">
+										<td>日期</td>
+										<td>AP名称</td>
+										<td>AP位置</td>
+										<td>出现时间</td>
+										<td>消失时间</td>
+										<td>停留时长</td>
+										<td>信号强度</td>
+									</tr>
+									<tr class="loading-tr">
+										<td colspan="7">&nbsp;</td>
+									</tr>
+								</table>
+								<div class="page-box">
+									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+									<span class="page-now">1</span>页 &nbsp;&nbsp;
+									<a class="page-pre" href="javascript:;">上一页</a>
+									&nbsp;&nbsp;
+									<a class="page-next" href="javascript:;">下一页</a>
+									&nbsp;&nbsp; 到第
+									<input type="text" class="page-num" />页
+									<button class="button-jump">Go</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -354,30 +474,119 @@
 					return params;
 				}
 
-				var getClientTrace = function() {
-					var params = getParams();
-					if(typeof(params) == "undefined") {
+				var pageNum = 1,
+					pageSize = 30,
+					totalPage = 1;
+
+				var showTableData = function(data) {
+					if(data.Code.Code == 200) {
+						var apList = data["ap_list"];
+						if(typeof(apList) == "undefined") {
+							$(".loading-txt").hide();
+							alert("暂无数据。")
+							return;
+						}
+						if(apList.length < 1) {
+							alert("暂无数据。");
+						} else {
+							$(".loading-txt").hide();
+							$(".btn-excel").attr("disabled",false).removeClass("dis");
+
+							//拼表格数据
+							var str = "";
+							for(var i = 0; i < apList.length; i++) {
+								str += "<tr><td>" + apList[i].day;
+								str += "</td><td>" + apList[i].ap_name;
+								str += "</td><td>" + apList[i].ap_addr;
+								str += "</td><td>" + apList[i].show_time;
+								str += "</td><td>" + apList[i].leave_time;
+								str += "</td><td>" + apList[i].stay;
+								str += "</td><td>" + apList[i].rssi;
+								str += "</td></tr>"
+							}
+							$(".loading-tr").hide();
+							//$(".client-table").append(str);
+							$(".client-table tr:not(.th,.loading-tr)").remove();
+							$(str).insertAfter(".client-table tr.th");
+
+							if(typeof(data.total_num) == "undefined") {
+								return
+							}
+							totalPage = Math.ceil(data.total_num / pageSize);
+							$(".page-total").html(totalPage);
+							$(".page-now").html(pageNum);
+							$(".page-pre,.page-next").removeClass("dis");
+							if(pageNum == 1) {
+								$(".page-pre").addClass("dis");
+							}
+							if(pageNum == totalPage) {
+								$(".page-next").addClass("dis");
+							}
+							$(".page-box").show();
+						}
+					}
+				}
+				
+				//导出excel
+				var downExcelGroup = function() {
+					var params = curListParams;
+					if(params == null) {
+						alert("暂无数据。")
 						return;
 					}
-					$(".loading-txt").show();
+					delete params.page_num;
+					delete params.page_size;
 					
-//					//直接用测试数据
-//					showMapData(apList1);
-//					return;
-
+					$(".btn-excel").attr("disabled",true).addClass("dis");
+					$(".link-excel").show().html("正在导出...");
+					$.ajax({
+						url: ajaxDomain + ajaxUrls.xlsCityTrace,
+						type: "post",
+						data: JSON.stringify(params),
+						contentType: "application/json",
+						success: function(data) {							
+							$(".btn-excel").attr("disabled",false).removeClass("dis");
+							if(typeof(data.dataurl)=="undefined"){
+								$(".link-excel").hide();
+								alert("暂无数据。");
+								return;
+							}
+							//window.open(data.dataurl);
+							$(".link-excel").attr("href",data.dataurl).html("点击下载");
+						},
+						error: function() {
+							$(".link-excel").hide();
+							$(".btn-excel").attr("disabled",false).removeClass("dis");
+							
+							console.warn("ajax error：");
+							console.log(arguments);
+							alert("请求数据出错。")
+						}
+					});
+				}
+				
+				$(document).on("click", ".btn-excel", function() {
+					downExcelGroup();
+				})
+				
+				var curListParams=null;
+				var traceAjax = function(params){
+					$(".loading-txt").show();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.clientTrace,
 						type: "post",
 						data: JSON.stringify(params),
 						contentType: "application/json",
 						success: function(data) {
+							if(typeof(params.page_size)!="undefined"){
+								curListParams = params;
+								showTableData(data);
+								return;
+							}							
 							if(data.Code.Code == 200) {
 								var apList = data["ap_list"];
 								if(typeof(apList) == "undefined") {
 									$(".loading-txt").hide();
-//									console.log("无数据。" + macI)
-//									console.warn("换MAC继续请求。")
-//									getClientTrace();
 									alert("暂无数据。")
 									return;
 								}
@@ -386,19 +595,38 @@
 								} else {
 									showMapData(apList);
 									$(".loading-txt").hide();
+									//获取表格数据（分页）
+									pageNum=1;
+									params.page_num = pageNum;
+									params.page_size = pageSize;									
+									$(".btn-excel").attr("disabled",true).addClass("dis");									
+									$(".link-excel").hide();
+									traceAjax(params);
 								}
 							}
 						}
-					})
+					})						
+				}
+				var getClientTrace = function(all) {
+					var params = getParams();
+					if(typeof(params) == "undefined") {
+						return;
+					}
+					if(typeof(all) == "undefined") {						
+						params.page_size = pageSize;
+						params.page_num = pageNum;
+					}					
+					traceAjax(params);
 				}
 				$(document).on("click", ".btn-search", function() {
-					getClientTrace();
-				})
+					getClientTrace("all");
+				})				
 
 				var myMap;
 				var pileLng = 0,
 					pileLat = 0;
-				var cluster, markers = null,lineMakers=null;;
+				var cluster, markers = null,
+					lineMakers = null;;
 				var pointMark = null,
 					infoWindow = null,
 					zoomN;
@@ -450,12 +678,14 @@
 					//infoWindow.close();
 
 					markers = [];
-					lineMakers=[];
-					
+					lineMakers = [];
+
 					//将数据按时间（日期+出现+离开）进行排序
 					var apData = JSON.parse(JSON.stringify(apList));
-					for(var i = apData.length-1; i >= 0; i--){
-						if(typeof(apData[i].lng) == "undefined" || typeof(apData[i].lat) == "undefined") {
+					for(var i = apData.length - 1; i >= 0; i--) {
+						var lngI = apData[i].lng,
+							latI = apData[i].lat;
+						if(typeof(lngI) == "undefined" || typeof(latI) == "undefined" || lngI == "" || latI == "") {
 							apData.splice(i, 1);
 							continue;
 						}
@@ -463,9 +693,9 @@
 					}
 					apData.sort(sortBy('dateTime', true, String));
 
-					
-					
-					var sameLineArr = [],sameLineNum=[],traceIdx=0;
+					var sameLineArr = [],
+						sameLineNum = [],
+						traceIdx = 0;
 
 					for(var i = 1; i < apData.length; i++) {
 						//前后两点坐标不同时，画连线
@@ -487,11 +717,11 @@
 								strokeStyle: "solid", //线样式
 							});
 							pltest.setMap(myMap);
-							
+
 							//计算线条、箭头的角度（没找到高德设置线条箭头的api）
 							var l_jiaodu = Math.atan((y2 - y1) / (x2 - x1));
 							if(x2 < x1 && y2 >= y1) l_jiaodu = Math.PI + l_jiaodu;
-							if(x2 < x1 && y2 < y1) l_jiaodu = l_jiaodu - Math.PI;							
+							if(x2 < x1 && y2 < y1) l_jiaodu = l_jiaodu - Math.PI;
 							//画箭头（用一个div两条直角边，css3旋转）
 							var deg = 135 - l_jiaodu * 180 / Math.PI;
 							var marker = new AMap.Marker({ //添加自定义点标记
@@ -501,57 +731,55 @@
 								content: '<i class="mark-jt" style="transform:rotate(' + deg + 'deg);border-color:#36f;"></i>' //自定义点标记覆盖物内容
 							});
 
-							
 							traceIdx++;
-							var lineLabelCtt = '<i>'+traceIdx+'</i>';
-							
-							var xy1xy2=x1+"-"+y1+"-"+x2+"-"+y2,
-								xy2xy1=x2+"-"+y2+"-"+x1+"-"+y1;
-							if(sameLineArr.indexOf(xy1xy2)<0 && sameLineArr.indexOf(xy2xy1)<0){
+							var lineLabelCtt = '<i>' + traceIdx + '</i>';
+
+							var xy1xy2 = x1 + "-" + y1 + "-" + x2 + "-" + y2,
+								xy2xy1 = x2 + "-" + y2 + "-" + x1 + "-" + y1;
+							if(sameLineArr.indexOf(xy1xy2) < 0 && sameLineArr.indexOf(xy2xy1) < 0) {
 								sameLineArr.push(xy1xy2);
 								sameLineNum.push(lineLabelCtt);
-							}else{
-								if(sameLineArr.indexOf(xy1xy2)>=0){
-									sameLineNum[sameLineArr.indexOf(xy1xy2)]+=lineLabelCtt;
-								}else{
-									sameLineNum[sameLineArr.indexOf(xy2xy1)]+=lineLabelCtt;
+							} else {
+								if(sameLineArr.indexOf(xy1xy2) >= 0) {
+									sameLineNum[sameLineArr.indexOf(xy1xy2)] += lineLabelCtt;
+								} else {
+									sameLineNum[sameLineArr.indexOf(xy2xy1)] += lineLabelCtt;
 								}
 							}
-							
-							
-//							var lineLabel1 = new AMap.Marker({ //添加自定义点标记
-//								map: myMap,
-//								position: [x1, y1],
-//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-//								content: '<div class="mark-line ln-right">离开：'+apData[i].day+" "+apData[i].leave_time+'</div>' //自定义点标记覆盖物内容
-//							});
-//							var lineLabel2 = new AMap.Marker({ //添加自定义点标记
-//								map: myMap,
-//								position: [x2,y2],
-//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-//								content: '<div class="mark-line ln-left">出现：'+apData[i].day+" "+apData[i].show_time+'</div>' //自定义点标记覆盖物内容
-//							});
-							
-//							var lineLabel3 = new AMap.Marker({ //添加自定义点标记
-//								map: myMap,
-//								position: [(x2+x1)/2, (y1+y2)/2],
-//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-//								content: '<div style="width:1px; height:1px; overflow:hidden;border:1px solid #f00"></div>' //自定义点标记覆盖物内容
-//							});
+
+							//							var lineLabel1 = new AMap.Marker({ //添加自定义点标记
+							//								map: myMap,
+							//								position: [x1, y1],
+							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+							//								content: '<div class="mark-line ln-right">离开：'+apData[i].day+" "+apData[i].leave_time+'</div>' //自定义点标记覆盖物内容
+							//							});
+							//							var lineLabel2 = new AMap.Marker({ //添加自定义点标记
+							//								map: myMap,
+							//								position: [x2,y2],
+							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+							//								content: '<div class="mark-line ln-left">出现：'+apData[i].day+" "+apData[i].show_time+'</div>' //自定义点标记覆盖物内容
+							//							});
+
+							//							var lineLabel3 = new AMap.Marker({ //添加自定义点标记
+							//								map: myMap,
+							//								position: [(x2+x1)/2, (y1+y2)/2],
+							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
+							//								content: '<div style="width:1px; height:1px; overflow:hidden;border:1px solid #f00"></div>' //自定义点标记覆盖物内容
+							//							});
 
 						}
 					}
-//					console.log(sameLineArr)
-//					console.log(sameLineNum)
-					for(var i=0;i<sameLineArr.length;i++){
+					//					console.log(sameLineArr)
+					//					console.log(sameLineNum)
+					for(var i = 0; i < sameLineArr.length; i++) {
 						var ll = sameLineArr[i].split("-");
-						var lng1 = parseFloat(ll[0])+parseFloat(ll[2]),
-							lat1 = parseFloat(ll[1])+parseFloat(ll[3]);
+						var lng1 = parseFloat(ll[0]) + parseFloat(ll[2]),
+							lat1 = parseFloat(ll[1]) + parseFloat(ll[3]);
 						var lineLabel = new AMap.Marker({ //添加自定义点标记
 							map: myMap,
-							position: [lng1/2, lat1/2],
+							position: [lng1 / 2, lat1 / 2],
 							offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-							content: '<div class="mark-line">'+sameLineNum[i]+'</div>' //自定义点标记覆盖物内容
+							content: '<div class="mark-line">' + sameLineNum[i] + '</div>' //自定义点标记覆盖物内容
 						});
 					}
 
@@ -569,7 +797,7 @@
 						var thisLnglat = object.lng + ',' + object.lat;
 						var conStr = '<div class="marker-info-line"><label>AP：</label>' + object.ap_name;
 						//conStr += '<br><label>MAC：</label>' + object.ap_mac;
-						conStr += '<br><label>位置：</label>' + object.address+" - "+object.ap_addr;
+						conStr += '<br><label>位置：</label>' + object.address + " - " + object.ap_addr;
 						conStr += '<br><label>时间：</label>' + object.day + ' ' + object.show_time + '-' + object.leave_time + "</div>";
 
 						if(samePArr.indexOf(thisLnglat) > -1) {
@@ -590,7 +818,7 @@
 						}
 						//						setInfoWindowCtt(marker,i);
 					}
-					
+
 					for(var i = 0; i < markers.length; i++) {
 						markers[i].content = '<div class="marker-info-box">' + conStrArr[i] + '</div>';
 						markers[i].on('mouseover', markerOver);
@@ -599,7 +827,7 @@
 				}
 
 				function markerOver(e) {
-					mouseOnFlag=false;
+					mouseOnFlag = false;
 					$(".map-pop .ctt").html(e.target.content);
 					$(".map-pop").fadeIn(300);
 				}
@@ -625,6 +853,30 @@
 					});
 				}
 
+
+				$(".page-pre").click(function() {
+					if(pageNum == 1) {
+						return
+					}
+					pageNum--;
+					getClientTrace();
+				});
+				$(".page-next").click(function() {
+					if(pageNum == totalPage) {
+						return
+					}
+					pageNum++;
+					getClientTrace();
+				});
+				$(".button-jump").click(function() {
+					var pg = parseInt($(".page-num").val());
+					if(pg > totalPage || pg < 1) {
+						return
+					}
+					getClientTrace();
+				});
+				
+				
 				$("#dateStart").datetimepicker({
 					dateFormat: 'yy-mm-dd',
 					stepMinute: 60,
@@ -639,20 +891,33 @@
 						$("#dateStart").datetimepicker("option", "maxDate", selectedDate);
 					}
 				});
-				$("#dateStart").datetimepicker("setDate", new Date(new Date().getTime()-1000*60*60*24))
-				$("#dateEnd").datetimepicker("setDate", new Date())
 				
+				//获取url参数（从区域热力趋势跳转过来）
+				var urlMac = $.getUrlParam("ap"),
+					urlSt = $.getUrlParam("st"),
+					urlEt = $.getUrlParam("et");
+				if(urlMac != null && urlSt != null && urlEt != null) {
+					var urlParam = [urlMac, urlSt, urlEt];					
+					$(".txt-mac").val(urlMac);
+					$("#dateStart").val(urlSt.substr(0, 4) + "-" + urlSt.substr(4, 2) + "-" + urlSt.substr(6, 2) + " " + urlSt.substr(8, 2) + ":00");
+					$("#dateEnd").val(urlEt.substr(0, 4) + "-" + urlEt.substr(4, 2) + "-" + urlEt.substr(6, 2) + " " + urlEt.substr(8, 2) + ":00");
+					getClientTrace("all");
+				}else{
+					$("#dateStart").datetimepicker("setDate", new Date(new Date().getTime() - 1000 * 60 * 60 * 24));
+					$("#dateEnd").datetimepicker("setDate", new Date());					
+				}
+
 				//地图弹窗定时关闭				
-//				var mouseOnFlag=false;				
-//				$(document).on("mouseover",".map-pop",function(){
-//					mouseOnFlag=true;
-//				})
-//				$(document).on("mouseout",".map-pop",function(){
-//					mouseOnFlag=false;
-//					setTimeout(function(){
-//						if(!mouseOnFlag){$(".map-pop").fadeOut(300);}
-//					},2000)
-//				})
+				//				var mouseOnFlag=false;				
+				//				$(document).on("mouseover",".map-pop",function(){
+				//					mouseOnFlag=true;
+				//				})
+				//				$(document).on("mouseout",".map-pop",function(){
+				//					mouseOnFlag=false;
+				//					setTimeout(function(){
+				//						if(!mouseOnFlag){$(".map-pop").fadeOut(300);}
+				//					},2000)
+				//				})
 			})
 
 			//

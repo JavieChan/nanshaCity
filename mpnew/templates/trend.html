@@ -23,18 +23,15 @@
 				text-indent: 0.5em;
 			}
 			
-			.sort-list-box{
-				
-			}
-
+			.sort-list-box {}
 			
 			#trendChart {
 				min-height: 300px;
 				min-width: 400px;
 			}
 			
-
-			.client-table tr.th,.client-table tr.th:hover {
+			.client-table tr.th,
+			.client-table tr.th:hover {
 				background-color: #D2F0FF;
 			}
 			
@@ -47,11 +44,10 @@
 			.client-table tr:nth-child(2n) {
 				background-color: #f2f2f2;
 			}
+			
 			.client-table tr:hover {
 				background: #ffd;
 			}
-			
-			
 			
 			.duration {
 				font-size: 12px;
@@ -88,35 +84,51 @@
 				margin-right: 6px;
 			}
 			
-			.page-box{
+			.page-box {
 				text-align: right;
 				font-size: 13px;
 				color: #666;
 				display: none;
 			}
-			.page-pre,.page-next{
+			
+			.page-pre,
+			.page-next {
 				color: #333;
 			}
-			.page-pre.dis,.page-next.dis{
+			
+			.page-pre.dis,
+			.page-next.dis {
 				color: #999;
 				cursor: not-allowed;
 			}
-			.page-num{
+			
+			.page-num {
 				width: 40px;
 			}
-			.button-jump{
+			
+			.button-jump {
 				width: 24px;
 				height: 24px;
 				cursor: pointer;
 			}
 			
-			.btn-excel{
+			.toolnav .toolbox a.link-excel{
+				display: none;
+				margin-right: 5px;
+				text-decoration: none;
+			}
+			.toolnav .toolbox a.link-excel:hover{
+				text-decoration: underline;
+			}
+			.btn-excel {
 				width: 120px;
 			}
-			.btn-search{
+			.btn-search {
 				width: 40px;
 			}
-			
+			.btn-search.dis,.btn-excel.dis {
+				background: #aaa;
+			}
 		</style>
 	</head>
 
@@ -208,9 +220,9 @@
 						<div class="toolnav">
 							<h3>感知到的设备</h3>
 							<div class="toolbox batch">
-								<button class="btnBlueSmall btn-excel">整表导出为Excel</button>
-								&nbsp;&nbsp;
-								<input type="text" class="txt-mac" placeholder="MAC地址(FC:57:B6:2C:B6:2C)" maxlength="17"><button class="btnBlueSmall btn-search">搜索</button>
+								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
+								<button class="btnBlueSmall btn-excel dis" disabled="disabled">导出Excel</button> &nbsp;&nbsp;
+								<input type="text" class="txt-mac" placeholder="MAC地址(FC:57:B6:2C:B6:2C)" maxlength="17"><button disabled="disabled" class="btnBlueSmall btn-search dis">搜索</button>
 							</div>
 						</div>
 						<!--<div class="content-title"></div>-->
@@ -225,18 +237,18 @@
 										<td>信号强度</td>
 										<td>操作</td>
 									</tr>
-									<tr class="loading-tr"><td colspan="6">&nbsp;</td></tr>
+									<tr class="loading-tr">
+										<td colspan="6">&nbsp;</td>
+									</tr>
 								</table>
 								<div class="page-box">
-									共<span class="page-total">1</span>页
-									&nbsp;&nbsp;
-									当前第<span class="page-now">1</span>页
-									&nbsp;&nbsp;
+									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+									<span class="page-now">1</span>页 &nbsp;&nbsp;
 									<a class="page-pre" href="javascript:;">上一页</a>
 									&nbsp;&nbsp;
 									<a class="page-next" href="javascript:;">下一页</a>
-									&nbsp;&nbsp;
-									到第<input type="text" class="page-num" />页
+									&nbsp;&nbsp; 到第
+									<input type="text" class="page-num" />页
 									<button class="button-jump">Go</button>
 								</div>
 							</div>
@@ -360,8 +372,7 @@
 			//	clientlist:"sense/Clientlist",//感知设备列表
 			var loadingImg = '<img src="data:image/gif;base64,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" alt="" />';
 			$(function() {
-				//热力趋势
-				//区域或AP组
+				//区域或AP组//下拉列表用
 				ajaxQ(ajaxUrls.disGroupList, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						var disGroupData = data["disgrp_lis"];
@@ -378,7 +389,7 @@
 						}
 					}
 				})
-				//AP list
+				//AP list//下拉列表用
 				var getGroupAPoptions = function() {
 					var mylocation = $(".select-dis-group").val();
 					if(mylocation == "" || mylocation == null) {
@@ -404,8 +415,7 @@
 						}
 					})
 				}
-				
-				
+
 				var getParams = function() {
 					var dis = $(".select-dis-group").val(),
 						ap = $(".select-ap-list").val(),
@@ -418,10 +428,10 @@
 						alert("请选择AP");
 						return;
 					}
-					if(ap=="all"){
-						my_mac_list=[];
-						for(var i=0;i<$(".select-ap-list option").length-1;i++){
-							my_mac_list.push($(".select-ap-list option:eq("+i+")").val())
+					if(ap == "all") {
+						my_mac_list = [];
+						for(var i = 0; i < $(".select-ap-list option").length - 1; i++) {
+							my_mac_list.push($(".select-ap-list option:eq(" + i + ")").val())
 						}
 					}
 					if(start_time == "" || end_time == "") {
@@ -432,34 +442,35 @@
 						alert("统计时间范围有误，请检查");
 						return;
 					}
-					
-					start_time = start_time.replace(/(\s+)|(-)|(:00)/g, "");//2017-06-20 08:00转换成2017062008
+
+					start_time = start_time.replace(/(\s+)|(-)|(:00)/g, ""); //2017-06-20 08:00转换成2017062008
 					end_time = end_time.replace(/(\s+)|(-)|(:00)/g, "");
 
 					var disGroupStaParams = {
 						time_flag: parseInt(my_time_flag),
-						scope_flag: ap=="all"?1:0,
-						_location: ap=="all"?dis:"",
-						mac_list: ap=="all"?[]:my_mac_list,
+						scope_flag: ap == "all" ? 1 : 0,
+						_location: ap == "all" ? dis : "",
+						mac_list: ap == "all" ? [] : my_mac_list,
 						start_t: parseInt(start_time),
 						end_t: parseInt(end_time),
 					}
-					
 					return disGroupStaParams;
 				}
 
 				//初始化echarts实例
 				var trendChart = echarts.init(document.getElementById('trendChart'));
 				//trendChart.showLoading();
-
 				var trendData = {
 					xAxisData: [],
 					seriesData: []
-				}				
+				}
 
-				//AP 组（区域）统计数值					
+				//统计图
 				var getDisGroupSta = function() {
 					var disGroupStaParams = getParams();
+					if(typeof(disGroupStaParams) == "undefined") {
+						return;
+					}
 					trendChart.showLoading();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.disGroupSta,
@@ -492,83 +503,189 @@
 					});
 				}
 				
+
+				
 				var pageNum = 1,
 					pageSize = 30,
 					totalPage = 1;
+					
+				var showTableData = function(data){
+					if(data.Code.Code == 200) {
+						var clientData = data["client_list"];
+						if(typeof(clientData) == "undefined" || clientData.length < 1) {
+							$(".loading-tr td").html("暂无数据。");
+						} else {
+							//拼表格数据
+							var str = "";
+							for(var i = 0; i < clientData.length; i++) {
+								str += "<tr><td>" + clientData[i].client_mac;
+								str += "</td><td>" + clientData[i].name;
+								str += "</td><td>" + clientData[i].mobile;
+								str += "</td><td>" + clientData[i].stay_hour;
+								str += "</td><td>" + clientData[i].rssi;
+								str += "</td><td><a href='citytrace.html?ap="+clientData[i].client_mac+"&st="+curListParams.start_t+"&et="+curListParams.end_t+"'>操作</a></td></tr>";
+							}
+							$(".loading-tr").hide();
+							//$(".client-table").append(str);
+							$(".client-table tr:not(.th,.loading-tr)").remove();
+							$(str).insertAfter(".client-table tr.th");
+							
+							if(typeof(data.total_num) == "undefined") {
+								return
+							}
+							totalPage = Math.ceil(data.total_num / pageSize);
+							$(".page-total").html(totalPage);
+							$(".page-now").html(pageNum);
+							$(".page-pre,.page-next").removeClass("dis");
+							if(pageNum == 1) {
+								$(".page-pre").addClass("dis");
+							}
+							if(pageNum == totalPage) {
+								$(".page-next").addClass("dis");
+							}
+							$(".page-box").show();
+						}
+					}					
+				}				
+				
+				//表格
+				var curListParams = null,curTableData=null;
 				var getClientlist = function() {
 					var disGroupStaParams = getParams();
-					
-					var loadOk=false;
-					$(".loading-tr td").html(loadingImg+" 数据加载中...");
+					if(typeof(disGroupStaParams) == "undefined") {
+						return;
+					}
+
+					$(".loading-tr td").html(loadingImg + " 数据加载中...");
 					$(".loading-tr").show();
 					$(".page-box").hide();
-						
-					disGroupStaParams.page_num=pageNum;
-					disGroupStaParams.page_size=pageSize;
+
+					disGroupStaParams.page_num = pageNum;
+					disGroupStaParams.page_size = pageSize;
+					delete disGroupStaParams.time_flag;
 					
+					
+					$(".btn-excel,.btn-search").attr("disabled",true).addClass("dis");
+					$(".link-excel").hide();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.clientlist,
 						type: "post",
 						data: JSON.stringify(disGroupStaParams),
 						contentType: "application/json",
 						success: function(data) {
-							if(data.Code.Code == 200) {
-								var clientData = data["client_list"];
-								if(typeof(clientData)=="undefined" || clientData.length < 1) {
-									$(".loading-tr td").html("暂无数据。");
-								} else {
-									//拼表格数据
-									var str="";
-									for(var i = 0; i < clientData.length; i++) {
-										str+="<tr><td>"+clientData[i].client_mac;
-										str+="</td><td>"+clientData[i].name;
-										str+="</td><td>"+clientData[i].mobile;
-										str+="</td><td>"+clientData[i].stay_hour;
-										str+="</td><td>"+clientData[i].rssi;
-										str+="</td><td><button>操作</button></td></tr>";
-									}
-									$(".loading-tr").hide();
-									//$(".client-table").append(str);
-									$(".client-table tr:not(.th,.loading-tr)").remove();
-									$(str).insertAfter(".client-table tr.th");
-									
-									totalPage = Math.ceil(data.total_num / pageSize);
-									$(".page-total").html(totalPage);
-									$(".page-now").html(pageNum);
-									$(".page-pre,.page-next").removeClass("dis");
-									if(pageNum==1){
-										$(".page-pre").addClass("dis");
-									}
-									if(pageNum==totalPage){
-										$(".page-next").addClass("dis");
-									}
-									$(".page-box").show();
-								}
-								loadOk=true;
-							}
+							curListParams = disGroupStaParams;//暂存，在结果中搜索mac时使用
+							curTableData = data;//暂存，在结果中搜索mac【为空】时使用
+							showTableData(data);
+							$(".btn-excel,.btn-search").attr("disabled",false).removeClass("dis");
 						},
 						error: function() {
 							console.log("ajax error：");
 							console.log(arguments);
 							alert("请求数据出错。")
-							trendChart.hideLoading();
+						}
+					});
+				}
+				//导出excel
+				var downExcelGroup = function() {
+					var disGroupStaParams = curListParams;
+					if(disGroupStaParams == null) {
+						alert("暂无数据。")
+						return;
+					}
+					
+					$(".btn-excel").attr("disabled",true).addClass("dis");
+					$(".link-excel").show().html("正在导出...");
+					$.ajax({
+						url: ajaxDomain + ajaxUrls.excelGroupClient,
+						type: "post",
+						data: JSON.stringify(disGroupStaParams),
+						contentType: "application/json",
+						success: function(data) {							
+							$(".btn-excel").attr("disabled",false).removeClass("dis");
+							if(typeof(data.dataurl)=="undefined"){
+								$(".link-excel").hide();
+								alert("暂无数据。");
+								return;}
+							//window.open(data.dataurl);
+							$(".link-excel").attr("href",data.dataurl).html("点击下载");
+						},
+						error: function() {
+							$(".link-excel").hide();
+							$(".btn-excel").attr("disabled",false).removeClass("dis");
+							
+							console.warn("ajax error：");
+							console.log(arguments);
+							alert("请求数据出错。")
+						}
+					});
+				}
+				
+				//在结果中搜索mac
+				var searchGroupClient = function() {
+					if($(".txt-mac").val() != "") {
+						//mac地址正则表达式 
+						var reg_name = /[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}:[A-F\d]{2}/;
+						if(!reg_name.test($(".txt-mac").val())) {
+							alert("MAC地址格式不正确。例如00:24:21:19:BD:E4");
+							$(".txt-mac").focus();
+							return;
+						}
+					}else{
+						showTableData(curTableData);
+						return;
+					}
+					
+					var disGroupStaParams = curListParams;
+					if(disGroupStaParams == null) {
+						return;
+					}
+					
+					delete disGroupStaParams.page_num;
+					delete disGroupStaParams.page_size;
+					disGroupStaParams.cli_mac_list = [$(".txt-mac").val()];
+					//disGroupStaParams["key"]="testing_@#$";
+					
+					$(".loading-tr td").html(loadingImg + " 数据加载中...");
+					$(".loading-tr").show();
+					$(".page-box").hide();
+
+					$.ajax({
+						url: ajaxDomain + ajaxUrls.searchGroupClient,
+						type: "post",
+						data: JSON.stringify(disGroupStaParams),
+						contentType: "application/json",
+						success: function(data) {
+							showTableData(data);
+							$(".link-excel").hide();
+							$(".btn-excel").attr("disabled",true).addClass("dis");
+						},
+						error: function() {
+							console.log("ajax error：");
+							console.log(arguments);
+							alert("请求数据出错。")
 						}
 					});
 				}
 
-				$(".page-pre").click(function(){
-					if(pageNum==1){return}
+				$(".page-pre").click(function() {
+					if(pageNum == 1) {
+						return
+					}
 					pageNum--;
 					getClientlist();
 				});
-				$(".page-next").click(function(){
-					if(pageNum==totalPage){return}
+				$(".page-next").click(function() {
+					if(pageNum == totalPage) {
+						return
+					}
 					pageNum++;
 					getClientlist();
 				});
-				$(".button-jump").click(function(){
-					var pg=parseInt($(".page-num").val());
-					if(pg>totalPage || pg<1){return}
+				$(".button-jump").click(function() {
+					var pg = parseInt($(".page-num").val());
+					if(pg > totalPage || pg < 1) {
+						return
+					}
 					getClientlist();
 				});
 
@@ -595,7 +712,14 @@
 					getDisGroupSta();
 					getClientlist();
 				})
+				$(document).on("click", ".btn-excel", function() {
+					downExcelGroup();
+				})
 
+				$(document).on("click", ".btn-search", function() {
+					searchGroupClient();
+				})
+				
 				function getTrendChartOption() {
 					var trendChartOption = {
 						title: {
@@ -647,7 +771,7 @@
 							data: trendData.seriesData
 						}
 					};
-//					console.log(trendChartOption.series)
+					//					console.log(trendChartOption.series)
 
 					//					trendChart.setOption(initTrendChartOption);
 					//					setTimeout(function(){
@@ -672,7 +796,7 @@
 						$("#dateStart").datetimepicker("option", "maxDate", selectedDate);
 					}
 				});
-				$("#dateStart").datetimepicker("setDate", new Date(new Date().getTime()-1000*60*60*24))
+				$("#dateStart").datetimepicker("setDate", new Date(new Date().getTime() - 1000 * 60 * 60 * 24))
 				$("#dateEnd").datetimepicker("setDate", new Date())
 			})
 		</script>

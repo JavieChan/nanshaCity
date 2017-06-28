@@ -116,6 +116,13 @@
 				margin-right: 10px;
 				cursor: default;
 			}
+			.grp-detail{
+				clear: both;
+				line-height: 32px;
+			}
+			.grp-detail span{
+				color: #34B5E2;
+			}
 		</style>
 	</head>
 
@@ -161,41 +168,49 @@
 							<h2>
 								<a href="#">所有项目</a>
 								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">AP感知预警</span>
+								&gt; <span style="color:#333">AP感知预警</span>
+								&gt; <span style="color:#0faee5">AP监视组详情</span>
 							</h2>
 						</div>
 					</div>
 					<div class="tabbox " id="">
 						<div class="toolnav">
-							<h3>监视组列表</h3> &nbsp; 状态：
-							<select class="select-status">
-								<option value="all">全部</option>
-								<option value="0">正常</option>
-								<option value="1">超负荷</option>
-								<option value="2">故障</option>
-							</select>
+							<h3>基本信息</h3>
 							<div class="toolbox batch">
-								<input type="text" class="txt-mac" placeholder="输入监视组名"><button class="btnBlueSmall btn-search">搜索</button> &nbsp;&nbsp;
-								<button class="btnBlueSmall btn-add">添加监视</button>
+								<button class="btnBlueSmall btn-edit">编辑监视组</button>
+							</div>
+							
+							<div class="grp-detail">
+								<div>监视组名：<span data-param="name"></span> &nbsp; &nbsp; 单AP警戒值：
+									<span data-param="salarm_n"></span> &nbsp; &nbsp; 总警戒值：
+									<span data-param="talarm_n"></span> &nbsp; &nbsp; AP数量：
+									<span data-param="ap_num"></span>
+								</div>
+								<div>告警联系人：<span data-param="person"></span> &nbsp; &nbsp; 联系信息：
+									<span data-param="tel"></span></div>
 							</div>
 						</div>
-						<!--<div class="content-title"></div>-->
+					</div>
+
+					<div class="tabbox " id="">
+						<div class="toolnav">
+							<h3>组内AP</h3>
+						</div>
 						<div class="sort-panel">
 							<div class="sort-list-box">
 								<table class="client-table">
 									<tr class="th">
-										<td>监视名</td>
-										<td>AP数</td>
+										<td>AP名</td>
+										<td>位置</td>
 										<td>启动时间</td>
-										<td>当前感知数</td>
-										<td>昨日平均</td>
+										<td>今日</td>
+										<td>昨日</td>
 										<td>月均</td>
-										<td>通知人</td>
 										<td>状态</td>
 										<td>操作</td>
 									</tr>
 									<tr class="loading-tr">
-										<td colspan="9">&nbsp;</td>
+										<td colspan="8">&nbsp;</td>
 									</tr>
 								</table>
 								<div class="page-box">
@@ -224,7 +239,7 @@
 
 		<div class="modal fade" id="modalSupervise">
 			<div class="modal_supervise modal_change_wechat modal_body">
-				<h3>添加监视</h3>
+				<h3>编辑监视组</h3>
 				<ul class="vertical">
 					<li>
 						<label><i>*</i>监视组名：</label>
@@ -261,7 +276,7 @@
 			<span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="tel" /></div></span>
 		</li>
 		</ul>
-		<div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
+		<div class="btngroups"><button type="button" class="btnBlue edit">确定</button></div>
 		<i class="msg"></i>
 		<span class="closed">X</span>
 		<input type="hidden" name="id" />
@@ -275,17 +290,17 @@
 		<script type="text/javascript" src="../static/js/main.min.js"></script>
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script>
-			//	superviseGrp:"sense/SuperviseGrp",//添加/删除监视组
-			//	outSuperviseAP:"sense/outSuperviseAP",//从监视组踢出AP
-			//	supervise:"sense/Supervise",//监视组列表
-			//	superviseDetail:"sense/SuperviseDetail",//监视组详情
 
+			var my_id = $.getUrlParam("gid");
+			
 			var loadingImg = '<img src="data:image/gif;base64,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" alt="" />';
 			var statusImg = ['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL5SURBVEhLrZa/axRBFMe/M3dWnmBhEX8UVwiJnUJ+QgoPFLQQUigYSBDhEiEStLAX/wIrRZIUgkUiWgpJEbAwhYkHsUhxRYIpDpIihZCAId7d+n2zb9e7zd7d3iUf2J19b3bnu2/mzQ+DBOS/44pNYwwG3fCQ9YCsq/BQom+b5ZYxWJjpRdH5m9BU8MkP3PQMnlJghC+m1d0QvrfE681cL76o6xixglMbyJQPMcvHh76nbZbTFYy/HcCu2iHHBPOruG4tPrHmqro6gpHuoorx2X4sq8tRJyhixuIbxyOjrhNB0bKp4N7MAJbU9V/QdeMfrJ80siiehz2vghtzg0wwYp2XuDE7ZTGBvXXBpDD/8qufdE5QspFFpwnSEooO75z123eCkvpSnhgPm+zCaZke6gnxLJ5JaWRSmzR+JZlnzaBQ8UwVOZkK0n075zBP932/1qcKDFlZQU5TTOxXOZQv7mOUkRbcC0oKeGSZKN1q1+PhN++feR06uwFRsQARZRsuMwP4Az2Wd39drMFNWoMhro0PaN5mowd+TT2NxITJNTxnsoyo6WC7WSs3tQMO2cW5YCFmucIP70ZFW4kxHV+rGcJ2s/bY+Hn4GV31o6KdiAVYfrytzw5Okd7JAobVDAlFmQidipGSmSjgA6McU4dDIpHGRURdLUkgJu2uSNJsqR1CsQwrF+MijSOJmMCNYdOy8QW160gqmlTMUcZH9ibAbl3kwx3njNCse9sRYzvF2T5c89dSHgucN4ZGkbYVmY/TcIKX991iW7cz1xKITqzhltgsX7QjxoA2jg4wJ8+uS4WpVXT9TWGdji51xSNLnsF5tVoiQ5LyMPSuHxtihxuwm1c8g/BvyuqKpw0xgfN6OhATQkFBDjxyBuFf7amrYyQybkePeWR8ry5H2KW1uD2SxwKOXaJ5GEXGLFXFaG1kAXURBsiB59IBcvKHspSpuyWMqshr+mgffXFiQmyEUfIFDMrmSfEeXll+FOwwJQpsywoik7r2OBgP8A/LpC6+xLoMtgAAAABJRU5ErkJggg==', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKqSURBVEhLvZa/axRBFMffjIIRTkiRwsIiheBplZ+SIqKChRZCSoVItJbgP6OVgoKFipZCUqQRLUQviYXgFRGuSJHCQiRgwPPGz5t9d9zd7u3uJTEf2J03b3f2O/Pm7cw4KUHropxxf2UxiJyTIOPiuJQg29gNPvKd2ku3LvXozyFXMEzLlRDkPuaCc3I88Q6GDq1ye+Q35K25UmQKhgtSCSPyGJFb5hoKOrnmjskd91l2zNUhJRhmZSK05DUPzpprXyC64zyiNVkzV6RH0MTe46yYqwdC9pPbF6u2qRKJ02b3gGiT92/6TUJtdARjGE/KZt7IEFz26/LQqpEwJXf5ylOrpkD0B7M/6T+RYOCjF+KcFYSR52NmlobRjzHOF+FyknRRULNxvwlSBr49H34l308Ek9QvhPdOmNkhOBkxMx8vD2KhPzXlglYKyUgOwpyZMP3w3kxrSua8riAMufCnPiSWfFyujo6qJ9eTdfEoYA32erPqf4d5RDAMMX8hnZFZmZuH/haNxCxFOiMHLGtZ0LltDekwgqOsGJ1R2upRWhAanrjq5lkKfp8J2ZXfrExBL+w/tL9uj4txsuVoWMX8lnjyISRNio9cWraZoyOlVht2oht0kCPEtKyU6SmCH9jNL1k1QtvntF206kBoW6ft+WS34FgQy2K6R9Ymy5fGJRpR0J2SVXrQszMfJnz7q6vIE7UTwXfS1DMID1JnkIPC0rmLym009rQe57BNmJFrTOzKoMWcDu3R4g1mdxgX+Mio2WmC3HMb8sxqvYJKa5LkcSSC7tQHQEfmgix3iykpQSXukRwLEJ0311DonGkYfY2yjyRL+9ADD4l0VcNBT2vmLgShuh60aDubJaZkjrAf3akplriqtBinUdxhENCTWAPflrTkVfdxMBuRf2TgyBNG5pjhAAAAAElFTkSuQmCC', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGNEI3RkQ0NDVBMzgxMUU3OURGODgxQzczNjI3OEI2QSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGNEI3RkQ0NTVBMzgxMUU3OURGODgxQzczNjI3OEI2QSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkY0QjdGRDQyNUEzODExRTc5REY4ODFDNzM2Mjc4QjZBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkY0QjdGRDQzNUEzODExRTc5REY4ODFDNzM2Mjc4QjZBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+UGWelAAAA2xJREFUeNqEVzFrW0EMfn54aAhkymCyFVrjEEyMaRYvNmTI2sGDQ5fStGD/Av+CDtmy2UuMt4aSIWuGgrMYXNoQU0JDKRnTDJ68tsX9vodk9NR7ycHH6d3pJJ1OutPLRWi9Xi+yLZfLRYvFQj/XgAZQAypAEfMFToDnHt0P4AoYAyNgHrmm8jqdTpTr9/vJh1VCGm0d3y3QTfR1GYtEkeWz6y/weQr6BPQsMB/l9cM2jO1hrA3ypQr3SqwgFYa+TuOAXdB99Oc6r2tjvxjtNXBEZdYlWbtza3WOhh6JrGRekbdChOE9FmxYN5j51Jm4s07RmCtRlvANdTw21u5hsktlGQKCgkNjZkcbWNflEel4LMQ6urZY5ZV8Aa79uN8dvqfopt5A8JQkHtaTM5SJlvjdWzrC+D7wCp+XNgCsUPQT8JKnJemROmvQlN3SHTLPmvbghZk7ewf6J0DLD6g0cKYTmbvG+hvgLehv/hiYXsBajMUNhrMNXWkroFeNEUzuA3xfmmCyynRsFd9PAgHFdGnQpTUfuqJ4C91AbpelUiDZKfAZPAd6vrJuB2MD4HkgFthq3GElI/mJKshjVSo83CnPdd8FE5UdY005lEqyvsIdFh9JgaVSk3u8P28Nzw55qCxjZ7quyKAp2FD3O5VWpfU0Ti/hdrutRm6JQeWH0kboQuyj07vDGPGHCBj0m7BB51IiJYtX2z0Gn2ZdWdJPJEBu7XOm7uUcenqgGjo74977WN6z1PVkLWRSi8BrF8FFG73Ck7ocvHIaF0vUefcpQyrPTIB8EFTMmit7OQQiPuFhlI79YyptqjtzeZZEI91nU0YFAm+A71G4jWO5Ly8yXoC/VpkPfU0Z5rJd49NBvlkNjOjSOZhOfUShbVMYXxDghQ99rxQ82wDnBxjbDLyn1DHPi3bWILv6yhvlNfQf8b0C+llW9IlSnimFlQJJfwaeE9J5ETwD+mTmjlzulK211mqXPps+UMSdN5SNfrZ88aWdA4dgvAvdOA+VFJ7XBOAdcEjZqZrGtKEwd9U1IYG+tskoG7kzKhv6m8a7hkp/oW/byu2xCs4dwxndqGWivVDyGUUR3fsV+IS5Jvq6PcMHXLwshCUu/jMqWa3Vd6iaZgnCl9qW+vrC8G4ET1Lqg2cMeoR+HvplIM0X5p8AAwDWNs5JTA/NOAAAAABJRU5ErkJggg=='];
 			$(function() {
 				var apGroups = [],
 					aps = [];
+				var apListOk=false,grpInfoOk=false;
 
+				//ap列表组
 				ajaxQ(ajaxUrls.disGroupList, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						var disGroupData = data["disgrp_lis"];
@@ -297,7 +312,7 @@
 						}
 					}
 				})
-				//AP list
+				//ap列表子ap
 				var getGroupAPoptions = function(n) {
 					var mylocation = apGroups[n]._location;
 					if(mylocation == "" || mylocation == null) {
@@ -313,13 +328,18 @@
 								str += '暂无AP';
 							} else {
 								for(var i = 0; i < apGroupData.length; i++) {
-									str += '<input type="checkbox" name="ap" value="' + apGroupData[i].ap_mac + '" /><span title=' + apGroupData[i].ap_address + '>' + apGroupData[i].ap_address + '</span>';
+									str += '<input type="checkbox" name="ap" data-mac="' + apGroupData[i].ap_mac + '" /><span title=' + apGroupData[i].ap_address + '>' + apGroupData[i].ap_address + '</span>';
 								}
 							}
 							str += "</div></div>";
 							$(".group-ap-box").append(str);
 							if(n < apGroups.length - 1) {
-								getGroupAPoptions(n + 1)
+								//getGroupAPoptions(n + 1)
+								apListOk=true;
+								checkEditAps();
+							}else{
+								apListOk=true;
+								checkEditAps();
 							}
 						}
 					})
@@ -345,48 +365,65 @@
 						})
 					}
 				})
-				var getParams = function() {
-					var my_status = $(".select-status").val();
-
-					if(my_status == "" || my_status == null) {
-						alert("请选择状态");
-						return;
+				
+				var apMac = [];
+				var checkEditAps = function(){//在"编辑监视组"的弹窗中勾选该组的ap项
+					if(apListOk && grpInfoOk){
+						console.log(apMac)
+						$(".ap-names input[type='checkbox']").each(function(){
+							var $self = $(this);
+							if(apMac.indexOf($self.data("mac"))>-1){
+								$self[0].checked = true;
+							}else{
+								$self[0].checked = false;
+							}
+						})
 					}
-
-					return my_status;
 				}
 
 				//监视组列表				
 				var pageNum = 1,
 					pageSize = 30,
 					totalPage = 1;
+					
+				var superviseInfo = null;
 				var showSuperviseData = function(data) {
 					if(data.Code.Code == 200) {
-						var dList = data["res"];
+						var dList = data["apinfo"];
+						var dInfo = data["grpinfo"]
+						
+						if(typeof(dInfo) != "undefined") {
+							superviseInfo = dInfo;
+							$(".grp-detail span").each(function(){
+								$(this).html(dInfo[$(this).data("param")]);
+							})
+						}
 						if(typeof(dList) == "undefined" || dList.length < 1) {
 							$(".client-table tr:not(.th,.loading-tr)").remove();
 							$(".loading-tr td").html("暂无数据。");
 						} else {
 							//拼表格数据
 							var str = "";
+							apMac=[];
 							for(var i = 0; i < dList.length; i++) {
-								str += "<tr><td>" + dList[i].name;
-								str += "</td><td>" + dList[i].ap_num;
-								str += "</td><td>" + dList[i].start_t;
-								str += "</td><td>" + dList[i].cur_num;
-								str += "</td><td>" + dList[i].ydn;
-								str += "</td><td>" + dList[i].mtn;
-								str += "</td><td>" + dList[i].person;
-								str += "</td><td><img title='" + (dList[i].status == 0 ? "正常" : (dList[i].status == 1 ? "超负荷" : "故障")) + "' src='" + statusImg[dList[i].status] + "'>";
-								str += "</td><td><a class='link-detail' href='supervisedetail.html?gid=" + dList[i].alarm_id + "'>详情</a> &nbsp; <a class='btn-del' href='javascript:;' data-id=" + dList[i].alarm_id + ">删除</a></td></tr>";
+								str += "<tr><td>" + dList[i].ap_name;
+								str += "</td><td>" + dList[i].ap_addr;
+								str += "</td><td>" + dInfo.start_t;
+								str += "</td><td>" + dList[i].day_n;
+								str += "</td><td>" + dList[i].yes_n;
+								str += "</td><td>" + dList[i].mon_n;
+								str += "</td><td><img title='" + (dList[i].ap_status == 0 ? "正常" : (dList[i].ap_status == 1 ? "超负荷" : "故障")) + "' src='" + statusImg[dList[i].ap_status] + "'>";
+								str += "</td><td><a class='btn-del' href='javascript:;' data-mac=" + dList[i].ap_mac + ">踢出</a></td></tr>";
+								apMac.push(dList[i].ap_mac);
 							}
+							grpInfoOk=true;checkEditAps();
+							
 							$(".loading-tr").hide();
 							//$(".client-table").append(str);
 							$(".client-table tr:not(.th,.loading-tr)").remove();
 							$(str).insertAfter(".client-table tr.th");
-							
-							if(typeof(data.totalcount) == "undefined"){return;}
-							totalPage = Math.ceil(data.totalcount / pageSize);
+
+							totalPage = Math.ceil(data.total_count / pageSize);
 							$(".page-total").html(totalPage);
 							$(".page-now").html(pageNum);
 							$(".page-pre,.page-next").removeClass("dis");
@@ -402,8 +439,7 @@
 				}
 
 				var getSupervise = function() {
-					var my_status = getParams();
-					if(typeof(my_status) == "undefined") {
+					if(typeof(my_id) == "undefined" || my_id==null) {
 						return;
 					}
 
@@ -412,53 +448,15 @@
 					$(".page-box").hide();
 
 					var superviseParams = {
+						alarm_id:my_id,
 						page_num: pageNum,
 						page_size: pageSize
 					}
-					if(my_status != "all") {
-						superviseParams.status = parseInt(my_status);
-					}
 
 					$.ajax({
-						url: ajaxDomain + ajaxUrls.superviseGrp,
-						type: "get",
-						data: superviseParams,
-						success: function(data) {
-							showSuperviseData(data);
-						},
-						error: function() {
-							console.log("ajax error：");
-							console.log(arguments);
-							$(".loading-tr").hide();
-							alert("请求数据出错。")
-						}
-					});
-				}
-				getSupervise();
-				
-				
-				var getSuperviseByName = function() {					
-					var p_name=$(".txt-mac").val();
-					if(p_name == "") {
-						getSupervise();
-						return;
-					}
-
-					$(".loading-tr td").html(loadingImg + " 数据加载中...");
-					$(".loading-tr").show();
-					$(".page-box").hide();
-					
-					pageNum = 1;
-					pageSize = 30;
-					totalPage = 1;
-
-					var superviseParams = {
-						SearchStr: p_name
-					}
-
-					$.ajax({
-						url: ajaxDomain + ajaxUrls.superviseGrpSearch,
+						url: ajaxDomain + ajaxUrls.superviseAP,
 						type: "post",
+//						data: superviseParams,
 						data: JSON.stringify(superviseParams),
 						contentType: "application/json",
 						success: function(data) {
@@ -472,11 +470,8 @@
 						}
 					});
 				}
+				getSupervise();
 
-				$(document).on('click', '.btn-search', function() {
-					getSuperviseByName();
-				});
-				
 				$(document).on('click', '.page-pre', function() {
 					if(pageNum == 1) {
 						return
@@ -484,7 +479,7 @@
 					pageNum--;
 					getSupervise();
 				});
-				
+
 				$(document).on('click', '.page-next', function() {
 					if(pageNum == totalPage) {
 						return
@@ -492,7 +487,7 @@
 					pageNum++;
 					getSupervise();
 				});
-				
+
 				$(document).on('click', '.button-jump', function() {
 					var pg = parseInt($(".page-num").val());
 					if(pg > totalPage || pg < 1) {
@@ -506,34 +501,45 @@
 					getSupervise();
 				})
 
-				//新增监视
-				$(document).on('click', '.toolbox.batch .btn-add', function() {
+				//编辑监视
+				$(document).on('click', '.toolbox.batch .btn-edit', function() {
+					if(superviseInfo){
+						$('input[name=name]').val(superviseInfo.name);						
+						$('input[name=salarm_n]').val(superviseInfo.salarm_n);
+						$('input[name=talarm_n]').val(superviseInfo.talarm_n);
+						$('input[name=person]').val(superviseInfo.person);
+						$('input[name=tel]').val(superviseInfo.tel);
+					}
 					$('#modalSupervise').modal('open');
 				});
 				$(document).on('click', '#modalSupervise, #modalSupervise .closed', function() {
 					$('#modalSupervise').modal('closed');
 				});
 
-				// 新增
-				$(document).on('click', '#modalSupervise .add', function() {
+				// 编辑
+				$(document).on('click', '#modalSupervise .edit', function() {
 					var my_name = $('input[name=name]').val(),
-						my_apmac = [], //$('.select-ap-list').val(),
+						my_apmac = [],
 						my_salarm_n = $('input[name=salarm_n]').val(),
 						my_talarm_n = $('input[name=talarm_n]').val(),
 						my_person = $('input[name=person]').val(),
 						my_tel = $('input[name=tel]').val();
 
 					$("input[name='ap']").each(function() {
-						if($(this).is(":checked")) my_apmac.push($(this).val());
+						if($(this).is(":checked")) my_apmac.push($(this).data("mac"));
 					})
 					console.log(my_apmac)
 					if(my_apmac.length < 1) {
 						alert("请选择AP");
 						return;
 					}
+					if(typeof(my_id) == "undefined" || my_id==null) {
+						return;
+					}
 
 					if(checkInput($('#modalSupervise .verify')) == 0) {
-						var params = [{
+						var params = {
+							"alarm_id":my_id,
 							"name": my_name,
 							"apmac": my_apmac,
 							"salarm_n": my_salarm_n,
@@ -541,19 +547,19 @@
 							"person": my_person,
 							"tel": my_tel,
 							"mac_flag": 0
-						}];
+						};
 
-						console.log(params)
+						//console.log(params)
 
 						$.ajax({
-							url: ajaxDomain + ajaxUrls.superviseGrp,
+							url: ajaxDomain + ajaxUrls.superviseGrpEdit,
 							type: "post",
 							data: JSON.stringify(params),
 							contentType: "application/json",
 							success: function(data) {
 								if(data.Code.Code == 200) {
 									getSupervise();
-									alert("新增成功。");
+									alert("编辑成功。");
 									$('#modalSupervise').modal('closed');
 								}
 							}
@@ -564,22 +570,26 @@
 
 				// 删除监视
 				$(document).on('click', '.btn-del', function() {
-					var my_id = $(this).data("id");
+					var my_mac = $(this).data("mac");
+					if(typeof(my_id) == "undefined" || my_id==null) {
+						return;
+					}
 
-					if(confirm("确定要删除该监视组吗？")) {
+					if(confirm("确定要将该AP踢出监视组？")) {
 						var params = {
-							"alarm_id": [my_id]
+							"alarm_id": my_id,
+							"ap_mac":[my_mac]
 						};
 
 						$.ajax({
-							url: ajaxDomain + ajaxUrls.superviseGrp,
+							url: ajaxDomain + ajaxUrls.superviseAP,
 							type: "delete",
 							data: JSON.stringify(params),
 							contentType: "application/json",
 							success: function(data) {
 								if(data.Code.Code == 200) {
 									getSupervise();
-									alert("删除成功。");
+									alert("踢出成功。");
 								}
 							}
 						})

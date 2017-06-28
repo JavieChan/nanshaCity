@@ -47,6 +47,37 @@
 				position: relative;
 			}
 			
+			.map-pop {
+				position: absolute;
+				top: 10px;
+				left: 70px;
+				background: rgba(255, 255, 255, 0.92);
+				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+				padding: 1px 15px 15px 15px;
+				border-radius: 5px;
+				display: none;
+			}
+			
+			.map-pop .close {
+				text-align: right;
+			}
+			
+			.map-pop .close span {
+				display: inline-block;
+				font-size: 16px;
+				color: #300;
+				cursor: pointer;
+				width: 24px;
+				height: 16px;
+				line-height: 16px;
+				text-align: center;
+				border-radius: 2px;
+			}
+			
+			.map-pop .close span:hover {
+				background: #c33;
+				color: #fff;
+			}
 			#citymap{
 				width: 100%;
 				height: 600px;
@@ -80,6 +111,27 @@
 				color: #333;
 				font-size: 13px;
 				white-space: nowrap;
+			}
+			
+			.mk-arr-box{
+				white-space: nowrap;
+				max-height: 200px;
+				overflow: auto;
+				background: #fff;
+				border-radius: 6px;
+				border: 1px solid #bbb;
+				transform: translateY(-50%);
+			}
+			.mk-arr-box div{
+				cursor: pointer;
+				padding:6px 15px;
+				border-bottom: 1px solid #ccc;
+			}
+			.mk-arr-box div:last-child{
+				border-bottom: none;
+			}
+			.mk-arr-box div:hover{
+				color: #34B5E2;
 			}
 		</style>
 	</head>
@@ -150,6 +202,10 @@
 						<div class="map-btn-box">
 							<button class="btn-show-sense">感知网</button>
 							<button class="btn-show-ap on">AP网</button>
+						</div>
+						<div class="map-pop">
+							<div class="close"><span>×</span></div>
+							<div class="ctt">×</div>
 						</div>
 					</div>
 				</div>
@@ -347,7 +403,7 @@
 				function getMapData() {
 					//查数据
 					ajaxQ(ajaxUrls.aplist, "get", null, function(data) {
-						console.log(data)
+//						console.log(data)
 						if(data.Code.Code==200){
 							if(data.aplist.length<1){
 								alert("没有搜索到相关数据。")
@@ -439,6 +495,8 @@
 								map: myMap,
 								offset: new AMap.Pixel(-25, -28)
 							});
+						   	marker.apName = object.ap_address;
+						   	marker.apIdx = i;
 							markers.push(marker);
 							
 							var conStr = '<p><b>'+object.ap_address+'</b></p><p>名称：' + object.mpoi_name;
@@ -469,10 +527,54 @@
 					infoWindow.open(myMap, e.target.getPosition());
 				}
 				//点聚合
+				var clusterMk = null;
 				function addCluster() {
-					cluster = new AMap.MarkerClusterer(myMap, markers,{maxZoom:16});			
+					cluster = new AMap.MarkerClusterer(myMap, markers);//,{maxZoom:16}
+					cluster.on("click",function(cluster){						
+						var mk_arr = cluster.markers,
+							mk_pos = cluster.lnglat,
+							mk_content = "<div class='mk-arr-box'>";
+							
+						for(var i=0;i<mk_arr.length;i++){
+							mk_content += "<div data-idx='"+mk_arr[i].content+"'>"+mk_arr[i].apName+"</div>";
+						}
+						mk_content += "</div>";
+						
+						if(clusterMk){
+							clusterMk.show();
+							clusterMk.setPosition(mk_pos);
+							clusterMk.setContent(mk_content);
+						}else{
+							clusterMk = new AMap.Marker({ //添加自定义点标记
+						        map: myMap,
+						        position: mk_pos,
+						        offset: new AMap.Pixel(20, 0), //相对于基点的偏移位置
+						        content: mk_content   //自定义点标记覆盖物内容
+						   });							
+						}
+						
+					})
 				}
 				
+				myMap.on("zoomstart", function() {
+					clusterMk.hide();
+					//var zoomLV = myMap.getZoom();
+				})
+				
+				$(document).on("click", ".mk-arr-box div", function() {
+					var str = $(this).data("idx");
+					$(".map-pop .ctt").html(str);
+					$(".map-pop").fadeIn(300);
+				})
+				$(document).on("mouseover", ".mk-arr-box", function() {
+					myMap.setStatus({zoomEnable:false})
+				})
+				$(document).on("mouseout", ".mk-arr-box", function() {
+					myMap.setStatus({zoomEnable:true})
+				})
+				$(document).on("click", ".map-pop .close span", function() {
+					$(".map-pop").fadeOut(300);
+				})
 
 
 			})
