@@ -290,20 +290,23 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
+				$(".item-list").append("<li style='padding: 10px;'><i class='loading'></i>正在加载...</li>");
 				ajaxQ(ajaxUrls.top20Websites, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						var dList = data[" res"];
 						if(typeof(dList) == "undefined" ||dList.length < 1) {
+							$("i.loading").parent().remove();
 							$(".item-list").append("<li>暂无数据。</li>");
 						} else {
 							var str="";
-							for(var i=0;i<dList.length;i++){								
-								str+='<li><div class="item-hd"> <i class="num-normal">'+dList[i].index;
-								str+='</i> <span class="key">'+dList[i].name;
-								str+='</span> <span class="tmn-num">'+dList[i].num;
+							for(var i=0;i<dList.length;i++){
+								if(dList[i].domain==""){continue;}
+								str+='<li><div class="item-hd"> <i class="num-normal">'+dList[i].num;
+								str+='</i> <span class="key">'+dList[i].nmae;
+								str+='</span> <span class="tmn-num">'+dList[i].domain;
 								str+='</span></div></li>';
 							}
-							
+							$("i.loading").parent().remove();
 							$(".item-list").append(str);
 						}
 					}

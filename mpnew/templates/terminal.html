@@ -334,13 +334,15 @@
 
 				//初始化echarts实例
 				var sortChart = echarts.init(document.getElementById('sortChart'));
-
+				
+				$(".item-list").append("<li style='padding: 10px;'><i class='loading'></i>正在加载...</li>");
 				ajaxQ(ajaxUrls.phoneType, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						phoneTypeData = data.phone_type;
 						var str = "";
 						var orderIndex = 1; //序号
 						if(phoneTypeData.length < 1) {
+							$("i.loading:eq(0)").parent().remove();
 							str = "<li>暂无数据。</li>";
 						} else {
 							//拼列表数据
@@ -372,7 +374,8 @@
 								name: otherType
 							})
 						}
-
+						
+						$("i.loading:eq(0)").parent().remove();
 						$(".item-list").append(str);
 						getSortChartOption();
 					}
@@ -426,8 +429,10 @@
 					seriesData: [] //[180, 152, 200, 334, 390, 330, 220, 270]
 				}
 				
+				$("#hoursChart").prepend("<div style='padding: 10px;'><i class='loading'></i>正在加载...</div>");
 				ajaxQ(ajaxUrls.disOnliTime, "get", null, function(data) {
 					if(data.Code.Code == 200) {
+						$("i.loading:eq(1)").parent().remove();
 						var disOnliTimeData = data[" res"];
 						if(disOnliTimeData.length < 1) {
 							$("#hoursChart").html("暂无数据。")

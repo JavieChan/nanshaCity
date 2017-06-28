@@ -322,10 +322,12 @@
 		<script type="text/javascript" src="../static/js/echarts.js"></script>
 		<script>
 			$(function() {
+				$(".item-list:eq(0)").append("<li style='padding: 10px;'><i class='loading'></i>加载中...</li>");
 				ajaxQ(ajaxUrls.top20HotEn, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						var dList = data[" res"];
 						if(typeof(dList) == "undefined" ||dList.length < 1) {
+							$("i.loading").parent().remove();
 							$(".item-list:eq(0)").append("<li>暂无数据。</li>");
 						} else {
 							var str1="",str2="";
@@ -339,7 +341,7 @@
 								}
 								
 							}
-							
+							$("i.loading").parent().remove();
 							$(".item-list:eq(0)").append(str1);
 							$(".item-list:eq(1)").append(str2);
 						}

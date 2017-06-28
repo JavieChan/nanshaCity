@@ -290,6 +290,7 @@
 		<script>
 			$(function() {
 //用户区域分布
+				$(".circles").append("<span style='padding: 10px;'><i class='loading'></i>正在加载...</span>");
 				ajaxQ(ajaxUrls.userDistrict, "get", null, function(data) {
 					if(data.Code.Code == 200) {
 						var distrcitData = data["distrcit"];

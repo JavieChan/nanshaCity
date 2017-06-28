@@ -32,8 +32,8 @@ var ajaxUrls = {
 	searchGroupClient: "sense/SearchGroupClient", //用户设备搜索
 	excelGroupClient: "sense/excelGroupClient", //导出excel
 
-	clientTrace: "sense/ClientTrace",
-	xlsCityTrace: "sense/xlsCityTrace",
+	clientTrace: "sense/ClientTrace",//返回用户轨迹
+	xlsCityTrace: "sense/xlsCityTrace",//轨迹AP excel 表格下载
 
 	superviseGrp: "sense/SuperviseGrp", //添加/删除监视组
 	outSuperviseAP: "sense/outSuperviseAP", //从监视组踢出AP
@@ -71,6 +71,7 @@ window.msgBox = function(texts, tos) {
 	}, tos); //停留时间
 }
 
+//json排序
 var sortBy = function(filed, rev, primer) {
 	rev = (rev) ? -1 : 1;
 	return function(a, b) {
