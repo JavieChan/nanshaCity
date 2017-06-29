@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>分布式认证系统（二期）</title>
-		<link rel="stylesheet" href="../static/css/jqueryui.css" />
-		<link rel="stylesheet" href="../static/css/main.css" />
-		<link rel="stylesheet" href="../static/css/2qi.css" />
+## supervise.html
+<%inherit file="base.html" />
 		<style type="text/css">
 			.sort-panel,
 			.search-echart-box {
@@ -117,42 +108,11 @@
 				cursor: default;
 			}
 		</style>
-	</head>
 
-	<body>
-		<div class="header">
-			<div class="wrapper">
-				<a href="/index.html" title="分布式认证系统" class="logo">分布式认证系统</a>
-				<div class="admin">
-					<img src="../static/images/logo_bidong.png" />
-					<span class="username">liwenwen</span>
-					<span class="cutofline"><i></i></span>
-					<a href="/logout" class="logout">退出</a>
-				</div>
-				<div class="search">
-					<input type="text" />
-					<button><i class="searchIco"></i></button>
-				</div>
-			</div>
-		</div>
-		<div class="content">
 
 			<div class="wrapper">
 				<!--导航-->
-
-				<div class="nav">
-					<h3 class=""><a href="#"><i class="navProjectIco"></i>AP管理</a></h3>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
-					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
-					<h4 class=""><a href="terminal.html">终端分析</a></h4>
-					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="userhx.html">人群画像</a></h4>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
-					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
-					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
-					<h4 class="on"><a href="supervise.html">AP感知预警</a></h4>
-				</div>
+				<%include file="nav.html" args="on={'supervise': 'on'}"/>
 
 				<!--右侧功能栏-->
 				<div class="projects">
@@ -214,14 +174,9 @@
 
 				</div>
 			</div>
-		</div>
-		<div class="footer">
-			<div class="wrapper">
-				<p>广州中国科学院计算机网络信息中心</p>
-				<p>电话：020-22992549<span></span>邮箱：gd-xub@chinaunicom.cn</p>
-			</div>
-		</div>
 
+
+<%block name="aside">
 		<div class="modal fade" id="modalSupervise">
 			<div class="modal_supervise modal_change_wechat modal_body">
 				<h3>添加监视</h3>
@@ -269,16 +224,11 @@
 		</div>
 		</div>
 
-		<div class="uptotop"><i></i>返回顶部</div>
+</%block>
 
-		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="../static/js/main.min.js"></script>
+<%block name="jscode">
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script>
-			//	superviseGrp:"sense/SuperviseGrp",//添加/删除监视组
-			//	outSuperviseAP:"sense/outSuperviseAP",//从监视组踢出AP
-			//	supervise:"sense/Supervise",//监视组列表
-			//	superviseDetail:"sense/SuperviseDetail",//监视组详情
 
 			var loadingImg = '<img src="data:image/gif;base64,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" alt="" />';
 			var statusImg = ['data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAL5SURBVEhLrZa/axRBFMe/M3dWnmBhEX8UVwiJnUJ+QgoPFLQQUigYSBDhEiEStLAX/wIrRZIUgkUiWgpJEbAwhYkHsUhxRYIpDpIihZCAId7d+n2zb9e7zd7d3iUf2J19b3bnu2/mzQ+DBOS/44pNYwwG3fCQ9YCsq/BQom+b5ZYxWJjpRdH5m9BU8MkP3PQMnlJghC+m1d0QvrfE681cL76o6xixglMbyJQPMcvHh76nbZbTFYy/HcCu2iHHBPOruG4tPrHmqro6gpHuoorx2X4sq8tRJyhixuIbxyOjrhNB0bKp4N7MAJbU9V/QdeMfrJ80siiehz2vghtzg0wwYp2XuDE7ZTGBvXXBpDD/8qufdE5QspFFpwnSEooO75z123eCkvpSnhgPm+zCaZke6gnxLJ5JaWRSmzR+JZlnzaBQ8UwVOZkK0n075zBP932/1qcKDFlZQU5TTOxXOZQv7mOUkRbcC0oKeGSZKN1q1+PhN++feR06uwFRsQARZRsuMwP4Az2Wd39drMFNWoMhro0PaN5mowd+TT2NxITJNTxnsoyo6WC7WSs3tQMO2cW5YCFmucIP70ZFW4kxHV+rGcJ2s/bY+Hn4GV31o6KdiAVYfrytzw5Okd7JAobVDAlFmQidipGSmSjgA6McU4dDIpHGRURdLUkgJu2uSNJsqR1CsQwrF+MijSOJmMCNYdOy8QW160gqmlTMUcZH9ibAbl3kwx3njNCse9sRYzvF2T5c89dSHgucN4ZGkbYVmY/TcIKX991iW7cz1xKITqzhltgsX7QjxoA2jg4wJ8+uS4WpVXT9TWGdji51xSNLnsF5tVoiQ5LyMPSuHxtihxuwm1c8g/BvyuqKpw0xgfN6OhATQkFBDjxyBuFf7amrYyQybkePeWR8ry5H2KW1uD2SxwKOXaJ5GEXGLFXFaG1kAXURBsiB59IBcvKHspSpuyWMqshr+mgffXFiQmyEUfIFDMrmSfEeXll+FOwwJQpsywoik7r2OBgP8A/LpC6+xLoMtgAAAABJRU5ErkJggg==', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAKqSURBVEhLvZa/axRBFMffjIIRTkiRwsIiheBplZ+SIqKChRZCSoVItJbgP6OVgoKFipZCUqQRLUQviYXgFRGuSJHCQiRgwPPGz5t9d9zd7u3uJTEf2J03b3f2O/Pm7cw4KUHropxxf2UxiJyTIOPiuJQg29gNPvKd2ku3LvXozyFXMEzLlRDkPuaCc3I88Q6GDq1ye+Q35K25UmQKhgtSCSPyGJFb5hoKOrnmjskd91l2zNUhJRhmZSK05DUPzpprXyC64zyiNVkzV6RH0MTe46yYqwdC9pPbF6u2qRKJ02b3gGiT92/6TUJtdARjGE/KZt7IEFz26/LQqpEwJXf5ylOrpkD0B7M/6T+RYOCjF+KcFYSR52NmlobRjzHOF+FyknRRULNxvwlSBr49H34l308Ek9QvhPdOmNkhOBkxMx8vD2KhPzXlglYKyUgOwpyZMP3w3kxrSua8riAMufCnPiSWfFyujo6qJ9eTdfEoYA32erPqf4d5RDAMMX8hnZFZmZuH/haNxCxFOiMHLGtZ0LltDekwgqOsGJ1R2upRWhAanrjq5lkKfp8J2ZXfrExBL+w/tL9uj4txsuVoWMX8lnjyISRNio9cWraZoyOlVht2oht0kCPEtKyU6SmCH9jNL1k1QtvntF206kBoW6ft+WS34FgQy2K6R9Ymy5fGJRpR0J2SVXrQszMfJnz7q6vIE7UTwXfS1DMID1JnkIPC0rmLym009rQe57BNmJFrTOzKoMWcDu3R4g1mdxgX+Mio2WmC3HMb8sxqvYJKa5LkcSSC7tQHQEfmgix3iykpQSXukRwLEJ0311DonGkYfY2yjyRL+9ADD4l0VcNBT2vmLgShuh60aDubJaZkjrAf3akplriqtBinUdxhENCTWAPflrTkVfdxMBuRf2TgyBNG5pjhAAAAAElFTkSuQmCC', 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpGNEI3RkQ0NDVBMzgxMUU3OURGODgxQzczNjI3OEI2QSIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpGNEI3RkQ0NTVBMzgxMUU3OURGODgxQzczNjI3OEI2QSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkY0QjdGRDQyNUEzODExRTc5REY4ODFDNzM2Mjc4QjZBIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkY0QjdGRDQzNUEzODExRTc5REY4ODFDNzM2Mjc4QjZBIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+UGWelAAAA2xJREFUeNqEVzFrW0EMfn54aAhkymCyFVrjEEyMaRYvNmTI2sGDQ5fStGD/Av+CDtmy2UuMt4aSIWuGgrMYXNoQU0JDKRnTDJ68tsX9vodk9NR7ycHH6d3pJJ1OutPLRWi9Xi+yLZfLRYvFQj/XgAZQAypAEfMFToDnHt0P4AoYAyNgHrmm8jqdTpTr9/vJh1VCGm0d3y3QTfR1GYtEkeWz6y/weQr6BPQsMB/l9cM2jO1hrA3ypQr3SqwgFYa+TuOAXdB99Oc6r2tjvxjtNXBEZdYlWbtza3WOhh6JrGRekbdChOE9FmxYN5j51Jm4s07RmCtRlvANdTw21u5hsktlGQKCgkNjZkcbWNflEel4LMQ6urZY5ZV8Aa79uN8dvqfopt5A8JQkHtaTM5SJlvjdWzrC+D7wCp+XNgCsUPQT8JKnJemROmvQlN3SHTLPmvbghZk7ewf6J0DLD6g0cKYTmbvG+hvgLehv/hiYXsBajMUNhrMNXWkroFeNEUzuA3xfmmCyynRsFd9PAgHFdGnQpTUfuqJ4C91AbpelUiDZKfAZPAd6vrJuB2MD4HkgFthq3GElI/mJKshjVSo83CnPdd8FE5UdY005lEqyvsIdFh9JgaVSk3u8P28Nzw55qCxjZ7quyKAp2FD3O5VWpfU0Ti/hdrutRm6JQeWH0kboQuyj07vDGPGHCBj0m7BB51IiJYtX2z0Gn2ZdWdJPJEBu7XOm7uUcenqgGjo74977WN6z1PVkLWRSi8BrF8FFG73Ck7ocvHIaF0vUefcpQyrPTIB8EFTMmit7OQQiPuFhlI79YyptqjtzeZZEI91nU0YFAm+A71G4jWO5Ly8yXoC/VpkPfU0Z5rJd49NBvlkNjOjSOZhOfUShbVMYXxDghQ99rxQ82wDnBxjbDLyn1DHPi3bWILv6yhvlNfQf8b0C+llW9IlSnimFlQJJfwaeE9J5ETwD+mTmjlzulK211mqXPps+UMSdN5SNfrZ88aWdA4dgvAvdOA+VFJ7XBOAdcEjZqZrGtKEwd9U1IYG+tskoG7kzKhv6m8a7hkp/oW/byu2xCs4dwxndqGWivVDyGUUR3fsV+IS5Jvq6PcMHXLwshCUu/jMqWa3Vd6iaZgnCl9qW+vrC8G4ET1Lqg2cMeoR+HvplIM0X5p8AAwDWNs5JTA/NOAAAAABJRU5ErkJggg=='];
@@ -589,6 +539,4 @@
 
 			})
 		</script>
-	</body>
-
-</html>
+</%block>

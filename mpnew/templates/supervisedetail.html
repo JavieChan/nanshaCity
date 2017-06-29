@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>分布式认证系统（二期）</title>
-		<link rel="stylesheet" href="../static/css/jqueryui.css" />
-		<link rel="stylesheet" href="../static/css/main.css" />
-		<link rel="stylesheet" href="../static/css/2qi.css" />
+## supervisedetail.html
+<%inherit file="base.html" />
 		<style type="text/css">
 			.sort-panel,
 			.search-echart-box {
@@ -124,43 +115,11 @@
 				color: #34B5E2;
 			}
 		</style>
-	</head>
 
-	<body>
-		<div class="header">
-			<div class="wrapper">
-				<a href="/index.html" title="分布式认证系统" class="logo">分布式认证系统</a>
-				<div class="admin">
-					<img src="../static/images/logo_bidong.png" />
-					<span class="username">liwenwen</span>
-					<span class="cutofline"><i></i></span>
-					<a href="/logout" class="logout">退出</a>
-				</div>
-				<div class="search">
-					<input type="text" />
-					<button><i class="searchIco"></i></button>
-				</div>
-			</div>
-		</div>
-		<div class="content">
 
 			<div class="wrapper">
 				<!--导航-->
-
-				<div class="nav">
-					<h3 class=""><a href="#"><i class="navProjectIco"></i>AP管理</a></h3>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
-					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
-					<h4 class=""><a href="terminal.html">终端分析</a></h4>
-					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="userhx.html">人群画像</a></h4>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
-					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
-					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
-					<h4 class="on"><a href="supervise.html">AP感知预警</a></h4>
-				</div>
-
+				<%include file="nav.html" args="on={'supervisedetail': 'on'}"/>
 				<!--右侧功能栏-->
 				<div class="projects">
 					<div class="tabbox">
@@ -229,14 +188,8 @@
 
 				</div>
 			</div>
-		</div>
-		<div class="footer">
-			<div class="wrapper">
-				<p>广州中国科学院计算机网络信息中心</p>
-				<p>电话：020-22992549<span></span>邮箱：gd-xub@chinaunicom.cn</p>
-			</div>
-		</div>
 
+<%block name="aside">
 		<div class="modal fade" id="modalSupervise">
 			<div class="modal_supervise modal_change_wechat modal_body">
 				<h3>编辑监视组</h3>
@@ -284,10 +237,10 @@
 		</div>
 		</div>
 
-		<div class="uptotop"><i></i>返回顶部</div>
 
-		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
-		<script type="text/javascript" src="../static/js/main.min.js"></script>
+</%block>
+
+<%block name="jscode">
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script>
 
@@ -597,6 +550,5 @@
 
 			})
 		</script>
-	</body>
 
-</html>
+</%block>
