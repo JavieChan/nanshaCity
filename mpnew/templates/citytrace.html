@@ -210,6 +210,9 @@
 			.btn-excel.dis {
 				background: #aaa;
 			}
+			.cur-mac-span{
+				display: none;
+			}
 		</style>
 
 			<div class="wrapper">
@@ -250,7 +253,7 @@
 
 					<div class="tabbox " id="">
 						<div class="toolnav">
-							<span>【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
+							<span class="cur-mac-span">【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
 							<div class="toolbox batch">
 								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
 								<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
@@ -333,7 +336,7 @@
 					pageSize = 30,
 					totalPage = 1;
 
-				var showTableData = function(data) {
+				var showTableData = function(data) {				
 					if(data.Code.Code == 200) {
 						var apList = data["ap_list"];
 						if(typeof(apList) == "undefined") {
@@ -427,6 +430,8 @@
 				var curListParams=null;
 				var traceAjax = function(params){
 					$(".loading-txt").show();
+					$(".cur-mac").html(curListParams.client_mac);
+					$(".cur-mac-span").show();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.clientTrace,
 						type: "post",
