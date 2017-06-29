@@ -328,7 +328,7 @@
 								str += "</td><td>" + dList[i].mtn;
 								str += "</td><td>" + dList[i].person;
 								str += "</td><td><img title='" + (dList[i].status == 0 ? "正常" : (dList[i].status == 1 ? "超负荷" : "故障")) + "' src='" + statusImg[dList[i].status] + "'>";
-								str += "</td><td><a class='link-detail' href='supervisedetail.html?location="+urlPramamLocation+"?gid=" + dList[i].alarm_id + "'>详情</a> &nbsp; <a class='btn-del' href='javascript:;' data-id=" + dList[i].alarm_id + ">删除</a></td></tr>";
+								str += "</td><td><a class='link-detail' href='supervisedetail.html?gid=" + dList[i].alarm_id + "&location="+urlPramamLocation+"'>详情</a> &nbsp; <a class='btn-del' href='javascript:;' data-id=" + dList[i].alarm_id + ">删除</a></td></tr>";
 							}
 							$(".loading-tr").hide();
 							//$(".client-table").append(str);
