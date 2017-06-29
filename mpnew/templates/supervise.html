@@ -172,7 +172,7 @@
 								<option value="all">全部</option>
 								<option value="0">正常</option>
 								<option value="1">超负荷</option>
-								<option value="2">故障</option>
+								<!--<option value="2">故障</option>-->
 							</select>
 							<div class="toolbox batch">
 								<input type="text" class="txt-mac" placeholder="输入监视组名"><button class="btnBlueSmall btn-search">搜索</button> &nbsp;&nbsp;
@@ -290,7 +290,7 @@
 					if(data.Code.Code == 200) {
 						var disGroupData = data["disgrp_lis"];
 						if(disGroupData.length < 1) {
-							console.error("无区域或AP组数据。")
+							console.error("无区域或AP组数据。");
 						} else {
 							apGroups = disGroupData; //_location,name
 							getGroupAPoptions(0);
