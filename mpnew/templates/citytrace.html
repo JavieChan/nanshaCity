@@ -430,7 +430,7 @@
 				var curListParams=null;
 				var traceAjax = function(params){
 					$(".loading-txt").show();
-					$(".cur-mac").html(curListParams.client_mac);
+					$(".cur-mac").html(params.client_mac);
 					$(".cur-mac-span").show();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.clientTrace,
