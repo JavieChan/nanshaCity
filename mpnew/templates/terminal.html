@@ -1,61 +1,60 @@
 ## terminal.html
 <%inherit file="base.html" />
-
-			<div class="wrapper">
-				<!--导航-->
-				<%include file="nav.html" args="on={'terminal': 'on'}"/>
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">数据分析平台</span>
-								&gt; <span style="color:#0faee5">终端分析</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>终端品牌</h3>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<!--<div style="margin-bottom: 10px;">
-									<span>统计区域</span>
-									<select class="towns" name="" style="width: 100px;">
-										<option value="">全部</option>
-										<option value="">一镇</option>
-										<option value="">二镇</option>
-									</select>
-									<button class="btnBlueSmall chaxun">查询</button>
-								</div>-->
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span class="key">品牌</span><span>终端数量</span></div>
-									</li>
-									<!--<li>
-										<div class="item-hd"><i class="num-top">1</i><span class="key">华为</span><span class="tmn-num">1548</span></div>
-									</li>-->
-								</ul>
-							</div>
-							<div id="sortChart" class="sort-echart-box">
-								<!--饼图-->
-							</div>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>终端联网时间</h3>
-						</div>
-
-						<div id="hoursChart" class="search-echart-box">
-							<!--曲线图-->
-						</div>
-					</div>
+<div class="wrapper phase2">
+	<!--导航-->
+	<%include file="nav.html" args="on={'terminal': 'on'}"/>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">数据分析平台</span>
+					&gt; <span style="color:#0faee5">终端分析</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>终端品牌</h3>
+			</div>
+			<!--<div class="content-title"></div>-->
+			<div class="sort-panel">
+				<div class="sort-list-box">
+					<!--<div style="margin-bottom: 10px;">
+						<span>统计区域</span>
+						<select class="towns" name="" style="width: 100px;">
+							<option value="">全部</option>
+							<option value="">一镇</option>
+							<option value="">二镇</option>
+						</select>
+						<button class="btnBlueSmall chaxun">查询</button>
+					</div>-->
+					<ul class="item-list">
+						<li class="item-list-title">
+							<div class="item-hd"><i class="">排名</i><span class="key">品牌</span><span>终端数量</span></div>
+						</li>
+						<!--<li>
+							<div class="item-hd"><i class="num-top">1</i><span class="key">华为</span><span class="tmn-num">1548</span></div>
+						</li>-->
+					</ul>
+				</div>
+				<div id="sortChart" class="sort-echart-box">
+					<!--饼图-->
 				</div>
 			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>终端联网时间</h3>
+			</div>
+
+			<div id="hoursChart" class="search-echart-box">
+				<!--曲线图-->
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <%block name="jscode">

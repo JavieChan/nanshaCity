@@ -1,45 +1,44 @@
 ## website.html
 <%inherit file="base.html" />
+<div class="wrapper phase2">
+	<!--导航-->
+	<%include file="nav.html" args="on={'website': 'on'}"/>
 
-			<div class="wrapper">
-				<!--导航-->
-    			<%include file="nav.html" args="on={'website': 'on'}"/>
-
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">数据分析平台</span>
-								&gt; <span style="color:#0faee5">网站分析</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>网站排行榜</h3>
-							<h3>网站分类排行</h3>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span class="key">网站</span><span>日平均访问量</span></div>
-									</li>
-									<!--<li>
-										<div class="item-hd"> <i class="num-normal">1</i> <span class="key"><a href="http://www.baidu.com" target="_blank">百度</a></span> <span class="tmn-num">-</span></div>
-									</li>-->
-								</ul>
-							</div>
-							<div id="sortChart" class="sort-echart-box">
-								<!--饼图-->
-							</div>
-						</div>
-					</div>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">数据分析平台</span>
+					&gt; <span style="color:#0faee5">网站分析</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>网站排行榜</h3>
+				<h3>网站分类排行</h3>
+			</div>
+			<!--<div class="content-title"></div>-->
+			<div class="sort-panel">
+				<div class="sort-list-box">
+					<ul class="item-list">
+						<li class="item-list-title">
+							<div class="item-hd"><i class="">排名</i><span class="key">网站</span><span>日平均访问量</span></div>
+						</li>
+						<!--<li>
+							<div class="item-hd"> <i class="num-normal">1</i> <span class="key"><a href="http://www.baidu.com" target="_blank">百度</a></span> <span class="tmn-num">-</span></div>
+						</li>-->
+					</ul>
+				</div>
+				<div id="sortChart" class="sort-echart-box">
+					<!--饼图-->
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
 
 <%block name="jscode">
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
