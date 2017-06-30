@@ -1,447 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>分布式认证系统（二期）</title>
-		<link rel="stylesheet" href="../static/css/jqueryui.css" />
-		<link rel="stylesheet" href="../static/css/main.css" />
-		<link rel="stylesheet" href="../static/css/2qi.css" />
-		<style type="text/css">
-			.date-box {}
-			
-			.map-box {
-				position: relative;
-			}
-			
-			.map-pop {
-				position: absolute;
-				top: 10px;
-				left: 70px;
-				background: rgba(255, 255, 255, 0.92);
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-				padding: 1px 5px 5px 5px;
-				border-radius: 5px;
-				display: none;
-			}
-			
-			.map-pop .close {
-				text-align: right;
-			}
-			
-			.map-pop .close span {
-				display: inline-block;
-				font-size: 16px;
-				color: #300;
-				cursor: pointer;
-				width: 24px;
-				height: 16px;
-				line-height: 16px;
-				text-align: center;
-				border-radius: 2px;
-			}
-			
-			.map-pop .close span:hover {
-				background: #c33;
-				color: #fff;
-			}
-			
-			#citymap {
-				width: 100%;
-				height: 600px;
-			}
-			
-			.mark-jt {
-				display: block;
-				border-left: 2px solid transparent;
-				border-top: 2px solid transparent;
-				height: 8px;
-				width: 8px;
-				overflow: hidden;
-				transform-origin: left top;
-			}
-			
-			.marker-ap {
-				width: 16px;
-				height: 16px;
-				line-height: 16px;
-				text-align: center;
-				border: 1px solid #fff;
-				border-radius: 100%;
-				overflow: hidden;
-				color: #ff9;
-				font-size: 12px;
-				white-space: nowrap;
-				background: rgba(20, 160, 220, 1);
-				box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.9);
-			}
-			
-			.marker-ap:hover {
-				background: rgba(20, 160, 220, 0.5);
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-			}
-			
-			.marker-info-box {
-				max-width: 700px;
-				max-height: 400px;
-				border: 1px solid #ccc;
-				overflow: auto;
-				border-radius: 5px;
-			}
-			
-			.marker-info-line {
-				padding: 10px;
-				white-space: nowrap;
-				font-size: 13px;
-				border-bottom: 1px solid #ccc;
-			}
-			
-			.marker-info-line.not-same-day {
-				border-top: 5px solid #ccc;
-			}
-			
-			.marker-info-line:last-child {
-				border-bottom: none;
-			}
-			
-			.marker-info-line label {
-				display: inline-block;
-				min-width: 4em;
-			}
-			
-			.loading-txt {
-				font-size: 13px;
-				color: #333;
-				display: none;
-			}
-			
-			.mark-line {
-				background: rgba(255, 255, 255, 0.7);
-				color: #36f;
-				padding: 3px 10px;
-				border-radius: 3px;
-				font-size: 13px;
-				font-weight: bold;
-				box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
-			}
-			
-			.mark-line i:after {
-				content: ",";
-			}
-			
-			.mark-line i:last-child:after {
-				content: "";
-			}
-			
-			.mark-line.ln-left {
-				transform: translateX(-105%);
-			}
-			
-			.mark-line.ln-right {
-				transform: translateX(5%);
-			}
-			
-			.sort-panel {
-				overflow: hidden;
-				width: 880px;
-				margin: 0 auto;
-			}
-			
-			.toolnav h3 {
-				width: 400px;
-				border-left: 3px solid #39f;
-				text-indent: 0.5em;
-			}
-			
-			.client-table tr.th,
-			.client-table tr.th:hover {
-				background-color: #D2F0FF;
-			}
-			
-			.client-table td {
-				border: 1px solid #ccc;
-				padding: 5px 10px;
-				padding: 5px 10px;
-			}
-			
-			.client-table tr:nth-child(2n) {
-				background-color: #f2f2f2;
-			}
-			
-			.client-table tr:hover {
-				background: #ffd;
-			}
-			
-			.page-box {
-				text-align: right;
-				font-size: 13px;
-				color: #666;
-				display: none;
-			}
-			
-			.page-pre,
-			.page-next {
-				color: #333;
-			}
-			
-			.page-pre.dis,
-			.page-next.dis {
-				color: #999;
-				cursor: not-allowed;
-			}
-			
-			.page-num {
-				width: 40px;
-			}
-			
-			.button-jump {
-				width: 24px;
-				height: 24px;
-				cursor: pointer;
-			}
-			
-			.toolnav .toolbox a.link-excel {
-				display: none;
-				margin-right: 5px;
-				text-decoration: none;
-			}
-			
-			.toolnav .toolbox a.link-excel:hover {
-				text-decoration: underline;
-			}
-			
-			.btn-excel {
-				width: 120px;
-			}
-			
-			.btn-excel.dis {
-				background: #aaa;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="header">
-			<div class="wrapper">
-				<a href="/index.html" title="分布式认证系统" class="logo">分布式认证系统</a>
-				<div class="admin">
-					<img src="../static/images/logo_bidong.png" />
-					<span class="username">liwenwen</span>
-					<span class="cutofline"><i></i></span>
-					<a href="/logout" class="logout">退出</a>
-				</div>
-				<div class="search">
-					<input type="text" />
-					<button><i class="searchIco"></i></button>
+## citytrace.html
+<%inherit file="base.html" />
+<div class="wrapper phase2">
+	<!--导航-->
+	<%include file="nav.html" args="on={'citytrace': 'on'}"/>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">城市感知网</span>
+					&gt; <span style="color:#0faee5">城市寻迹</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox">
+			<div class="toolnav">
+				<div class="date-box">
+					<input type="text" id="dateStart" placeholder="选择开始时间"> -
+					<input type="text" id="dateEnd" placeholder="选择结束时间"> &nbsp; &nbsp;
+					<input type="text" class="txt-mac" placeholder="搜索设备Mac地址（格式：FC:57:B6:2C:B6:2C）" maxlength="17" />
+					<button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button>
+					<span class="loading-txt">
+						<img src="data:image/gif;base64,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" alt="" />
+						正在查询...
+					</span>
 				</div>
 			</div>
 		</div>
-		<div class="content">
+		<div class="map-box">
+			<div id="citymap"></div>
+			<div class="map-pop">
+				<div class="close"><span>×</span></div>
+				<div class="ctt">×</div>
+			</div>
+		</div>
 
-			<div class="wrapper">
-				<!--导航-->
-
-				<div class="nav">
-					<h3 class=""><a href="#"><i class="navProjectIco"></i>AP管理</a></h3>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
-					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
-					<h4 class=""><a href="terminal.html">终端分析</a></h4>
-					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="userhx.html">人群画像</a></h4>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
-					<h4 class=""><a href="citymap.html">城市热力图</a></h4>
-					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
-					<h4 class="on"><a href="citytrace.html">城市寻迹</a></h4>
-					<h4 class=""><a href="supervise.html">AP感知预警</a></h4>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<span class="cur-mac-span">【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
+				<div class="toolbox batch">
+					<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
+					<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
 				</div>
-
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">城市寻迹</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox">
-						<div class="toolnav">
-							<div class="date-box">
-								<input type="text" id="dateStart" placeholder="选择开始时间"> -
-								<input type="text" id="dateEnd" placeholder="选择结束时间"> &nbsp; &nbsp;
-								<input type="text" class="txt-mac" placeholder="搜索设备Mac地址（格式：FC:57:B6:2C:B6:2C）" maxlength="17" />
-								<button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button>
-								<span class="loading-txt">
-									<img src="data:image/gif;base64,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" alt="" />
-									正在查询...
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="map-box">
-						<div id="citymap"></div>
-						<div class="map-pop">
-							<div class="close"><span>×</span></div>
-							<div class="ctt">×</div>
-						</div>
-					</div>
-
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<span>【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
-							<div class="toolbox batch">
-								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
-								<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
-							</div>
-						</div>
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<table class="client-table">
-									<tr class="th">
-										<td>日期</td>
-										<td>AP名称</td>
-										<td>AP位置</td>
-										<td>出现时间</td>
-										<td>消失时间</td>
-										<td>停留时长</td>
-										<td>信号强度</td>
-									</tr>
-									<tr class="loading-tr">
-										<td colspan="7">&nbsp;</td>
-									</tr>
-								</table>
-								<div class="page-box">
-									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
-									<span class="page-now">1</span>页 &nbsp;&nbsp;
-									<a class="page-pre" href="javascript:;">上一页</a>
-									&nbsp;&nbsp;
-									<a class="page-next" href="javascript:;">下一页</a>
-									&nbsp;&nbsp; 到第
-									<input type="text" class="page-num" />页
-									<button class="button-jump">Go</button>
-								</div>
-							</div>
-						</div>
+			</div>
+			<div class="sort-panel">
+				<div class="sort-list-box">
+					<table class="client-table">
+						<tr class="th">
+							<td>日期</td>
+							<td>AP名称</td>
+							<td>AP位置</td>
+							<td>出现时间</td>
+							<td>消失时间</td>
+							<td>停留时长</td>
+							<td>信号强度</td>
+						</tr>
+						<tr class="loading-tr">
+							<td colspan="7">&nbsp;</td>
+						</tr>
+					</table>
+					<div class="page-box">
+						共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+						<span class="page-now">1</span>页 &nbsp;&nbsp;
+						<a class="page-pre" href="javascript:;">上一页</a>
+						&nbsp;&nbsp;
+						<a class="page-next" href="javascript:;">下一页</a>
+						&nbsp;&nbsp; 到第
+						<input type="text" class="page-num" />页
+						<button class="button-jump">Go</button>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="footer">
-			<div class="wrapper">
-				<p>广州中国科学院计算机网络信息中心</p>
-				<p>电话：020-22992549<span></span>邮箱：gd-xub@chinaunicom.cn</p>
-			</div>
-		</div>
+	</div>
+</div>
 
-		<div class="modal fade" id="modalPn">
-			<div class="modal_pn modal_body">
-				<h3>新增网络配置</h3>
-				<p class="notice"><em>注：</em>同一个专网只能有唯一的SSID</p>
-				<ul class="vertical">
-					<li>
-						<label><i>*</i>私有网络：</label>
-						<span class="veright">
-                    <select id="pri">
-                        <option value="0">否</option>
-                        <option value="1">是</option>
-                    </select>
-                </span>
-					</li>
-					<li>
-						<label><i>*</i>收费方式：</label>
-						<span class="veright">
-                    <select id="policy">
-                        <option value="0">收费</option>
-                        <option value="1">免费</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第8位-->
-					<li>
-						<label><i>*</i>账户认证：</label>
-						<span class="veright">
-                    <select id="accountRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第9位-->
-					<li>
-						<label><i>*</i>微信认证：</label>
-						<span class="veright">
-                    <select id="wechatRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第10位-->
-					<li>
-						<label><i>*</i>手机号认证：</label>
-						<span class="veright">
-                    <select id="mobileRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<li>
-						<label><i>*</i>SSID：</label>
-						<span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="ssid" /></div></span>
-					</li>
-					<li>
-						<label>备注：</label>
-						<span class="veright"><div class="verify"><input type="text" name="note" /></div></span>
-					</li>
-					<li class="portalRZ">
-						<label><i>*</i>Portal：</label>
-						<span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" id="portal" /></div></span>
-					</li>
-					<li>
-						<label>AppId：</label>
-						<span class="veright"><div class="verify"><input type="text" name="appid" /></div></span>
-					</li>
-					<li>
-						<label>ShopId：</label>
-						<span class="veright"><div class="verify"><input type="text" name="shopid" /></div></span>
-					</li>
-					<li>
-						<label>Secret：</label>
-						<span class="veright"><div class="verify"><input type="text" name="secret" /></div></span>
-					</li>
-					<li class="durationRZ">
-						<label><i>*</i>免认证(天)：</label>
-						<span class="veright"><div class="verify"><input type="text" name="duration" placeholder="输入天数，例如：5" class="matchVerify shouldVerify checkInt" /></div></span>
-					</li>
-					<li>
-						<label>会话过期时间(小时)：</label>
-						<span class="veright"><div class="verify"><input type="text" name="stout" placeholder="输入小时，默认24小时" class="matchVerify checkInt" /></div></span>
-					</li>
-				</ul>
-				<div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
-				<i class="msg"></i>
-				<span class="closed">X</span>
-				<input type="hidden" name="id" />
-				<input type="hidden" name="idx" />
-			</div>
-		</div>
+<%block name="jscode">
 
-		<div class="uptotop"><i></i>返回顶部</div>
-
-		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=38be3b6a4b58f6632251b88809db0b82&&plugin=AMap.Scale,AMap.ToolBar,AMap.Geocoder,AMap.MarkerClusterer"></script>
 		<script type="text/javascript" src="../static/js/lib/jqueryui.min.js"></script>
 		<script type="text/javascript" src="../static/js/lib/jquery-ui-timepicker-addon.js"></script>
 		<script>
 			$(function() {
-				//var macArr = ['00:00:00:03:79:7E', '00:02:87:13:07:16', '00:07:0E:30:0E:71', '00:07:A8:A2:B0:43', '00:08:22:04:2C:02', '00:08:22:68:6A:05', '00:08:22:9D:5F:62', '00:08:22:E4:CD:FD', '00:0A:44:9A:97:30', '00:0A:F5:03:87:24', '00:16:6D:14:7E:FD', '00:17:23:05:76:99', '00:17:23:07:60:55', '00:17:23:07:85:9B', '00:17:23:08:A0:4E', '00:17:23:08:A4:03', '00:17:23:08:A7:DC', '00:17:23:18:BC:B0', '00:17:23:1A:72:12', '00:17:23:1A:72:4D', '00:17:23:1A:74:DA', '00:17:23:1D:B1:16', '00:17:23:1D:B1:52', '00:17:23:1D:B5:6E', '00:17:23:1E:B1:7A', '00:17:23:1E:B1:84', '00:17:23:20:4B:91', '00:17:23:20:4C:33', '00:17:23:20:51:62', '00:17:23:20:51:A0', '00:17:23:20:51:A3', '00:17:23:F0:A3:29', '00:17:23:F0:AF:2A', '00:17:23:F0:AF:67', '00:17:23:F1:0C:F1', '00:17:23:F1:0D:19', '00:17:23:F1:2E:67', '00:17:23:F1:65:E4', '00:17:23:F1:68:FB', '00:17:23:F1:6F:BA', '00:17:23:F1:C4:F6', '00:17:23:F2:20:78', '00:17:23:F2:21:ED', '00:17:23:F2:22:01', '00:17:23:F2:22:28', '00:17:23:F2:22:5A', '00:17:23:F2:22:61', '00:17:23:F2:22:94', '00:17:23:F2:22:97', '00:17:23:FB:2A:38', '00:17:23:FE:0C:31', '00:17:23:FE:0C:EC', '00:17:23:FE:0D:E0', '00:17:23:FE:1C:48', '00:17:23:FE:1C:6B', '00:17:23:FE:1C:7A', '00:17:23:FE:1C:B0', '00:17:23:FE:23:A1', '00:17:23:FE:29:00', '00:17:23:FE:29:18'];
-				//macArr = ['00:0C:E7:87:2D:92', '00:1A:8E:63:CC:FA', '00:27:22:26:8B:1A', '00:7E:56:78:28:51', '00:9A:CD:06:12:3E', '00:9A:CD:2C:65:63', '00:DA:F3:09:FD:7F', '00:EC:0A:1B:70:BC', '02:13:A2:88:D3:17', '02:1E:E7:37:30:17', '02:49:AD:ED:3A:6E', '02:DA:F9:65:61:1D', '02:DD:AC:3F:A6:BC', '04:56:04:20:A8:23', '04:56:04:45:8C:64', '04:56:04:EC:AC:D3', '06:60:F9:30:01:DE', '06:8F:0E:85:65:1F', '06:A0:7F:00:F4:81', '06:FE:A8:F3:7D:A1', '08:23:B2:90:B6:76', '08:23:B2:92:4D:82', '0A:65:CD:82:47:D1', '0A:87:26:CA:DF:D4', '0A:92:CA:EA:D3:63', '0A:99:62:4E:1B:54', '0A:C0:5C:4E:FA:9A', '0C:1D:AF:D1:C0:C4', '0C:D6:BD:6B:75:05', '0E:16:7B:55:74:80']
+				//var macArr = ['00:00:00:03:79:7E','00:0C:E7:87:2D:92']
 				var macI = 0;
 				var getParams = function() {
 					//$(".txt-mac").val(macArr[macI]);
@@ -478,7 +121,7 @@
 					pageSize = 30,
 					totalPage = 1;
 
-				var showTableData = function(data) {
+				var showTableData = function(data) {				
 					if(data.Code.Code == 200) {
 						var apList = data["ap_list"];
 						if(typeof(apList) == "undefined") {
@@ -572,6 +215,8 @@
 				var curListParams=null;
 				var traceAjax = function(params){
 					$(".loading-txt").show();
+					$(".cur-mac").html(params.client_mac);
+					$(".cur-mac-span").show();
 					$.ajax({
 						url: ajaxDomain + ajaxUrls.clientTrace,
 						type: "post",
@@ -747,26 +392,6 @@
 								}
 							}
 
-							//							var lineLabel1 = new AMap.Marker({ //添加自定义点标记
-							//								map: myMap,
-							//								position: [x1, y1],
-							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-							//								content: '<div class="mark-line ln-right">离开：'+apData[i].day+" "+apData[i].leave_time+'</div>' //自定义点标记覆盖物内容
-							//							});
-							//							var lineLabel2 = new AMap.Marker({ //添加自定义点标记
-							//								map: myMap,
-							//								position: [x2,y2],
-							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-							//								content: '<div class="mark-line ln-left">出现：'+apData[i].day+" "+apData[i].show_time+'</div>' //自定义点标记覆盖物内容
-							//							});
-
-							//							var lineLabel3 = new AMap.Marker({ //添加自定义点标记
-							//								map: myMap,
-							//								position: [(x2+x1)/2, (y1+y2)/2],
-							//								offset: new AMap.Pixel(0, 0), //相对于基点的偏移位置
-							//								content: '<div style="width:1px; height:1px; overflow:hidden;border:1px solid #f00"></div>' //自定义点标记覆盖物内容
-							//							});
-
 						}
 					}
 					//					console.log(sameLineArr)
@@ -812,7 +437,7 @@
 								map: myMap,
 								position: [object.lng, object.lat],
 								offset: new AMap.Pixel(-8, -8), //相对于基点的偏移位置
-								content: '<div class="marker-ap"></div>' //自定义点标记覆盖物内容
+								content: '<div class="marker-ap-trace"></div>' //自定义点标记覆盖物内容
 							});
 							markers.push(marker);
 						}
@@ -920,504 +545,6 @@
 				//				})
 			})
 
-			//
-			//									address:"广州市南沙区龙穴街道海港大厦"
-			//									ap_addr:"大厅-AP04"
-			//									ap_mac:"9C:50:EE:67:B7:A0"
-			//									ap_name:"HaiGangDaSha-DaTing-AP01"
-			//									day:"20170607"
-			//									lat:22.6281
-			//									leave_time:"16:00"
-			//									lng:113.679
-			//									name:"海港大厦"
-			//									rssi:"160"
-			//									show_time:"15:00"
-			//									stay:"1h"
-
-			/*var apList1 = [{
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "19:00",
-						"show_time": "18:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP04",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170606",
-						"ap_mac": "9C:50:EE:67:B7:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP01"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "16:00",
-						"show_time": "15:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP02",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170607",
-						"ap_mac": "9C:50:EE:67:B3:80",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP04"
-					}, {
-						"lat": 22.8844,
-						"lng": 113.455,
-						"leave_time": "21:00",
-						"show_time": "20:00",
-						"name": "窝头医院大同分院",
-						"ap_addr": "2楼值班室",
-						"address": "广州市南沙区东涌镇窝头医院大同分院",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:65:F6:40",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "datongfenyuan-2L-zhibanshi"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "23:00",
-						"show_time": "22:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP02",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:67:B3:80",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP04"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "16:00",
-						"show_time": "15:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP03",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170607",
-						"ap_mac": "9C:50:EE:67:B6:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP03"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "23:00",
-						"show_time": "22:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP03",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:67:B6:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP03"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "16:00",
-						"show_time": "15:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP04",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170607",
-						"ap_mac": "9C:50:EE:67:B7:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP01"
-					}, {
-						"lat": 22.8844,
-						"lng": 113.455,
-						"leave_time": "21:00",
-						"show_time": "20:00",
-						"name": "窝头医院大同分院",
-						"ap_addr": "1楼护士站",
-						"address": "广州市南沙区东涌镇窝头医院大同分院",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:65:F4:C0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "datongfenyuan-1L-hushizhan"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "15:00",
-						"show_time": "14:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP03",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:67:B6:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP03"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "23:00",
-						"show_time": "22:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP04",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:67:B7:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP01"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "19:00",
-						"show_time": "18:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP03",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170606",
-						"ap_mac": "9C:50:EE:67:B6:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP03"
-					}, {
-						"lat": 22.6281,
-						"lng": 113.679,
-						"leave_time": "15:00",
-						"show_time": "14:00",
-						"name": "海港大厦",
-						"ap_addr": "大厅-AP04",
-						"address": "广州市南沙区龙穴街道海港大厦",
-						"day": "20170609",
-						"ap_mac": "9C:50:EE:67:B7:A0",
-						"stay": "1h",
-						"rssi": "160",
-						"ap_name": "HaiGangDaSha-DaTing-AP01"
-					},{
-				"ap_mac": "88:3F:D3:93:4E:A0",
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170601"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "华表柱",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:E0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "HuaBiaozhu"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫",
-				"ap_addr": "观光路-AP03",
-				"address": "广州市南沙区万顷沙镇天后宫",
-				"day": "20170601",
-				"ap_mac": "18:DE:D7:AA:5D:A0",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "GuanGuangLu3"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场后",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:45:20",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "GuangChanghou1",
-				"dateTime": "20170601-14:00"
-			}, {
-				"ap_mac": "9C:50:EE:67:AE:60",
-				"leave_time": "21:00",
-				"show_time": "20:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170614"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场前",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:46:20",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "Guangchangqian"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "华表柱",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:E0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "HuaBiaozhu",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "山门",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:4E:40",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "TianhuogongGuangchangshanmen",
-				"dateTime": "20170601-14:00"
-			}, {
-				"ap_mac": "9C:50:EE:67:AE:A0",
-				"leave_time": "22:00",
-				"show_time": "21:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170618"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "华表柱",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:E0",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "HuaBiaozhu",
-				"dateTime": "20170601-14:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场后",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:45:20",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "GuangChanghou1",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫",
-				"ap_addr": "观光路-AP03",
-				"address": "广州市南沙区万顷沙镇天后宫",
-				"day": "20170601",
-				"ap_mac": "18:DE:D7:AA:5D:A0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "GuanGuangLu3"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "正殿",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:C0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "ZhengDian",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场前",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:46:20",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "Guangchangqian"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫",
-				"ap_addr": "观光路-AP03",
-				"address": "广州市南沙区万顷沙镇天后宫",
-				"day": "20170601",
-				"ap_mac": "18:DE:D7:AA:5D:A0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "GuanGuangLu3",
-				"dateTime": "20170601-14:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "山门",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:4E:40",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "TianhuogongGuangchangshanmen",
-				"dateTime": "20170601-14:00"
-			}, {
-				"ap_mac": "9C:50:EE:67:AE:60",
-				"leave_time": "00:00",
-				"show_time": "23:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170531"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "华表柱",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:E0",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "HuaBiaozhu",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "山门",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:4E:40",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "TianhuogongGuangchangshanmen",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫",
-				"ap_addr": "文化中心-AP02",
-				"address": "广州市南沙区万顷沙镇天后宫",
-				"day": "20170601",
-				"ap_mac": "9C:50:EE:67:C2:60",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "wenhuazhongxin2"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场前",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:46:20",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "Guangchangqian",
-				"dateTime": "20170601-14:00"
-			}, {
-				"ap_mac": "9C:50:EE:67:B1:20",
-				"leave_time": "22:00",
-				"show_time": "21:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170617"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "正殿",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:53:C0",
-				"stay": "1h",
-				"rssi": "160",
-				"ap_name": "ZhengDian",
-				"dateTime": "20170601-14:00"
-			}, {
-				"ap_mac": "9C:50:EE:67:AE:60",
-				"leave_time": "18:00",
-				"show_time": "17:00",
-				"stay": "1h",
-				"rssi": "160",
-				"day": "20170602"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "14:00",
-				"show_time": "13:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场前",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:46:20",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "Guangchangqian",
-				"dateTime": "20170601-13:00"
-			}, {
-				"lat": 22.7062,
-				"lng": 113.552,
-				"leave_time": "15:00",
-				"show_time": "14:00",
-				"name": "天后宫广场",
-				"ap_addr": "广场后",
-				"address": "广州市南沙区万顷沙镇天后宫广场",
-				"day": "20170601",
-				"ap_mac": "88:3F:D3:93:45:20",
-				"stay": "1h",
-				"rssi": "180",
-				"ap_name": "GuangChanghou1"
-			}]
-			console.log(giwl.length)
-			for(var i = giwl.length-1; i >= 0; i--) {
-										if(typeof(giwl[i].lng) == "undefined" || typeof(giwl[i].lat) == "undefined") {
-											console.log(i)
-											giwl.splice(i, 1);
-											continue;
-										}
-										giwl[i].dateTime = giwl[i].day + "-" + giwl[i].show_time + "-" + giwl[i].leave_time;
-									}
-									giwl.sort(sortBy('dateTime', true, String));
-									console.log(giwl)*/
 		</script>
-	</body>
 
-</html>
+</%block>

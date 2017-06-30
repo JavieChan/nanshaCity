@@ -1,328 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-
-	<head>
-		<meta charset="UTF-8">
-		<meta name="renderer" content="webkit">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>分布式认证系统（二期）</title>
-		<link rel="stylesheet" href="../static/css/jqueryui.css" />
-		<link rel="stylesheet" href="../static/css/main.css" />
-		<link rel="stylesheet" href="../static/css/2qi.css" />
-		<style type="text/css">
-			.total-num-box{
-				float: left;
-				width: 300px;
-				border-top: 1px solid #ccc;
-				border-bottom: 1px solid #ccc;
-				padding: 10px 0px;
-			}
-			.total-num-box>div{
-				float: left;
-				text-align: center;
-				line-height: 30px;
-				width: 148px;
-				overflow: hidden;
-			}
-			.sense{
-				border-right: 1px solid #ccc;
-			}
-			.num{
-				line-height: 40px;
-				font-size: 24px;
-				font-weight: bold;
-			}
-			.connet .num{
-				color: #34B5E2;
-			}
-			.sense .num{
-				color: #3c3;
-			}
-			.search-box{
-				float: right;
-				margin-top: 28px;
-			}
-			
-			.map-box{
-				position: relative;
-			}
-			
-			.map-pop {
-				position: absolute;
-				top: 10px;
-				left: 70px;
-				background: rgba(255, 255, 255, 0.92);
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-				padding: 1px 15px 15px 15px;
-				border-radius: 5px;
-				display: none;
-			}
-			
-			.map-pop .close {
-				text-align: right;
-			}
-			
-			.map-pop .close span {
-				display: inline-block;
-				font-size: 16px;
-				color: #300;
-				cursor: pointer;
-				width: 24px;
-				height: 16px;
-				line-height: 16px;
-				text-align: center;
-				border-radius: 2px;
-			}
-			
-			.map-pop .close span:hover {
-				background: #c33;
-				color: #fff;
-			}
-			#citymap{
-				width: 100%;
-				height: 600px;
-			}
-			.map-btn-box{
-				position: absolute;
-				right: 20px;
-				top: 10px;
-			}
-			.map-btn-box button{
-				padding: 3px 5px;
-				background: rgba(22,155,213,0.7);
-				color: #fff;
-				border-radius: 3px;
-				cursor: pointer;
-			}
-			.map-btn-box button.on{
-				background: rgba(22,155,213,1);
-			}
-			
-			.marker-ap{
-				width: 52px;
-				height: 52px;
-				line-height: 52px;
-				text-align: center;
-				/*border: 4px solid rgba(150,0,240,0.2);
-				box-shadow: 1px 1px 1px rgba(0,0,0,0.5);*/
-				border-radius:0 100% 100% 100%;
-				overflow: hidden;
-				background: rgba(150,0,240,0.45);
-				color: #fff;
-				font-size: 13px;
-				white-space: nowrap;
-			}
-			.marker-ap:hover{
-				transform: scale(1.2);
-				background: rgba(150,0,240,0.7);
-				transform-origin: left top;
-			}
-			
-			.mk-arr-box{
-				white-space: nowrap;
-				max-height: 200px;
-				overflow: auto;
-				background: #fff;
-				border-radius: 6px;
-				border: 1px solid #bbb;
-				transform: translateY(-50%);
-			}
-			.mk-arr-box div{
-				cursor: pointer;
-				padding:6px 15px;
-				border-bottom: 1px solid #ccc;
-			}
-			.mk-arr-box div:last-child{
-				border-bottom: none;
-			}
-			.mk-arr-box div:hover{
-				color: #34B5E2;
-			}
-		</style>
-	</head>
-
-	<body>
-		<div class="header">
-			<div class="wrapper">
-				<a href="/index.html" title="分布式认证系统" class="logo">分布式认证系统</a>
-				<div class="admin">
-					<img src="../static/images/logo_bidong.png" />
-					<span class="username">liwenwen</span>
-					<span class="cutofline"><i></i></span>
-					<a href="/logout" class="logout">退出</a>
-				</div>
-				<div class="search">
-					<input type="text" />
-					<button><i class="searchIco"></i></button>
-				</div>
+## citymap.html
+<%inherit file="base.html" />
+<div class="wrapper phase2">
+	<!--导航-->
+	<%include file="nav.html" args="on={'citymap': 'on'}"/>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">城市感知网</span>
+					&gt; <span style="color:#0faee5">城市热力图</span>
+				</h2>
 			</div>
 		</div>
-		<div class="content">
-
-			<div class="wrapper">
-				<!--导航-->
-
-				<div class="nav">
-					<h3 class=""><a href="#"><i class="navProjectIco"></i>AP管理</a></h3>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>数据分析平台</a></h3>
-					<h4 class=""><a href="keywords.html">关键词分析</a></h4>
-					<h4 class=""><a href="terminal.html">终端分析</a></h4>
-					<h4 class=""><a href="website.html">网站分析</a></h4>
-					<h4 class=""><a href="userhx.html">人群画像</a></h4>
-					<h3 class=""><a href="#"><i class="navPolicyIco"></i>城市感知网</a></h3>
-					<h4 class="on"><a href="citymap.html">城市热力图</a></h4>
-					<h4 class=""><a href="trend.html">区域热力趋势</a></h4>
-					<h4 class=""><a href="citytrace.html">城市寻迹</a></h4>
-					<h4 class=""><a href="supervise.html">AP感知预警</a></h4>
-				</div>
-
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">城市热力图</span>
-							</h2>
-						</div>
+		<div class="tabbox">
+			<div class="toolnav">
+				<div class="total-num-box">
+					<div class="sense">
+						<div>感知设备总数</div>
+						<div class="num">-</div>
 					</div>
-					<div class="tabbox">
-						<div class="toolnav">
-							<div class="total-num-box">
-								<div class="sense">
-									<div>感知设备总数</div>
-									<div class="num">-</div>
-								</div>
-								<div class="connet">
-									<div>连接设备总数</div>
-									<div class="num">-</div>
-								</div>
-							</div>
-							<div class="search-box"><input type="text" class="txt-search" placeholder="搜索热点或地址" /><button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button></div>
-						</div>
-					</div>
-					<div class="map-box">
-						<div id="citymap"></div>
-						<div class="map-btn-box">
-							<button class="btn-show-sense">感知网</button>
-							<button class="btn-show-ap on">AP网</button>
-						</div>
-						<div class="map-pop">
-							<div class="close"><span>×</span></div>
-							<div class="ctt">×</div>
-						</div>
+					<div class="connet">
+						<div>连接设备总数</div>
+						<div class="num">-</div>
 					</div>
 				</div>
+				<div class="search-box"><input type="text" class="txt-search" placeholder="搜索热点或地址" /><button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button></div>
 			</div>
 		</div>
-		<div class="footer">
-			<div class="wrapper">
-				<p>广州中国科学院计算机网络信息中心</p>
-				<p>电话：020-22992549<span></span>邮箱：gd-xub@chinaunicom.cn</p>
+		<div class="map-box">
+			<div id="citymap"></div>
+			<div class="map-btn-box">
+				<button class="btn-show-sense">感知网</button>
+				<button class="btn-show-ap on">AP网</button>
+			</div>
+			<div class="map-pop">
+				<div class="close"><span>×</span></div>
+				<div class="ctt">×</div>
 			</div>
 		</div>
+	</div>
+</div>
 
-		<div class="modal fade" id="modalPn">
-			<div class="modal_pn modal_body">
-				<h3>新增网络配置</h3>
-				<p class="notice"><em>注：</em>同一个专网只能有唯一的SSID</p>
-				<ul class="vertical">
-					<li>
-						<label><i>*</i>私有网络：</label>
-						<span class="veright">
-                    <select id="pri">
-                        <option value="0">否</option>
-                        <option value="1">是</option>
-                    </select>
-                </span>
-					</li>
-					<li>
-						<label><i>*</i>收费方式：</label>
-						<span class="veright">
-                    <select id="policy">
-                        <option value="0">收费</option>
-                        <option value="1">免费</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第8位-->
-					<li>
-						<label><i>*</i>账户认证：</label>
-						<span class="veright">
-                    <select id="accountRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第9位-->
-					<li>
-						<label><i>*</i>微信认证：</label>
-						<span class="veright">
-                    <select id="wechatRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<!--policy 第10位-->
-					<li>
-						<label><i>*</i>手机号认证：</label>
-						<span class="veright">
-                    <select id="mobileRZ">
-                        <option value="1">启用</option>
-                        <option value="0">停用</option>
-                    </select>
-                </span>
-					</li>
-					<li>
-						<label><i>*</i>SSID：</label>
-						<span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" name="ssid" /></div></span>
-					</li>
-					<li>
-						<label>备注：</label>
-						<span class="veright"><div class="verify"><input type="text" name="note" /></div></span>
-					</li>
-					<li class="portalRZ">
-						<label><i>*</i>Portal：</label>
-						<span class="veright"><div class="verify"><input type="text" class="matchVerify shouldVerify" id="portal" /></div></span>
-					</li>
-					<li>
-						<label>AppId：</label>
-						<span class="veright"><div class="verify"><input type="text" name="appid" /></div></span>
-					</li>
-					<li>
-						<label>ShopId：</label>
-						<span class="veright"><div class="verify"><input type="text" name="shopid" /></div></span>
-					</li>
-					<li>
-						<label>Secret：</label>
-						<span class="veright"><div class="verify"><input type="text" name="secret" /></div></span>
-					</li>
-					<li class="durationRZ">
-						<label><i>*</i>免认证(天)：</label>
-						<span class="veright"><div class="verify"><input type="text" name="duration" placeholder="输入天数，例如：5" class="matchVerify shouldVerify checkInt" /></div></span>
-					</li>
-					<li>
-						<label>会话过期时间(小时)：</label>
-						<span class="veright"><div class="verify"><input type="text" name="stout" placeholder="输入小时，默认24小时" class="matchVerify checkInt" /></div></span>
-					</li>
-				</ul>
-				<div class="btngroups"><button type="button" class="btnBlue add">确定</button></div>
-				<i class="msg"></i>
-				<span class="closed">X</span>
-				<input type="hidden" name="id" />
-				<input type="hidden" name="idx" />
-			</div>
-		</div>
-
-		<div class="uptotop"><i></i>返回顶部</div>
-
-		<script type="text/javascript" src="../static/js/lib/jquery.min.js"></script>
+<%block name="jscode">
 		<script type="text/javascript" src="../static/js/2qi.js"></script>
 		<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=38be3b6a4b58f6632251b88809db0b82&&plugin=AMap.Scale,AMap.ToolBar,AMap.Geocoder,AMap.MarkerClusterer"></script>
-		<!-- ,AMap.OverView -->
 		<script>
 			$(function() {
 				ajaxQ(ajaxUrls.totalnum, "get", null, function(data) {
@@ -584,6 +307,5 @@
 
 			})
 		</script>
-	</body>
 
-</html>
+</%block>

@@ -816,6 +816,23 @@ select.sel {
 .content .nav h3 i {
   margin: 0 15px 0 30px;
 }
+.content .nav h4 {
+  font-size: 16px;
+  height: 40px;
+  line-height: 40px;
+  cursor: pointer;
+  font-weight: normal;
+  border-bottom: 1px solid #efefef;
+  background: none;
+  border-left: 6px solid #fff;
+}
+.content .nav h4.on {
+  border-left: 6px solid #0faee5;
+}
+.content .nav h4 a {
+  padding-left: 4em;
+  color: #444;
+}
 .content .nav ul {
   overflow: hidden;
   margin-bottom: 14px;
@@ -5574,4 +5591,486 @@ button:hover .arrowNext {
 }
 .css_stamp {
   content: "20170508102356";
+}
+.phase2 {
+  /*citymap*/
+  /*citytrace*/
+  /*trend*/
+  /*surpervise*/
+  /*surpervisedetail*/
+}
+.phase2 .toolnav h3 {
+  width: 400px;
+  border-left: 3px solid #39f;
+  text-indent: 0.5em;
+}
+.phase2 .sort-panel,
+.phase2 .search-echart-box {
+  overflow: hidden;
+  width: 880px;
+  margin: 0 auto;
+}
+.phase2 .sort-list-box,
+.phase2 .sort-echart-box {
+  float: left;
+  /*width: 400px;*/
+}
+.phase2 .sort-echart-box {
+  margin-left: 25px;
+}
+.phase2 .sort-list-box .circles {
+  position: relative;
+  width: 400px;
+  height: 300px;
+  overflow: hidden;
+}
+.phase2 .sort-list-box .circles > div {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  background: #ccc;
+  text-align: center;
+  border-radius: 100%;
+  float: left;
+}
+.phase2 .sort-list-box .circles > div:nth-child(1) {
+  left: 5px;
+  top: 75px;
+  width: 93px;
+  height: 93px;
+  background: #39C;
+}
+.phase2 .sort-list-box .circles > div:nth-child(2) {
+  left: 75px;
+  top: 160px;
+  width: 89px;
+  height: 89px;
+  background: #969;
+}
+.phase2 .sort-list-box .circles > div:nth-child(3) {
+  left: 98px;
+  top: 25px;
+  width: 87px;
+  height: 87px;
+  background: #2BC2EB;
+}
+.phase2 .sort-list-box .circles > div:nth-child(4) {
+  left: 153px;
+  top: 105px;
+  width: 79px;
+  height: 79px;
+  background: #dFcAe8;
+}
+.phase2 .sort-list-box .circles > div:nth-child(5) {
+  left: 195px;
+  top: 185px;
+  width: 78px;
+  height: 78px;
+  background: #fc9;
+}
+.phase2 .sort-list-box .circles > div:nth-child(6) {
+  left: 215px;
+  top: 40px;
+  width: 73px;
+  height: 73px;
+  background: #06c;
+}
+.phase2 .sort-list-box .circles > div:nth-child(7) {
+  left: 248px;
+  top: 123px;
+  width: 71px;
+  height: 71px;
+  background: #2BC2EB;
+}
+.phase2 .sort-list-box .circles > div:nth-child(8) {
+  left: 305px;
+  top: 60px;
+  width: 67px;
+  height: 67px;
+  background: #f99;
+}
+.phase2 .sort-list-box .circles > div:nth-child(9) {
+  left: 290px;
+  top: 190px;
+  width: 66px;
+  height: 66px;
+  background: #39C;
+}
+.phase2 .sort-list-box .circles > div span {
+  display: inline-block;
+  margin-top: 25%;
+  color: #fff;
+  cursor: default;
+}
+.phase2 #trendChart,
+.phase2 #searchChart,
+.phase2 #hoursChart,
+.phase2 #sortChart {
+  min-height: 300px;
+  min-width: 400px;
+}
+.phase2 .item-list {
+  float: left;
+  font-size: 14px;
+}
+.phase2 .item-list li:nth-child(2n+1) {
+  background-color: #f2f2f2;
+}
+.phase2 .item-list li.item-list-title,
+.phase2 .item-list-title .item-hd:hover {
+  background-color: #D2F0FF;
+  cursor: default;
+}
+.phase2 .item-hd {
+  padding: 5px 10px;
+}
+.phase2 .item-hd:hover {
+  background: #ffc;
+  cursor: pointer;
+}
+.phase2 .item-hd i {
+  display: inline-block;
+  width: 4em;
+  text-indent: 0.6em;
+}
+.phase2 .item-hd span.key {
+  display: inline-block;
+  width: 12em;
+  text-indent: 0.6em;
+}
+.phase2 .item-hd span.key a {
+  color: #333;
+}
+.phase2 .item-hd span.key a:hover {
+  text-decoration: underline;
+}
+.phase2 .duration {
+  font-size: 12px;
+  line-height: 30px;
+  vertical-align: middle;
+}
+.phase2 .duration span {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 100%;
+  overflow: hidden;
+  text-align: center;
+  cursor: pointer;
+}
+.phase2 .duration span.on {
+  background: #08c3e5;
+  color: #fff;
+}
+.phase2 .duration span.label {
+  border: 1px solid transparent;
+  cursor: text;
+}
+.phase2 .added-keywords i {
+  display: inline-block;
+  padding: 1px 3px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  cursor: pointer;
+}
+.phase2 .added-keywords i:hover::after {
+  content: ' ×';
+  color: #c00;
+}
+.phase2 .total-num-box {
+  float: left;
+  width: 300px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  padding: 10px 0px;
+}
+.phase2 .total-num-box > div {
+  float: left;
+  text-align: center;
+  line-height: 30px;
+  width: 148px;
+  overflow: hidden;
+}
+.phase2 .sense {
+  border-right: 1px solid #ccc;
+}
+.phase2 .num {
+  line-height: 40px;
+  font-size: 24px;
+  font-weight: bold;
+}
+.phase2 .connet .num {
+  color: #34B5E2;
+}
+.phase2 .sense .num {
+  color: #3c3;
+}
+.phase2 .search-box {
+  float: right;
+  margin-top: 28px;
+}
+.phase2 .map-box {
+  position: relative;
+}
+.phase2 .map-pop {
+  position: absolute;
+  top: 10px;
+  left: 70px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  padding: 1px 15px 15px 15px;
+  border-radius: 5px;
+  display: none;
+}
+.phase2 .map-pop .close {
+  text-align: right;
+}
+.phase2 .map-pop .close span {
+  display: inline-block;
+  font-size: 16px;
+  color: #300;
+  cursor: pointer;
+  width: 24px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  border-radius: 2px;
+}
+.phase2 .map-pop .close span:hover {
+  background: #c33;
+  color: #fff;
+}
+.phase2 #citymap {
+  width: 100%;
+  height: 600px;
+}
+.phase2 .map-btn-box {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+}
+.phase2 .map-btn-box button {
+  padding: 3px 5px;
+  background: rgba(22, 155, 213, 0.7);
+  color: #fff;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.phase2 .map-btn-box button.on {
+  background: #169bd5;
+}
+.phase2 .marker-ap {
+  width: 52px;
+  height: 52px;
+  line-height: 52px;
+  text-align: center;
+  /*border: 4px solid rgba(150,0,240,0.2);
+        box-shadow: 1px 1px 1px rgba(0,0,0,0.5);*/
+  border-radius: 0 100% 100% 100%;
+  overflow: hidden;
+  background: rgba(150, 0, 240, 0.45);
+  color: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.phase2 .marker-ap:hover {
+  transform: scale(1.2);
+  background: rgba(150, 0, 240, 0.7);
+  transform-origin: left top;
+}
+.phase2 .mk-arr-box {
+  white-space: nowrap;
+  max-height: 200px;
+  overflow: auto;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+  transform: translateY(-50%);
+}
+.phase2 .mk-arr-box div {
+  cursor: pointer;
+  padding: 6px 15px;
+  border-bottom: 1px solid #ccc;
+}
+.phase2 .mk-arr-box div:last-child {
+  border-bottom: none;
+}
+.phase2 .mk-arr-box div:hover {
+  color: #34B5E2;
+}
+.phase2 .mark-jt {
+  display: block;
+  border-left: 2px solid transparent;
+  border-top: 2px solid transparent;
+  height: 8px;
+  width: 8px;
+  overflow: hidden;
+  transform-origin: left top;
+}
+.phase2 .marker-ap-trace {
+  width: 16px;
+  height: 16px;
+  line-height: 16px;
+  text-align: center;
+  border: 1px solid #fff;
+  border-radius: 100%;
+  overflow: hidden;
+  color: #ff9;
+  font-size: 12px;
+  white-space: nowrap;
+  background: #14a0dc;
+  box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.9);
+}
+.phase2 .marker-ap-trace:hover {
+  background: rgba(20, 160, 220, 0.5);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+}
+.phase2 .marker-info-box {
+  max-width: 700px;
+  max-height: 400px;
+  border: 1px solid #ccc;
+  overflow: auto;
+  border-radius: 5px;
+}
+.phase2 .marker-info-line {
+  padding: 10px;
+  white-space: nowrap;
+  font-size: 13px;
+  border-bottom: 1px solid #ccc;
+}
+.phase2 .marker-info-line.not-same-day {
+  border-top: 5px solid #ccc;
+}
+.phase2 .marker-info-line:last-child {
+  border-bottom: none;
+}
+.phase2 .marker-info-line label {
+  display: inline-block;
+  min-width: 4em;
+}
+.phase2 .loading-txt {
+  font-size: 13px;
+  color: #333;
+  display: none;
+}
+.phase2 .mark-line {
+  background: rgba(255, 255, 255, 0.7);
+  color: #36f;
+  padding: 3px 10px;
+  border-radius: 3px;
+  font-size: 13px;
+  font-weight: bold;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
+}
+.phase2 .mark-line.ln-left {
+  transform: translateX(-105%);
+}
+.phase2 .mark-line.ln-right {
+  transform: translateX(5%);
+}
+.phase2 .mark-line i:after {
+  content: ",";
+}
+.phase2 .mark-line i:last-child:after {
+  content: "";
+}
+.phase2 .client-table tr.th,
+.phase2 .client-table tr.th:hover {
+  background-color: #D2F0FF;
+}
+.phase2 .client-table td {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+}
+.phase2 .client-table tr:nth-child(2n) {
+  background-color: #f2f2f2;
+}
+.phase2 .client-table tr:hover {
+  background: #ffd;
+}
+.phase2 .page-box {
+  text-align: right;
+  font-size: 13px;
+  color: #666;
+  display: none;
+}
+.phase2 .page-box .page-pre,
+.phase2 .page-box .page-next {
+  color: #333;
+}
+.phase2 .page-box .page-pre.dis,
+.phase2 .page-box .page-next.dis {
+  color: #999;
+  cursor: not-allowed;
+}
+.phase2 .page-box .page-num {
+  width: 40px;
+}
+.phase2 .page-box .button-jump {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+.phase2 .toolnav .toolbox a.link-excel {
+  display: none;
+  margin-right: 5px;
+  text-decoration: none;
+}
+.phase2 .toolnav .toolbox a.link-excel:hover {
+  text-decoration: underline;
+}
+.phase2 .btn-excel {
+  width: 120px;
+}
+.phase2 .btn-excel.dis {
+  background: #aaa;
+}
+.phase2 .cur-mac-span {
+  display: none;
+}
+.phase2 .trend-form > div {
+  margin-top: 15px;
+}
+.phase2 .trend-form > div > label {
+  margin-right: 6px;
+}
+.phase2 .btn-search {
+  width: 40px;
+}
+.phase2 .btn-search.dis,
+.phase2 .btn-excel.dis {
+  background: #aaa;
+}
+.phase2 .group-ap-box {
+  max-height: 240px;
+  overflow: auto;
+}
+.phase2 .ap-box .grp-name {
+  border-bottom: 1px solid #ccc;
+  font-weight: bold;
+}
+.phase2 .ap-names {
+  margin-bottom: 20px;
+}
+.phase2 .ap-names input {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3px;
+}
+.phase2 .ap-names span {
+  display: inline-block;
+  width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: middle;
+  margin-right: 10px;
+  cursor: default;
+}
+.phase2 .grp-detail {
+  clear: both;
+  line-height: 32px;
+}
+.phase2 .grp-detail span {
+  color: #34B5E2;
 }

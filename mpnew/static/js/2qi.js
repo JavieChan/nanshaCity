@@ -7,6 +7,7 @@
 		return null;
 	}
 })(jQuery);
+var urlPramamLocation = $.getUrlParam("location");
 //ajax
 var ajaxDomain = "http://172.16.36.15:8007/";
 //var ajaxDomain = "http://172.16.44.2:8007/";

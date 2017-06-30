@@ -114,6 +114,21 @@
         $('.tip').remove();
     });
 
+    //可用套餐类型选择projectbill.html
+    $(document).on('mouseenter', '.packageType .bill_tab', function(){
+        var tip = $(this).attr('data-title'),
+            offsetTop = $(this).offset().top,
+            offsetLeft = $(this).offset().left;
+        var html = '<span class="tip">'+tip+'</span>';
+        $('body').append(html);
+        var w = $('.tip').outerWidth(), h = $('.tip').outerHeight();
+
+        $('.tip').css({'left': offsetLeft-(w/2)+'px', 'top': offsetTop-h-5+'px'});
+    });
+    $(document).on('mouseleave', '.packageType .bill_tab', function(){
+        $('.tip').remove();
+    });
+
     $(document).on('click', '#AP001', function(){$(this).next('div').toggle();});
     // 禁用链接
     $(document).on('click', '.preventUrl', function(e){
@@ -425,10 +440,12 @@
                 dateFormat: 'yy-mm-dd'
             });
             $('.vtime input').attr('placeholder', '选择学期结束日期').val('');
+            $("input[name='expired']").addClass("matchVerify shouldVerify");
         }else{//月套餐
             $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
             $('.vtime input').removeClass('datepickerbill').addClass('checkInt');
             $('.vtime input').attr('placeholder', '输入天数').val('');
+            $("input[name='expired']").removeClass("matchVerify shouldVerify");
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
