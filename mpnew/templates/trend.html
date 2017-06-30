@@ -1,221 +1,100 @@
 ## trend.html
 <%inherit file="base.html" />
-		<style type="text/css">
-			.sort-panel,
-			.search-echart-box {
-				overflow: hidden;
-				width: 880px;
-				margin: 0 auto;
-			}
-			
-			.toolnav h3 {
-				width: 400px;
-				border-left: 3px solid #39f;
-				text-indent: 0.5em;
-			}
-			
-			.sort-list-box {}
-			
-			#trendChart {
-				min-height: 300px;
-				min-width: 400px;
-			}
-			
-			.client-table tr.th,
-			.client-table tr.th:hover {
-				background-color: #D2F0FF;
-			}
-			
-			.client-table td {
-				border: 1px solid #ccc;
-				padding: 5px 10px;
-				padding: 5px 10px;
-			}
-			
-			.client-table tr:nth-child(2n) {
-				background-color: #f2f2f2;
-			}
-			
-			.client-table tr:hover {
-				background: #ffd;
-			}
-			
-			.duration {
-				font-size: 12px;
-				line-height: 30px;
-				vertical-align: middle;
-			}
-			
-			.duration span {
-				display: inline-block;
-				width: 30px;
-				height: 30px;
-				border: 1px solid #ccc;
-				border-radius: 100%;
-				overflow: hidden;
-				text-align: center;
-				cursor: pointer;
-			}
-			
-			.duration span.on {
-				background: #08c3e5;
-				color: #fff;
-			}
-			
-			.duration span.label {
-				border: 1px solid transparent;
-				cursor: text;
-			}
-			
-			.trend-form>div {
-				margin-top: 15px;
-			}
-			
-			.trend-form>div>label {
-				margin-right: 6px;
-			}
-			
-			.page-box {
-				text-align: right;
-				font-size: 13px;
-				color: #666;
-				display: none;
-			}
-			
-			.page-pre,
-			.page-next {
-				color: #333;
-			}
-			
-			.page-pre.dis,
-			.page-next.dis {
-				color: #999;
-				cursor: not-allowed;
-			}
-			
-			.page-num {
-				width: 40px;
-			}
-			
-			.button-jump {
-				width: 24px;
-				height: 24px;
-				cursor: pointer;
-			}
-			
-			.toolnav .toolbox a.link-excel{
-				display: none;
-				margin-right: 5px;
-				text-decoration: none;
-			}
-			.toolnav .toolbox a.link-excel:hover{
-				text-decoration: underline;
-			}
-			.btn-excel {
-				width: 120px;
-			}
-			.btn-search {
-				width: 40px;
-			}
-			.btn-search.dis,.btn-excel.dis {
-				background: #aaa;
-			}
-		</style>
 
 
-			<div class="wrapper">
-				<!--导航-->
-				<%include file="nav.html" args="on={'trend': 'on'}"/>
+<div class="wrapper">
+	<!--导航-->
+	<%include file="nav.html" args="on={'trend': 'on'}"/>
 
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">区域热力趋势</span>
-							</h2>
-						</div>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">城市感知网</span>
+					&gt; <span style="color:#0faee5">区域热力趋势</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3 style="float: none;">热力趋势</h3>
+				<div class="trend-form">
+					<div>
+						<label for="">区域或AP组</label>
+						<select name="" class="select-dis-group">
+							<!--<option value=""></option>-->
+						</select>
+						&nbsp; &nbsp; &nbsp;
+						<label for="">AP</label>
+						<select name="" class="select-ap-list">
+							<!--<option value=""></option>-->
+						</select>
 					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3 style="float: none;">热力趋势</h3>
-							<div class="trend-form">
-								<div>
-									<label for="">区域或AP组</label>
-									<select name="" class="select-dis-group">
-										<!--<option value=""></option>-->
-									</select>
-									&nbsp; &nbsp; &nbsp;
-									<label for="">AP</label>
-									<select name="" class="select-ap-list">
-										<!--<option value=""></option>-->
-									</select>
-								</div>
-								<div>
-									<label for="">统计范围</label>
-									<input type="text" id="dateStart" placeholder="选择开始时间"> -
-									<input type="text" id="dateEnd" placeholder="选择结束时间">
-									<button class="btnBlueSmall chaxun">查询统计</button>
-								</div>
-							</div>
-						</div>
-						<div class="toolnav">
-							<span class="dis-ap-box"></span>
-
-							<div class="toolbox duration">
-								<span class="label">统计维度</span>
-								<span class="time-flag on">时</span>
-								<span class="time-flag">天</span>
-							</div>
-						</div>
-
-						<div id="trendChart" class="search-echart-box">
-							<!--曲线图-->
-						</div>
-					</div>
-
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>感知到的设备</h3>
-							<div class="toolbox batch">
-								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
-								<button class="btnBlueSmall btn-excel dis" disabled="disabled">导出Excel</button> &nbsp;&nbsp;
-								<input type="text" class="txt-mac" placeholder="MAC地址(FC:57:B6:2C:B6:2C)" maxlength="17"><button disabled="disabled" class="btnBlueSmall btn-search dis">搜索</button>
-							</div>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<table class="client-table">
-									<tr class="th">
-										<td>Mac地址</td>
-										<td>姓名</td>
-										<td>手机号</td>
-										<td>停留时长</td>
-										<td>信号强度</td>
-										<td>操作</td>
-									</tr>
-									<tr class="loading-tr">
-										<td colspan="6">&nbsp;</td>
-									</tr>
-								</table>
-								<div class="page-box">
-									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
-									<span class="page-now">1</span>页 &nbsp;&nbsp;
-									<a class="page-pre" href="javascript:;">上一页</a>
-									&nbsp;&nbsp;
-									<a class="page-next" href="javascript:;">下一页</a>
-									&nbsp;&nbsp; 到第
-									<input type="text" class="page-num" />页
-									<button class="button-jump">Go</button>
-								</div>
-							</div>
-						</div>
+					<div>
+						<label for="">统计范围</label>
+						<input type="text" id="dateStart" placeholder="选择开始时间"> -
+						<input type="text" id="dateEnd" placeholder="选择结束时间">
+						<button class="btnBlueSmall chaxun">查询统计</button>
 					</div>
 				</div>
 			</div>
+			<div class="toolnav">
+				<span class="dis-ap-box"></span>
+
+				<div class="toolbox duration">
+					<span class="label">统计维度</span>
+					<span class="time-flag on">时</span>
+					<span class="time-flag">天</span>
+				</div>
+			</div>
+
+			<div id="trendChart" class="search-echart-box">
+				<!--曲线图-->
+			</div>
+		</div>
+
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>感知到的设备</h3>
+				<div class="toolbox batch">
+					<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
+					<button class="btnBlueSmall btn-excel dis" disabled="disabled">导出Excel</button> &nbsp;&nbsp;
+					<input type="text" class="txt-mac" placeholder="MAC地址(FC:57:B6:2C:B6:2C)" maxlength="17"><button disabled="disabled" class="btnBlueSmall btn-search dis">搜索</button>
+				</div>
+			</div>
+			<!--<div class="content-title"></div>-->
+			<div class="sort-panel">
+				<div class="client-table-box">
+					<table class="client-table">
+						<tr class="th">
+							<td>Mac地址</td>
+							<td>姓名</td>
+							<td>手机号</td>
+							<td>停留时长</td>
+							<td>信号强度</td>
+							<td>操作</td>
+						</tr>
+						<tr class="loading-tr">
+							<td colspan="6">&nbsp;</td>
+						</tr>
+					</table>
+					<div class="page-box">
+						共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+						<span class="page-now">1</span>页 &nbsp;&nbsp;
+						<a class="page-pre" href="javascript:;">上一页</a>
+						&nbsp;&nbsp;
+						<a class="page-next" href="javascript:;">下一页</a>
+						&nbsp;&nbsp; 到第
+						<input type="text" class="page-num" />页
+						<button class="button-jump">Go</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 <%block name="jscode">
 

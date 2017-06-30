@@ -1,295 +1,81 @@
 ## citytrace.html
 <%inherit file="base.html" />
-		<style type="text/css">
-			.date-box {}
-			
-			.map-box {
-				position: relative;
-			}
-			
-			.map-pop {
-				position: absolute;
-				top: 10px;
-				left: 70px;
-				background: rgba(255, 255, 255, 0.92);
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-				padding: 1px 5px 5px 5px;
-				border-radius: 5px;
-				display: none;
-			}
-			
-			.map-pop .close {
-				text-align: right;
-			}
-			
-			.map-pop .close span {
-				display: inline-block;
-				font-size: 16px;
-				color: #300;
-				cursor: pointer;
-				width: 24px;
-				height: 16px;
-				line-height: 16px;
-				text-align: center;
-				border-radius: 2px;
-			}
-			
-			.map-pop .close span:hover {
-				background: #c33;
-				color: #fff;
-			}
-			
-			#citymap {
-				width: 100%;
-				height: 600px;
-			}
-			
-			.mark-jt {
-				display: block;
-				border-left: 2px solid transparent;
-				border-top: 2px solid transparent;
-				height: 8px;
-				width: 8px;
-				overflow: hidden;
-				transform-origin: left top;
-			}
-			
-			.marker-ap {
-				width: 16px;
-				height: 16px;
-				line-height: 16px;
-				text-align: center;
-				border: 1px solid #fff;
-				border-radius: 100%;
-				overflow: hidden;
-				color: #ff9;
-				font-size: 12px;
-				white-space: nowrap;
-				background: rgba(20, 160, 220, 1);
-				box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.9);
-			}
-			
-			.marker-ap:hover {
-				background: rgba(20, 160, 220, 0.5);
-				box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
-			}
-			
-			.marker-info-box {
-				max-width: 700px;
-				max-height: 400px;
-				border: 1px solid #ccc;
-				overflow: auto;
-				border-radius: 5px;
-			}
-			
-			.marker-info-line {
-				padding: 10px;
-				white-space: nowrap;
-				font-size: 13px;
-				border-bottom: 1px solid #ccc;
-			}
-			
-			.marker-info-line.not-same-day {
-				border-top: 5px solid #ccc;
-			}
-			
-			.marker-info-line:last-child {
-				border-bottom: none;
-			}
-			
-			.marker-info-line label {
-				display: inline-block;
-				min-width: 4em;
-			}
-			
-			.loading-txt {
-				font-size: 13px;
-				color: #333;
-				display: none;
-			}
-			
-			.mark-line {
-				background: rgba(255, 255, 255, 0.7);
-				color: #36f;
-				padding: 3px 10px;
-				border-radius: 3px;
-				font-size: 13px;
-				font-weight: bold;
-				box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
-			}
-			
-			.mark-line i:after {
-				content: ",";
-			}
-			
-			.mark-line i:last-child:after {
-				content: "";
-			}
-			
-			.mark-line.ln-left {
-				transform: translateX(-105%);
-			}
-			
-			.mark-line.ln-right {
-				transform: translateX(5%);
-			}
-			
-			.sort-panel {
-				overflow: hidden;
-				width: 880px;
-				margin: 0 auto;
-			}
-			
-			.toolnav h3 {
-				width: 400px;
-				border-left: 3px solid #39f;
-				text-indent: 0.5em;
-			}
-			
-			.client-table tr.th,
-			.client-table tr.th:hover {
-				background-color: #D2F0FF;
-			}
-			
-			.client-table td {
-				border: 1px solid #ccc;
-				padding: 5px 10px;
-				padding: 5px 10px;
-			}
-			
-			.client-table tr:nth-child(2n) {
-				background-color: #f2f2f2;
-			}
-			
-			.client-table tr:hover {
-				background: #ffd;
-			}
-			
-			.page-box {
-				text-align: right;
-				font-size: 13px;
-				color: #666;
-				display: none;
-			}
-			
-			.page-pre,
-			.page-next {
-				color: #333;
-			}
-			
-			.page-pre.dis,
-			.page-next.dis {
-				color: #999;
-				cursor: not-allowed;
-			}
-			
-			.page-num {
-				width: 40px;
-			}
-			
-			.button-jump {
-				width: 24px;
-				height: 24px;
-				cursor: pointer;
-			}
-			
-			.toolnav .toolbox a.link-excel {
-				display: none;
-				margin-right: 5px;
-				text-decoration: none;
-			}
-			
-			.toolnav .toolbox a.link-excel:hover {
-				text-decoration: underline;
-			}
-			
-			.btn-excel {
-				width: 120px;
-			}
-			
-			.btn-excel.dis {
-				background: #aaa;
-			}
-			.cur-mac-span{
-				display: none;
-			}
-		</style>
 
-			<div class="wrapper">
-				<!--导航-->
-				<%include file="nav.html" args="on={'citytrace': 'on'}"/>
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">城市寻迹</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox">
-						<div class="toolnav">
-							<div class="date-box">
-								<input type="text" id="dateStart" placeholder="选择开始时间"> -
-								<input type="text" id="dateEnd" placeholder="选择结束时间"> &nbsp; &nbsp;
-								<input type="text" class="txt-mac" placeholder="搜索设备Mac地址（格式：FC:57:B6:2C:B6:2C）" maxlength="17" />
-								<button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button>
-								<span class="loading-txt">
-									<img src="data:image/gif;base64,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" alt="" />
-									正在查询...
-								</span>
-							</div>
-						</div>
-					</div>
-					<div class="map-box">
-						<div id="citymap"></div>
-						<div class="map-pop">
-							<div class="close"><span>×</span></div>
-							<div class="ctt">×</div>
-						</div>
-					</div>
+<div class="wrapper">
+	<!--导航-->
+	<%include file="nav.html" args="on={'citytrace': 'on'}"/>
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">城市感知网</span>
+					&gt; <span style="color:#0faee5">城市寻迹</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox">
+			<div class="toolnav">
+				<div class="date-box">
+					<input type="text" id="dateStart" placeholder="选择开始时间"> -
+					<input type="text" id="dateEnd" placeholder="选择结束时间"> &nbsp; &nbsp;
+					<input type="text" class="txt-mac" placeholder="搜索设备Mac地址（格式：FC:57:B6:2C:B6:2C）" maxlength="17" />
+					<button class="btnBlueSmall btn-search" style="width: auto; ">　搜索　</button>
+					<span class="loading-txt">
+						<img src="data:image/gif;base64,R0lGODlhEAAQAMQAAP///+7u7t3d3bu7u6qqqpmZmYiIiHd3d2ZmZlVVVURERDMzMyIiIhEREQARAAAAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAQACwAAAAAEAAQAAAFdyAkQgGJJOWoQgIjBM8jkKsoPEzgyMGsCjPDw7ADpkQBxRDmSCRetpRA6Rj4kFBkgLC4IlUGhbNQIwXOYYWCXDufzYPDMaoKGBoKb886OjAKdgZAAgQkfCwzAgsDBAUCgl8jAQkHEAVkAoA1AgczlyIDczUDA2UhACH5BAUHABAALAAAAAAPABAAAAVjICSO0IGIATkqIiMKDaGKC8Q49jPMYsE0hQdrlABCGgvT45FKiRKQhWA0mPKGPAgBcTjsspBCAoH4gl+FmXNEUEBVAYHToJAVZK/XWoQQDAgBZioHaX8igigFKYYQVlkCjiMhACH5BAUHABAALAAAAAAQAA8AAAVgICSOUGGQqIiIChMESyo6CdQGdRqUENESI8FAdFgAFwqDISYwPB4CVSMnEhSej+FogNhtHyfRQFmIol5owmEta/fcKITB6y4choMBmk7yGgSAEAJ8JAVDgQFmKUCCZnwhACH5BAUHABAALAAAAAAQABAAAAViICSOYkGe4hFAiSImAwotB+si6Co2QxvjAYHIgBAqDoWCK2Bq6A40iA4yYMggNZKwGFgVCAQZotFwwJIF4QnxaC9IsZNgLtAJDKbraJCGzPVSIgEDXVNXA0JdgH6ChoCKKCEAIfkEBQcAEAAsAAAAABAADgAABUkgJI7QcZComIjPw6bs2kINLB5uW9Bo0gyQx8LkKgVHiccKVdyRlqjFSAApOKOtR810StVeU9RAmLqOxi0qRG3LptikAVQEh4UAACH5BAUHABAALAAAAAAQABAAAAVxICSO0DCQKBQQonGIh5AGB2sYkMHIqYAIN0EDRxoQZIaC6bAoMRSiwMAwCIwCggRkwRMJWKSAomBVCc5lUiGRUBjO6FSBwWggwijBooDCdiFfIlBRAlYBZQ0PWRANaSkED1oQYHgjDA8nM3kPfCmejiEAIfkEBQcAEAAsAAAAABAAEAAABWAgJI6QIJCoOIhFwabsSbiFAotGMEMKgZoB3cBUQIgURpFgmEI0EqjACYXwiYJBGAGBgGIDWsVicbiNEgSsGbKCIMCwA4IBCRgXt8bDACkvYQF6U1OADg8mDlaACQtwJCEAIfkEBQcAEAAsAAABABAADwAABV4gJEKCOAwiMa4Q2qIDwq4wiriBmItCCREHUsIwCgh2q8MiyEKODK7ZbHCoqqSjWGKI1d2kRp+RAWGyHg+DQUEmKliGx4HBKECIMwG61AgssAQPKA19EAxRKz4QCVIhACH5BAUHABAALAAAAAAQABAAAAVjICSOUBCQqHhCgiAOKyqcLVvEZOC2geGiK5NpQBAZCilgAYFMogo/J0lgqEpHgoO2+GIMUL6p4vFojhQNg8rxWLgYBQJCASkwEKLC17hYFJtRIwwBfRAJDk4ObwsidEkrWkkhACH5BAUHABAALAAAAQAQAA8AAAVcICSOUGAGAqmKpjis6vmuqSrUxQyPhDEEtpUOgmgYETCCcrB4OBWwQsGHEhQatVFhB/mNAojFVsQgBhgKpSHRTRxEhGwhoRg0CCXYAkKHHPZCZRAKUERZMAYGMCEAIfkEBQcAEAAsAAABABAADwAABV0gJI4kFJToGAilwKLCST6PUcrB8A70844CXenwILRkIoYyBRk4BQlHo3FIOQmvAEGBMpYSop/IgPBCFpCqIuEsIESHgkgoJxwQAjSzwb1DClwwgQhgAVVMIgVyKCEAIfkECQcAEAAsAAAAABAAEAAABWQgJI5kSQ6NYK7Dw6xr8hCw+ELC85hCIAq3Am0U6JUKjkHJNzIsFAqDqShQHRhY6bKqgvgGCZOSFDhAUiWCYQwJSxGHKqGAE/5EqIHBjOgyRQELCBB7EAQHfySDhGYQdDWGQyUhADs=" alt="" />
+						正在查询...
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="map-box">
+			<div id="citymap"></div>
+			<div class="map-pop">
+				<div class="close"><span>×</span></div>
+				<div class="ctt">×</div>
+			</div>
+		</div>
 
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<span class="cur-mac-span">【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
-							<div class="toolbox batch">
-								<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
-								<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
-							</div>
-						</div>
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<table class="client-table">
-									<tr class="th">
-										<td>日期</td>
-										<td>AP名称</td>
-										<td>AP位置</td>
-										<td>出现时间</td>
-										<td>消失时间</td>
-										<td>停留时长</td>
-										<td>信号强度</td>
-									</tr>
-									<tr class="loading-tr">
-										<td colspan="7">&nbsp;</td>
-									</tr>
-								</table>
-								<div class="page-box">
-									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
-									<span class="page-now">1</span>页 &nbsp;&nbsp;
-									<a class="page-pre" href="javascript:;">上一页</a>
-									&nbsp;&nbsp;
-									<a class="page-next" href="javascript:;">下一页</a>
-									&nbsp;&nbsp; 到第
-									<input type="text" class="page-num" />页
-									<button class="button-jump">Go</button>
-								</div>
-							</div>
-						</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<span class="cur-mac-span">【设备MAC地址】<span class='cur-mac'>FC:57:B6:2C</span></span>
+				<div class="toolbox batch">
+					<a class="link-excel" href="javascript:;" target="_blank">正在导出...</a>
+					<button class="btnBlueSmall btn-excel dis" disabled="disabled">整表导出为Excel</button>
+				</div>
+			</div>
+			<div class="sort-panel">
+				<div class="sort-list-box">
+					<table class="client-table">
+						<tr class="th">
+							<td>日期</td>
+							<td>AP名称</td>
+							<td>AP位置</td>
+							<td>出现时间</td>
+							<td>消失时间</td>
+							<td>停留时长</td>
+							<td>信号强度</td>
+						</tr>
+						<tr class="loading-tr">
+							<td colspan="7">&nbsp;</td>
+						</tr>
+					</table>
+					<div class="page-box">
+						共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+						<span class="page-now">1</span>页 &nbsp;&nbsp;
+						<a class="page-pre" href="javascript:;">上一页</a>
+						&nbsp;&nbsp;
+						<a class="page-next" href="javascript:;">下一页</a>
+						&nbsp;&nbsp; 到第
+						<input type="text" class="page-num" />页
+						<button class="button-jump">Go</button>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
 
 <%block name="jscode">
 
@@ -652,7 +438,7 @@
 								map: myMap,
 								position: [object.lng, object.lat],
 								offset: new AMap.Pixel(-8, -8), //相对于基点的偏移位置
-								content: '<div class="marker-ap"></div>' //自定义点标记覆盖物内容
+								content: '<div class="marker-ap-trace"></div>' //自定义点标记覆盖物内容
 							});
 							markers.push(marker);
 						}

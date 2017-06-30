@@ -1,179 +1,69 @@
 ## supervise.html
 <%inherit file="base.html" />
-		<style type="text/css">
-			.sort-panel,
-			.search-echart-box {
-				overflow: hidden;
-				width: 880px;
-				margin: 0 auto;
-			}
-			
-			.toolnav h3 {
-				border-left: 3px solid #39f;
-				text-indent: 0.5em;
-			}
-			
-			.sort-list-box {}
-			
-			.client-table tr.th,
-			.client-table tr.th:hover {
-				background-color: #D2F0FF;
-			}
-			
-			.client-table td {
-				border: 1px solid #ccc;
-				padding: 5px 10px;
-				padding: 5px 10px;
-			}
-			
-			.client-table tr:nth-child(2n) {
-				background-color: #f2f2f2;
-			}
-			
-			.client-table tr:hover {
-				background: #ffd;
-			}
-			
-			.trend-form>div {
-				margin-top: 15px;
-			}
-			
-			.trend-form>div>label {
-				margin-right: 6px;
-			}
-			
-			.page-box {
-				text-align: right;
-				font-size: 13px;
-				color: #666;
-				display: none;
-			}
-			
-			.page-pre,
-			.page-next {
-				color: #333;
-			}
-			
-			.page-pre.dis,
-			.page-next.dis {
-				color: #999;
-				cursor: not-allowed;
-			}
-			
-			.page-num {
-				width: 40px;
-			}
-			
-			.button-jump {
-				width: 24px;
-				height: 24px;
-				cursor: pointer;
-			}
-			
-			.btn-excel {
-				width: 120px;
-			}
-			
-			.btn-search {
-				width: 40px;
-			}
-			
-			.group-ap-box {
-				max-height: 240px;
-				overflow: auto;
-			}
-			
-			.ap-box .grp-name {
-				border-bottom: 1px solid #ccc;
-				font-weight: bold;
-			}
-			
-			.ap-names {
-				margin-bottom: 20px;
-			}
-			
-			.ap-names input {
-				display: inline-block;
-				vertical-align: middle;
-				margin-right: 3px;
-			}
-			
-			.ap-names span {
-				display: inline-block;
-				width: 160px;
-				overflow: hidden;
-				white-space: nowrap;
-				vertical-align: middle;
-				margin-right: 10px;
-				cursor: default;
-			}
-		</style>
+<div class="wrapper">
+	<!--导航-->
+	<%include file="nav.html" args="on={'supervise': 'on'}"/>
 
-
-			<div class="wrapper">
-				<!--导航-->
-				<%include file="nav.html" args="on={'supervise': 'on'}"/>
-
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">城市感知网</span>
-								&gt; <span style="color:#0faee5">AP感知预警</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>监视组列表</h3> &nbsp; 状态：
-							<select class="select-status">
-								<option value="all">全部</option>
-								<option value="0">正常</option>
-								<option value="1">超负荷</option>
-								<!--<option value="2">故障</option>-->
-							</select>
-							<div class="toolbox batch">
-								<input type="text" class="txt-mac" placeholder="输入监视组名"><button class="btnBlueSmall btn-search">搜索</button> &nbsp;&nbsp;
-								<button class="btnBlueSmall btn-add">添加监视</button>
-							</div>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
-								<table class="client-table">
-									<tr class="th">
-										<td>监视名</td>
-										<td>AP数</td>
-										<td>启动时间</td>
-										<td>当前感知数</td>
-										<td>昨日平均</td>
-										<td>月均</td>
-										<td>通知人</td>
-										<td>状态</td>
-										<td>操作</td>
-									</tr>
-									<tr class="loading-tr">
-										<td colspan="9">&nbsp;</td>
-									</tr>
-								</table>
-								<div class="page-box">
-									共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
-									<span class="page-now">1</span>页 &nbsp;&nbsp;
-									<a class="page-pre" href="javascript:;">上一页</a>
-									&nbsp;&nbsp;
-									<a class="page-next" href="javascript:;">下一页</a>
-									&nbsp;&nbsp; 到第
-									<input type="text" class="page-num" />页
-									<button class="button-jump">Go</button>
-								</div>
-							</div>
-						</div>
-					</div>
-
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">城市感知网</span>
+					&gt; <span style="color:#0faee5">AP感知预警</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3 style="width: auto;">监视组列表</h3> &nbsp; 状态：
+				<select class="select-status">
+					<option value="all">全部</option>
+					<option value="0">正常</option>
+					<option value="1">超负荷</option>
+					<!--<option value="2">故障</option>-->
+				</select>
+				<div class="toolbox batch">
+					<input type="text" class="txt-mac" placeholder="输入监视组名"><button class="btnBlueSmall btn-search">搜索</button> &nbsp;&nbsp;
+					<button class="btnBlueSmall btn-add">添加监视</button>
 				</div>
 			</div>
+			<!--<div class="content-title"></div>-->
+			<div class="sort-panel">
+				<div class="client-table-box">
+					<table class="client-table">
+						<tr class="th">
+							<td>监视名</td>
+							<td>AP数</td>
+							<td>启动时间</td>
+							<td>当前感知数</td>
+							<td>昨日平均</td>
+							<td>月均</td>
+							<td>通知人</td>
+							<td>状态</td>
+							<td>操作</td>
+						</tr>
+						<tr class="loading-tr">
+							<td colspan="9">&nbsp;</td>
+						</tr>
+					</table>
+					<div class="page-box">
+						共<span class="page-total">1</span>页 &nbsp;&nbsp; 当前第
+						<span class="page-now">1</span>页 &nbsp;&nbsp;
+						<a class="page-pre" href="javascript:;">上一页</a>
+						&nbsp;&nbsp;
+						<a class="page-next" href="javascript:;">下一页</a>
+						&nbsp;&nbsp; 到第
+						<input type="text" class="page-num" />页
+						<button class="button-jump">Go</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
 
 
 <%block name="aside">

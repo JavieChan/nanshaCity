@@ -1,176 +1,77 @@
 ## keywords.html
 <%inherit file="base.html" />
-		<style type="text/css">
-			.sort-panel,
-			.search-echart-box {
-				overflow: hidden;
-				width: 880px;
-				margin: 0 auto;
-			}
-			
-			.toolnav h3 {
-				width: 400px;
-				border-left: 3px solid #39f;
-				text-indent: 0.5em;
-			}
-			
-			.sort-list-box,
-			.sort-echart-box {
-				float: left;
-			}
-			
-			.sort-echart-box {
-				margin-left: 25px;
-			}
-			
-			#searchChart,
-			#sortChart {
-				min-height: 300px;
-				min-width: 400px;
-			}
-			
-			.item-list {
-				float: left;
-				font-size: 14px;
-			}
-			
-			.item-list li:nth-child(2n+1) {
-				background-color: #f2f2f2;
-			}
-			
-			.item-list li.item-list-title,
-			.item-list-title .item-hd:hover {
-				background-color: #D2F0FF;
-				cursor: default;
-			}
-			
-			.item-hd {
-				padding: 5px 10px;
-			}
-			
-			.item-hd:hover {
-				background: #ffc;
-				cursor: pointer;
-			}
-			
-			.item-hd i {
-				display: inline-block;
-				width: 4em;
-				text-indent: 0.6em;
-			}
-			
-			.duration {
-				font-size: 12px;
-				line-height: 30px;
-				vertical-align: middle;
-			}
-			
-			.duration span {
-				display: inline-block;
-				width: 30px;
-				height: 30px;
-				border: 1px solid #ccc;
-				border-radius: 100%;
-				overflow: hidden;
-				text-align: center;
-				cursor: pointer;
-			}
-			
-			.duration span.on {
-				background: #08c3e5;
-				color: #fff;
-			}
-			
-			.duration span.label {
-				border: 1px solid transparent;
-				cursor: text;
-			}
-			
-			.added-keywords i {
-				display: inline-block;
-				padding: 1px 3px;
-				border: 1px solid #ccc;
-				margin-right: 10px;
-				cursor: pointer;
-			}
-			
-			.added-keywords i:hover::after {
-				content: ' ×';
-				color: #c00;
-			}
-		</style>
-			<div class="wrapper">
-				<!--导航-->
-				<%include file="nav.html" args="on={'keywords': 'on'}"/>
+<div class="wrapper">
+	<!--导航-->
+	<%include file="nav.html" args="on={'keywords': 'on'}"/>
 
-				<!--右侧功能栏-->
-				<div class="projects">
-					<div class="tabbox">
-						<div class="bread">
-							<h2>
-								<a href="#">所有项目</a>
-								&gt; <span style="color:#333">数据分析平台</span>
-								&gt; <span style="color:#0faee5">关键词分析</span>
-							</h2>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>关键词排行榜</h3>
-						</div>
-						<!--<div class="content-title"></div>-->
-						<div class="sort-panel">
-							<div class="sort-list-box">
+	<!--右侧功能栏-->
+	<div class="projects">
+		<div class="tabbox">
+			<div class="bread">
+				<h2>
+					<a href="#">所有项目</a>
+					&gt; <span style="color:#333">数据分析平台</span>
+					&gt; <span style="color:#0faee5">关键词分析</span>
+				</h2>
+			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>关键词排行榜</h3>
+			</div>
+			<!--<div class="content-title"></div>-->
+			<div class="sort-panel">
+				<div class="sort-list-box">
 
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
-									</li>
-									<!--<li>
-										<div class="item-hd"><i class="num-top">1</i><span>柯洁对战阿尔法狗</span></div>
-									</li>-->
-								</ul>
-								<ul class="item-list">
-									<li class="item-list-title">
-										<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
-									</li>
-									<!--<li>
-										<div class="item-hd"><i class="num-normal">11</i><span>6名日本间谍被抓</span></div>
-									</li>-->
-								</ul>
-							</div>
-							<div id="sortChart" class="sort-echart-box">
-								<!--饼图-->
-							</div>
-						</div>
-					</div>
-					<div class="tabbox " id="">
-						<div class="toolnav">
-							<h3>关键词查询</h3>
-							<div class="toolbox batch">
-								<input type="text" class="txt-keyToAdd" placeholder="请输入要查询的关键词" maxlength="10"><button class="btnGraySmall btn-add-keyword">+添加对比词</button>
-								<button class="btnBlueSmall chaxun">查询</button>
-							</div>
-						</div>
-						<div class="toolnav">
-							<span class="added-keywords"></span> <span class="duration-box"></span>
-
-							<div class="toolbox duration">
-								<span class="label">最近</span>
-								<span class="on">7天</span>
-								<span>30天</span>
-								<span>90天</span>
-								<span>半年</span>
-								<span>全部</span>
-							</div>
-						</div>
-
-						<div id="searchChart" class="search-echart-box">
-							<!--曲线图-->
-						</div>
-					</div>
+					<ul class="item-list">
+						<li class="item-list-title">
+							<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
+						</li>
+						<!--<li>
+							<div class="item-hd"><i class="num-top">1</i><span>柯洁对战阿尔法狗</span></div>
+						</li>-->
+					</ul>
+					<ul class="item-list">
+						<li class="item-list-title">
+							<div class="item-hd"><i class="">排名</i><span>关键词</span></div>
+						</li>
+						<!--<li>
+							<div class="item-hd"><i class="num-normal">11</i><span>6名日本间谍被抓</span></div>
+						</li>-->
+					</ul>
+				</div>
+				<div id="sortChart" class="sort-echart-box">
+					<!--饼图-->
 				</div>
 			</div>
+		</div>
+		<div class="tabbox " id="">
+			<div class="toolnav">
+				<h3>关键词查询</h3>
+				<div class="toolbox batch">
+					<input type="text" class="txt-keyToAdd" placeholder="请输入要查询的关键词" maxlength="10"><button class="btnGraySmall btn-add-keyword">+添加对比词</button>
+					<button class="btnBlueSmall chaxun">查询</button>
+				</div>
+			</div>
+			<div class="toolnav">
+				<span class="added-keywords"></span> <span class="duration-box"></span>
+
+				<div class="toolbox duration">
+					<span class="label">最近</span>
+					<span class="on">7天</span>
+					<span>30天</span>
+					<span>90天</span>
+					<span>半年</span>
+					<span>全部</span>
+				</div>
+			</div>
+
+			<div id="searchChart" class="search-echart-box">
+				<!--曲线图-->
+			</div>
+		</div>
+	</div>
+</div>
 
 
 <%block name="jscode">
