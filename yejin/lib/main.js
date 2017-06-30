@@ -115,7 +115,7 @@
     });
 
     //可用套餐类型选择projectbill.html
-    $(document).on('mouseenter', '.packageType .bill_tab', function(){
+    $(document).on('mouseenter', '.packageType .bill_tab span', function(){
         var tip = $(this).attr('data-title'),
             offsetTop = $(this).offset().top,
             offsetLeft = $(this).offset().left;
@@ -125,7 +125,7 @@
 
         $('.tip').css({'left': offsetLeft-(w/2)+'px', 'top': offsetTop-h-5+'px'});
     });
-    $(document).on('mouseleave', '.packageType .bill_tab', function(){
+    $(document).on('mouseleave', '.packageType .bill_tab span', function(){
         $('.tip').remove();
     });
 
