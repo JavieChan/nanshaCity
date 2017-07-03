@@ -158,12 +158,12 @@
 	                            _react2.default.createElement(
 	                                "td",
 	                                null,
-	                                _this2.state.view ? _react2.default.createElement(
+	                                _this2.state.view && (list.mask & 1 << 30) == 0 ? _react2.default.createElement(
 	                                    "span",
 	                                    { className: "recharge" },
 	                                    "\u5145\u503C"
 	                                ) : null,
-	                                _this2.state.view ? _react2.default.createElement(
+	                                _this2.state.view && (list.mask & 1 << 30) == 0 ? _react2.default.createElement(
 	                                    "a",
 	                                    { href: "/projectuserpninfo.html?location=" + location + "&mask=1&user_id=" + list.id },
 	                                    "\u7F16\u8F91"
