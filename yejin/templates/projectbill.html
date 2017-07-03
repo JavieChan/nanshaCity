@@ -86,9 +86,9 @@
                 <div class="bill_tab">
                     % for policy in selected_policys:
                         % if policy.mask == 1:
-                        <span data-pay-id="${policy.id}" data-title="上网时间：${policy.time_formated} 天, 金额: ${policy.price_formated} 元, 套餐到期: ${policy.expired_formated}">${policy.label}<i></i></span>
+                        <span data-pay-id="${policy.id}" data-title="套餐类型: ${policy.ptype}, 上网时间：${policy.time_formated} 天, 金额: ${policy.price_formated} 元, 套餐到期: ${policy.expired_formated}">${policy.label}<i></i></span>
                         % else:
-                        <span data-pay-id="${policy.id}" data-title="上网到期：${policy.package_expired_formated}, 金额: ${policy.price_formated} 元, 套餐到期: ${policy.expired_formated}">${policy.label}<i></i></span>
+                        <span data-pay-id="${policy.id}" data-title="套餐类型: ${policy.ptype}, 上网到期：${policy.package_expired_formated}, 金额: ${policy.price_formated} 元, 套餐到期: ${policy.expired_formated}">${policy.label}<i></i></span>
                         % endif
                     % endfor
                 </div>
