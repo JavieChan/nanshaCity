@@ -6065,6 +6065,9 @@ button:hover .arrowNext {
   vertical-align: middle;
   margin-right: 3px;
 }
+.group-ap-box .ap-box .ap-names input:checked + span {
+  color: #369;
+}
 .group-ap-box .ap-box .ap-names span {
   display: inline-block;
   width: 160px;
