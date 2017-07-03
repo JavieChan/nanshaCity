@@ -5738,6 +5738,9 @@ button:hover .arrowNext {
   width: 12em;
   text-indent: 0.6em;
 }
+.phase2 .item-hd span.key.website {
+  width: 315px;
+}
 .phase2 .item-hd span.key a {
   color: #333;
 }
