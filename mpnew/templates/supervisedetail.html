@@ -243,9 +243,9 @@
 								str += "<tr><td>" + dList[i].ap_name;
 								str += "</td><td>" + dList[i].ap_addr;
 								str += "</td><td>" + dInfo.start_t;
-								str += "</td><td>" + dList[i].day_n;
-								str += "</td><td>" + dList[i].yes_n;
-								str += "</td><td>" + dList[i].mon_n;
+								str += "</td><td>" + (isNull(dList[i].day_n)?"-":dList[i].day_n);
+								str += "</td><td>" + (isNull(dList[i].yes_n)?"-":dList[i].yes_n);
+								str += "</td><td>" + (isNull(dList[i].mon_n)?"-":dList[i].mon_n);
 								str += "</td><td><img title='" + (dList[i].ap_status == 0 ? "正常" : (dList[i].ap_status == 1 ? "超负荷" : "故障")) + "' src='" + statusImg[dList[i].ap_status] + "'>";
 								str += "</td><td><a class='btn-del' href='javascript:;' data-mac=" + dList[i].ap_mac + ">踢出</a></td></tr>";
 								apMac.push(dList[i].ap_mac);
