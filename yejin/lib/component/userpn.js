@@ -58,8 +58,8 @@ class Table extends Component {
                                         })
                                     }
                                     <td>
-                                        { this.state.view ? <span className="recharge">充值</span> : null }
-                                        { this.state.view ? <a href={"/projectuserpninfo.html?location="+location+"&mask=1&user_id="+list.id}>编辑</a> : null }
+                                        { (this.state.view && (list.mask&(1<<30))==0) ? <span className="recharge">充值</span> : null }
+                                        { (this.state.view && (list.mask&(1<<30))==0) ? <a href={"/projectuserpninfo.html?location="+location+"&mask=1&user_id="+list.id}>编辑</a> : null }
                                         { this.state.update ? (forbin) : null }
                                         { this.state.delete ? <span className="delete" onClick={this.handleDel.bind(this)} data-key={index}>删除</span> : null }
                                         <input type="hidden" className="id" value={list.id} />

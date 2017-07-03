@@ -21,14 +21,16 @@
                     <button type="button" class="btnBlueSmall userinfoSave" id="userinfoPnSave" style="display: none;">保存</button>
                     <button type="button" class="btnGraySmall" id="userinfoQuit" style="display: none;">取消</button>
                     % endif
-                    <button type="button" class="btnGraySmall userinfoReback">返回</button>
-                </div>
+                    <!-- <button type="button" class="btnGraySmall userinfoReback">返回</button>
+                </div> -->
                 % else:
                 <div class="widget">
                     <a href="/projecturl.html?location=${location}&user=&mobile=&ip=${ip}" class="btnGraySmall">URL纪录</a>
-                    <button type="button" class="btnGraySmall userinfoReback">返回</button>
-                </div>
+                    <!-- <button type="button" class="btnGraySmall userinfoReback">返回</button>
+                </div>  -->               
                 % endif
+                    <a href="/projectuserpn.html?location=${location}" class="btnGraySmall">返回</a>
+                </div>
             </div>
         </div>
 	% if account:

@@ -490,6 +490,7 @@
                         return;
                     }
                     $('#modalPackageType').modal('closed');
+                    window.location.reload();
                     if(label==''){
                         if(idx>0){
                             var h='<span data-pay-id="'+data.pay_policy_id+'">'+price+'元 = '+time+'天<i></i></span>';
