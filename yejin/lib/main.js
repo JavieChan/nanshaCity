@@ -440,12 +440,12 @@
                 dateFormat: 'yy-mm-dd'
             });
             $('.vtime input').attr('placeholder', '选择学期结束日期').val('');
-            $("input[name='expired']").addClass("matchVerify shouldVerify");
+            $("input[name='expired']").addClass("matchVerify shouldVerify").attr('placeholder', '选择套餐有效期');
         }else{//月套餐
             $('.vtime label').html("<i>*</i>时间<em>（天数）</em>：");
             $('.vtime input').removeClass('datepickerbill').addClass('checkInt');
             $('.vtime input').attr('placeholder', '输入天数').val('');
-            $("input[name='expired']").removeClass("matchVerify shouldVerify");
+            $("input[name='expired']").removeClass("matchVerify shouldVerify").attr('placeholder', '长期');
         }
         $('.vtime .errormsg').remove();
         $('.vtime input').removeClass('error');
@@ -673,10 +673,17 @@
             fileElementId: fileElementId,
             dataType: 'json',
             success: function(data, status){
+                if(typeof(data["_code"])!="undefined" && data["_code"]==400){//错误码
+                    alert(data.errors.toString());
+                    return;
+                }
                 window.location.reload();
             },
             error: function(data, status, e){
                 console.log(e);
+                if(typeof(data["_code"])!="undefined" && data["_code"]==400){//错误码
+                    alert(data.errors.toString());
+                }
             }
         });
     });

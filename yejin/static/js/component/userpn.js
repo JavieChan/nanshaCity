@@ -285,8 +285,18 @@
 
 	                if (checkInput($('#modalRoomPn .vertical')) == 0) {
 	                    userPnAjax("post", '', param, function (data) {
+	                        if (typeof data["_code"] != "undefined" && data["_code"] == 400) {
+	                            //错误码
+	                            alert(data.reason);
+	                            return;
+	                        }
 	                        if (data.code == 200) {
 	                            window.location.reload();
+	                        }
+	                    }, function (data) {
+	                        if (typeof data["_code"] != "undefined" && data["_code"] == 400) {
+	                            //错误码
+	                            alert(data.reason);
 	                        }
 	                    });
 	                }
