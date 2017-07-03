@@ -2132,6 +2132,7 @@
             accountAjax("put", {name:$(this).siblings('input[name=name]').val(), mask:0}, function(data){
                 $this.parent().parent().addClass('dab');
                 $this.text('启用').addClass('unforbin').removeClass('forbin');
+                window.location.reload();
             });
         }
     });
@@ -2141,6 +2142,7 @@
         accountAjax("put", {name:$(this).siblings('input[name=name]').val(), mask:1}, function(data){
             $this.parent().parent().removeClass('dab');
             $this.text('停用').addClass('forbin').removeClass('unforbin');
+            window.location.reload();
         });
     });
     // 在线用户导出
