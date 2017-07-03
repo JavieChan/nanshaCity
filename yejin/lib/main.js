@@ -504,7 +504,6 @@
             },function(data){
                 if(typeof(data["_code"])!="undefined" && data["_code"]!=200){//错误码
                     alert(data.reason);
-                    return;
                 }
             });
         }
