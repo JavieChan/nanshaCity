@@ -11,7 +11,6 @@ class Table extends Component {
                <thead>
                     <tr>
                         <th>手机号</th>
-                        <th>类型</th>
                         <th>金额</th>
                         <th>时间</th>
                         <th>备注</th>
@@ -31,7 +30,6 @@ class Table extends Component {
                             <tbody key={index}>
                                 <tr>
                                     <td>{list.mobile}</td>
-                                    <td>{pfc}</td>
                                     <td>{list.fee}</td>
                                     <td>{list.ctime}</td>
                                     <td>{list.note}</td>
