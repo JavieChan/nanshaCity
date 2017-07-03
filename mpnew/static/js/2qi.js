@@ -91,3 +91,12 @@ var sortBy = function(filed, rev, primer) {
 		return 1;
 	}
 };
+
+var isNull = function(val){
+	if(val==null || val=="null" || val=="undefined" || typeof(val)=="undefined")
+	{
+		return true;
+	}else{
+		return false;
+	}
+}

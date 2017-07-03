@@ -213,9 +213,9 @@
 								str += "<tr><td>" + dList[i].name;
 								str += "</td><td>" + dList[i].ap_num;
 								str += "</td><td>" + dList[i].start_t;
-								str += "</td><td>" + dList[i].cur_num;
-								str += "</td><td>" + dList[i].ydn;
-								str += "</td><td>" + dList[i].mtn;
+								str += "</td><td>" + (isNull(dList[i].cur_num)?"-":dList[i].cur_num);
+								str += "</td><td>" + (isNull(dList[i].ydn)?"-":dList[i].ydn);
+								str += "</td><td>" + (isNull(dList[i].mtn)?"-":dList[i].mtn);
 								str += "</td><td>" + dList[i].person;
 								str += "</td><td><img title='" + (dList[i].status == 0 ? "正常" : (dList[i].status == 1 ? "超负荷" : "故障")) + "' src='" + statusImg[dList[i].status] + "'>";
 								str += "</td><td><a class='link-detail' href='supervisedetail.html?gid=" + dList[i].alarm_id + "&location="+urlPramamLocation+"'>详情</a> &nbsp; <a class='btn-del' href='javascript:;' data-id=" + dList[i].alarm_id + ">删除</a></td></tr>";

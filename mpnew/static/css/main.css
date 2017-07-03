@@ -5595,9 +5595,6 @@ button:hover .arrowNext {
 .phase2 {
   /*citymap*/
   /*citytrace*/
-  /*trend*/
-  /*surpervise*/
-  /*surpervisedetail*/
 }
 .phase2 .toolnav h3 {
   width: 400px;
@@ -6045,23 +6042,30 @@ button:hover .arrowNext {
 .phase2 .btn-excel.dis {
   background: #aaa;
 }
-.phase2 .group-ap-box {
+.phase2 .grp-detail {
+  clear: both;
+  line-height: 32px;
+}
+.phase2 .grp-detail span {
+  color: #34B5E2;
+}
+.group-ap-box {
   max-height: 240px;
   overflow: auto;
 }
-.phase2 .ap-box .grp-name {
+.group-ap-box .ap-box .grp-name {
   border-bottom: 1px solid #ccc;
   font-weight: bold;
 }
-.phase2 .ap-names {
+.group-ap-box .ap-box .ap-names {
   margin-bottom: 20px;
 }
-.phase2 .ap-names input {
+.group-ap-box .ap-box .ap-names input {
   display: inline-block;
   vertical-align: middle;
   margin-right: 3px;
 }
-.phase2 .ap-names span {
+.group-ap-box .ap-box .ap-names span {
   display: inline-block;
   width: 160px;
   overflow: hidden;
@@ -6069,11 +6073,4 @@ button:hover .arrowNext {
   vertical-align: middle;
   margin-right: 10px;
   cursor: default;
-}
-.phase2 .grp-detail {
-  clear: both;
-  line-height: 32px;
-}
-.phase2 .grp-detail span {
-  color: #34B5E2;
 }
