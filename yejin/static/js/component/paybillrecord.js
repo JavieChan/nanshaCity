@@ -96,11 +96,6 @@
 	                        _react2.default.createElement(
 	                            "th",
 	                            null,
-	                            "\u7C7B\u578B"
-	                        ),
-	                        _react2.default.createElement(
-	                            "th",
-	                            null,
 	                            "\u91D1\u989D"
 	                        ),
 	                        _react2.default.createElement(
@@ -134,11 +129,6 @@
 	                                "td",
 	                                null,
 	                                list.mobile
-	                            ),
-	                            _react2.default.createElement(
-	                                "td",
-	                                null,
-	                                pfc
 	                            ),
 	                            _react2.default.createElement(
 	                                "td",
