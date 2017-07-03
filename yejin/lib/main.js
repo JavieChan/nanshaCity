@@ -485,6 +485,10 @@
             }
             billAjax("post", param, function(data){
                 if(data.code==200){
+                    if(typeof(data["_code"])!="undefined" && data["_code"]!=200){//错误码
+                        alert(data.reason);
+                        return;
+                    }
                     $('#modalPackageType').modal('closed');
                     if(label==''){
                         if(idx>0){
@@ -496,6 +500,11 @@
                         var h='<span data-pay-id="'+data.pay_policy_id+'">'+label+'<i></i></span>';
                     }
                     $('.packageType .bill_tab').append(h);
+                }
+            },function(data){
+                if(typeof(data["_code"])!="undefined" && data["_code"]!=200){//错误码
+                    alert(data.reason);
+                    return;
                 }
             });
         }
