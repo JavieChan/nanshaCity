@@ -5595,9 +5595,6 @@ button:hover .arrowNext {
 .phase2 {
   /*citymap*/
   /*citytrace*/
-  /*trend*/
-  /*surpervise*/
-  /*surpervisedetail*/
 }
 .phase2 .toolnav h3 {
   width: 400px;
@@ -6049,19 +6046,19 @@ button:hover .arrowNext {
   max-height: 240px;
   overflow: auto;
 }
-.phase2 .ap-box .grp-name {
+.phase2 .group-ap-box .ap-box .grp-name {
   border-bottom: 1px solid #ccc;
   font-weight: bold;
 }
-.phase2 .ap-names {
+.phase2 .group-ap-box .ap-box .ap-names {
   margin-bottom: 20px;
 }
-.phase2 .ap-names input {
+.phase2 .group-ap-box .ap-box .ap-names input {
   display: inline-block;
   vertical-align: middle;
   margin-right: 3px;
 }
-.phase2 .ap-names span {
+.phase2 .group-ap-box .ap-box .ap-names span {
   display: inline-block;
   width: 160px;
   overflow: hidden;
