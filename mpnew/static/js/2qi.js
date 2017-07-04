@@ -49,12 +49,15 @@ var ajaxQ = function(url, type, param, callback, errFunc) {
 		url: ajaxDomain + url,
 		type: type,
 		data: param,
-		//		contentType:"application/json",
+		//contentType:"application/json",
 		success: function(data) {
 			callback(data);
 		},
 		error: function() {
 			console.log("ajax error");
+			if(typeof(arguments[0].readyState)!="undefined"){
+				console.log("ajax readyState::"+arguments[0].readyState);
+			}
 			if(typeof(errFunc) == "function") errFunc();
 		}
 	});
