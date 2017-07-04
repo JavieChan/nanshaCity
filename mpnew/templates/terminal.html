@@ -85,7 +85,7 @@
 						var str = "";
 						var orderIndex = 1; //序号
 						if(phoneTypeData.length < 1) {
-							$("i.loading:eq(0)").parent().remove();
+							$(".item-list .loading").parent().remove();
 							str = "<li>暂无数据。</li>";
 						} else {
 							//拼列表数据
@@ -118,7 +118,7 @@
 							// })
 						}
 						
-						$("i.loading:eq(0)").parent().remove();
+						$(".item-list .loading").parent().remove();
 						$(".item-list").append(str);
 						getSortChartOption();
 					}
@@ -175,7 +175,6 @@
 				$("#hoursChart").prepend("<div style='padding: 10px;'><i class='loading'></i>正在加载...</div>");
 				ajaxQ(ajaxUrls.disOnliTime, "get", null, function(data) {
 					if(data.Code.Code == 200) {
-						$("i.loading:eq(1)").parent().remove();
 						var disOnliTimeData = data[" res"];
 						if(disOnliTimeData.length < 1) {
 							$("#hoursChart").html("暂无数据。")
@@ -186,6 +185,7 @@
 								disOnliTimeDataForShow.seriesData.push(disOnliTimeData[i].session_time)
 							}
 						}
+						$("#hoursChart .loading").parent().remove();
 						getHoursChartOption();
 					}
 				})
