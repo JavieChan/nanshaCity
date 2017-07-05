@@ -3950,7 +3950,7 @@ select.sel {
   border-right: 8px solid transparent;
   display: block;
   position: absolute;
-  top: 27px;
+  bottom: -8px;
   left: 50%;
   margin-left: -4px;
 }
@@ -3961,7 +3961,7 @@ select.sel {
   border-right: 6px solid transparent;
   display: block;
   position: absolute;
-  top: 26px;
+  bottom: -6px;
   left: 50%;
   margin-left: -3px;
 }
