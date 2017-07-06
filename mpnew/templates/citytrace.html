@@ -139,8 +139,8 @@
 							var str = "";
 							for(var i = 0; i < apList.length; i++) {
 								str += "<tr><td>" + apList[i].day;
-								str += "</td><td>" + apList[i].ap_name;
-								str += "</td><td>" + apList[i].ap_addr;
+								str += "</td><td>" + (isNull(apList[i].ap_name)?"-":apList[i].ap_name);
+								str += "</td><td>" + (isNull(apList[i].ap_addr)?"-":apList[i].ap_addr);
 								str += "</td><td>" + apList[i].show_time;
 								str += "</td><td>" + apList[i].leave_time;
 								str += "</td><td>" + apList[i].stay;
