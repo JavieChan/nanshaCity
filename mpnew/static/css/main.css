@@ -828,12 +828,12 @@ select.sel {
 }
 .content .nav h4.on {
   background: #f9f9f9;
+  border-left: 6px solid #0faee5;
 }
 .content .nav h4.on a {
-  border-left: 6px solid #0faee5;
   color: #0faee5;
 }
-.content .nav h4.on:hover a {
+.content .nav h4.on:hover {
   border-left: 6px solid #0faee5;
 }
 .content .nav h4 a {
@@ -842,8 +842,6 @@ select.sel {
 }
 .content .nav h4:hover {
   background: #f9f9f9;
-}
-.content .nav h4:hover a {
   border-left: 6px solid #f9f9f9;
 }
 .content .nav ul {
