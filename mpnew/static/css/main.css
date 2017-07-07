@@ -827,11 +827,24 @@ select.sel {
   border-left: 6px solid #fff;
 }
 .content .nav h4.on {
+  background: #f9f9f9;
+}
+.content .nav h4.on a {
+  border-left: 6px solid #0faee5;
+  color: #0faee5;
+}
+.content .nav h4.on:hover a {
   border-left: 6px solid #0faee5;
 }
 .content .nav h4 a {
   padding-left: 4em;
   color: #444;
+}
+.content .nav h4:hover {
+  background: #f9f9f9;
+}
+.content .nav h4:hover a {
+  border-left: 6px solid #f9f9f9;
 }
 .content .nav ul {
   overflow: hidden;
@@ -6066,7 +6079,7 @@ button:hover .arrowNext {
   margin-right: 3px;
 }
 .group-ap-box .ap-box .ap-names input:checked + span {
-  color: #369;
+  color: #06e;
 }
 .group-ap-box .ap-box .ap-names span {
   display: inline-block;

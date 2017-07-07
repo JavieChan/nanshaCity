@@ -121,7 +121,8 @@
 					pageSize = 30,
 					totalPage = 1;
 
-				var showTableData = function(data) {				
+				var showTableData = function(data) {
+					$(".client-table tr:not(.th,.loading-tr)").remove();
 					if(data.Code.Code == 200) {
 						var apList = data["ap_list"];
 						if(typeof(apList) == "undefined") {

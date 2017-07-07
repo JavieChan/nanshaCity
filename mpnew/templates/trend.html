@@ -240,6 +240,7 @@
 					totalPage = 1;
 					
 				var showTableData = function(data){
+					$(".client-table tr:not(.th,.loading-tr)").remove();
 					if(data.Code.Code == 200) {
 						var clientData = data["client_list"];
 						if(typeof(clientData) == "undefined" || clientData.length < 1) {
