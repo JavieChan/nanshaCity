@@ -75,32 +75,44 @@
 					$(this).html(numI)
 				})
 
+				var vDataSort = [
+					[1256,1308,470,821,1025,646],
+					[1459,1104,477,801,475,423],
+					[727,314,999,567,1074,650],
+					[1661,596,882,367,289,280],
+					[433,505,517,289,531,280],
+					[1082,1112,348,904,611,604],
+					[790,1248,946,306,1313,360],
+					[859,1143,299,773,597,774]
+				]
+				var todayWeekDay = new Date().getDay();
+
 
 				var keywordData = {
 					subtext: "",
 					legendData: ["购物","社交","资讯","门户","影音","游戏"],
 					seriesData: [{
-							value: 200 + parseInt(Math.random() * 1500),
+							value: vDataSort[todayWeekDay][0],
 							name: '购物'
 						},
 						{
-							value: 200 + parseInt(Math.random() * 1200),
+							value: vDataSort[todayWeekDay][1],
 							name: '社交'
 						},
 						{
-							value: 200 + parseInt(Math.random() * 800),
+							value: vDataSort[todayWeekDay][2],
 							name: '资讯'
 						},
 						{
-							value: 200 + parseInt(Math.random() * 800),
+							value: vDataSort[todayWeekDay][3],
 							name: '门户'
 						},
 						{
-							value: 200 + parseInt(Math.random() * 1200),
+							value: vDataSort[todayWeekDay][4],
 							name: '影音'
 						},
 						{
-							value: 200 + parseInt(Math.random() * 800),
+							value: vDataSort[todayWeekDay][5],
 							name: '游戏'
 						}
 					]
