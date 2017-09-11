@@ -2222,7 +2222,7 @@
     });
     // 专网用户
     // 充值
-    var curRechargingId = null;
+    window.curRechargingId = null;
     $(document).on('click', '#userlistPn .recharge', function(e){
         var thisUserId = $(this).siblings('input.id').val(), location = $('#location').val();
         policyListAjax({location: location}, function(data){
