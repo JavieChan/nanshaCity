@@ -827,11 +827,22 @@ select.sel {
   border-left: 6px solid #fff;
 }
 .content .nav h4.on {
+  background: #f9f9f9;
+  border-left: 6px solid #0faee5;
+}
+.content .nav h4.on a {
+  color: #0faee5;
+}
+.content .nav h4.on:hover {
   border-left: 6px solid #0faee5;
 }
 .content .nav h4 a {
   padding-left: 4em;
   color: #444;
+}
+.content .nav h4:hover {
+  background: #f9f9f9;
+  border-left: 6px solid #f9f9f9;
 }
 .content .nav ul {
   overflow: hidden;
@@ -5955,12 +5966,15 @@ button:hover .arrowNext {
   display: none;
 }
 .phase2 .mark-line {
+  max-width: 480px;
   background: rgba(255, 255, 255, 0.7);
   color: #36f;
   padding: 3px 10px;
   border-radius: 3px;
   font-size: 13px;
   font-weight: bold;
+  word-wrap: break-word;
+  word-break: break-all;
   box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.9);
 }
 .phase2 .mark-line.ln-left {
@@ -6066,7 +6080,7 @@ button:hover .arrowNext {
   margin-right: 3px;
 }
 .group-ap-box .ap-box .ap-names input:checked + span {
-  color: #369;
+  color: #06e;
 }
 .group-ap-box .ap-box .ap-names span {
   display: inline-block;

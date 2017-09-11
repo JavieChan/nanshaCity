@@ -578,11 +578,22 @@
             background: none;
             border-left: 6px solid #fff;
             &.on {
+                background: #f9f9f9;
                 border-left: 6px solid #0faee5;
+                a {
+                    color: #0faee5;
+                }
+                &:hover{
+                    border-left: 6px solid #0faee5;
+                }
             }
             a {
                 padding-left: 4em;
                 color: #444;
+            }            
+            &:hover {
+                background: #f9f9f9;
+                border-left: 6px solid #f9f9f9;
             }
         }
         ul {

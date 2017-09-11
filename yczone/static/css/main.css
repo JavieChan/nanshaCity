@@ -3204,6 +3204,7 @@ select.sel {
   top: 40px;
   left: 0;
   display: none;
+  z-index: 15;
 }
 .content .projects .ns_device .areabox .deviceBar .deviceNav .deviceOp span {
   display: block;
