@@ -2222,6 +2222,7 @@
     });
     // 专网用户
     // 充值
+    window.curRechargingId = null;
     $(document).on('click', '#userlistPn .recharge', function(e){
         var thisUserId = $(this).siblings('input.id').val(), location = $('#location').val();
         policyListAjax({location: location}, function(data){
@@ -2237,6 +2238,7 @@
             }
         });
         $('#modalRecharge').modal('open');
+        curRechargingId = thisUserId;
         $('#modalRecharge .add').attr('data-userid',thisUserId);
         $(this).addClass("recharging");
     });
@@ -2251,7 +2253,7 @@
 
         if(confirm("确定要充值该套餐吗？")){
             var param={
-                userid: thisUserId,
+                userid: curRechargingId,//thisUserId,
                 pay_policy_id: myPay_policy_id
                 // location: location,
             };
